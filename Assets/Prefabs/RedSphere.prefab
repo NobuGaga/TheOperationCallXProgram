@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5725437676340095925}
   - component: {fileID: 2888535222748084540}
   m_Layer: 0
-  m_Name: GreenSphere
+  m_Name: RedSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 83573cd9c99b6a1409a39c27243c3be4, type: 2}
+  - {fileID: 2100000, guid: bf73e521677d23846aaea33fc29b802f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -5,7 +5,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 public static class EditorMenu {
-    [MenuItem("Tools/导出 Lua 界面中英文名对照表", false)]
+    [MenuItem("Custom/AssetBundle/Pack")]
+    private static void PackAssetBundle() {
+        AssetBundlePacker.Pack();
+    }
+
+    [MenuItem("Custom/Tool/导出 Lua 界面中英文名对照表", false)]
     private static void ExportAllViewName() {
         string windowRegistPath = "Assets/Editor/LuaScript/Library/Window/WindowRegist.lua";
         if (!File.Exists(windowRegistPath)) {
