@@ -1,7 +1,13 @@
 ManifestFileVersion: 0
-CRC: 3093459550
+CRC: 3828426930
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: base
+      Name: assets/prefabs/greencube
+      Dependencies: {}
+    Info_1:
+      Name: assets/prefabs/imageprefab
+      Dependencies: {}
+    Info_2:
+      Name: assets/prefabs/redsphere
       Dependencies: {}

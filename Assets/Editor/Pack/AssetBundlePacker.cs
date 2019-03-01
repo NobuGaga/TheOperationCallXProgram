@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 public static class AssetBundlePacker{
     private static string PlatformName() {
@@ -25,36 +24,27 @@ public static class AssetBundlePacker{
         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
 
         string packToPath = string.Format("AssetBundle/{0}/", PlatformName());
-        Debug.Log(string.Format("AssetBundle Pack Path {0}", packToPath));
         // 打包目录不存在则打包失败
         if (!Directory.Exists(packToPath))
             Directory.CreateDirectory(packToPath);
 
-        List<AssetBundleBuild> bundles = new List<AssetBundleBuild>();
-        // 不会返回子目录文件
-        string[] prefabPath = Directory.GetFiles("Assets/Prefabs");
-        foreach(string path in prefabPath)
-            if (path.EndsWith(".prefab")) {
-                //Assets / Prefabs\GreenCube.prefab
-                //string[] temp = Path.GetFileNameWithoutExtension(path).Split('/');
-                //AssetBundleBuild assetData = new AssetBundleBuild();
-                //assetData.assetBundleName = 
-            }
+        List<AssetBundleBuild> packBundles = new List<AssetBundleBuild>();
 
+        // 不用文件流读取, 因为文件流读取的路径在最终文件上一级会出现 \ 反斜杠, 才用读取 GUID 保证文件唯一性
         string[] assetGUIDs = AssetDatabase.FindAssets("t:Prefab", new string[]{ "Assets/Prefabs" });
         if (assetGUIDs != null && assetGUIDs.Length > 0)
-        {
-            foreach (string guid in assetGUIDs)
-            {
-                Debug.Log(guid);
-                Debug.Log(AssetDatabase.GUIDToAssetPath(guid));
-                //assets.Add(AssetDatabase.GUIDToAssetPath(guid));
+            foreach (string guid in assetGUIDs) {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                string extension = Path.GetExtension(assetPath);
+                string assetBundleName = assetPath.Replace(extension, "");
+                Debug.Log(assetPath.Replace(extension, ""));
+                AssetBundleBuild bundleData = new AssetBundleBuild();
+                bundleData.assetBundleName = assetBundleName;
+                bundleData.assetNames = new string[] { assetPath };
+                packBundles.Add(bundleData);
             }
-        }
-        //Path.Combine(Application.streamingAssetsPath, "myassetBundle")
 
-        //BuildPipeline.BuildAssetBundles(packToPath, BuildAssetBundleOptions.ForceRebuildAssetBundle, EditorUserBuildSettings.activeBuildTarget);
-        //BuildPipeline.BuildAssetBundles(packToPath, bundles.ToArray(),
-        //    BuildAssetBundleOptions.ForceRebuildAssetBundle, EditorUserBuildSettings.activeBuildTarget);
+        BuildPipeline.BuildAssetBundles(packToPath, packBundles.ToArray(),
+            BuildAssetBundleOptions.ForceRebuildAssetBundle, EditorUserBuildSettings.activeBuildTarget);
     }
 }
