@@ -1,8 +1,7 @@
-# Special Group
+# Root Unnecessary Group
+.vs
 Library
 Logs
 Packages
 Temp
-
-# VS File
-.vs
+obj
