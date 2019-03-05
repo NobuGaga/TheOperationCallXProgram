@@ -61,7 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\AssetBundleLoader.cs" />
-    <Compile Include="Assets\StartGame.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\LogicScript.cs" />
+    <Compile Include="Assets\Scripts\PathConfig.cs" />
+    <Compile Include="Assets\Scripts\StartGame.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>F:/appdev/unity/TheOperationCallXProgram/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

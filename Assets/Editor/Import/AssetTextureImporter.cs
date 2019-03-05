@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 public static class AssetTextureImporter {
-    private static List<string> m_DeleteTextureList = new List<string>();
-    private static Texture2D m_AlphaTestTexture = new Texture2D(1024, 1024, TextureFormat.BGRA32, false);
+    private static List<string> m_deleteTextureList = new List<string>();
+    private static Texture2D m_alphaTestTexture = new Texture2D(1024, 1024, TextureFormat.BGRA32, false);
 
     public static void OnPreprocessTexture(string assetPath) {
         if (!assetPath.Contains("Atlas")) {
-            m_DeleteTextureList.Add(assetPath);
+            m_deleteTextureList.Add(assetPath);
             return;
         }
         TextureImporter import = AssetImporter.GetAtPath(assetPath) as TextureImporter;
@@ -34,9 +34,9 @@ public static class AssetTextureImporter {
     }
 
     private static bool CheckTextureAlpha(string assetPath) {
-        m_AlphaTestTexture.LoadImage(File.ReadAllBytes(assetPath));
-        foreach (Color rgba in m_AlphaTestTexture.GetPixels())
-            if (rgba.a < 0.98f) 
+        m_alphaTestTexture.LoadImage(File.ReadAllBytes(assetPath));
+        foreach (Color rgba in m_alphaTestTexture.GetPixels())
+            if (rgba.a < 0.98f)
                 return true;
         return false;
     }
@@ -87,15 +87,15 @@ public static class AssetTextureImporter {
     }
 
     public static void OnPostprocessAllAssets() {
-        if (m_DeleteTextureList.Count == 0)
+        if (m_deleteTextureList.Count == 0)
             return;
         Debug.LogError("导入图片资源不在 Assets/Atlas/ 路径下");
-        foreach (string assetPath in m_DeleteTextureList) {
+        foreach (string assetPath in m_deleteTextureList) {
             File.Delete(assetPath);
             // 手动删除 meta 文件, Unity 控制台强制刷新删除 meta 时会报错
             string metaPath = string.Format("{0}.meta", Path.GetFileNameWithoutExtension(assetPath));
             File.Delete(metaPath);
         }
-        m_DeleteTextureList.Clear();
+        m_deleteTextureList.Clear();
     }
 }
