@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7574477383442464663}
   - component: {fileID: 8709106798167916494}
   - component: {fileID: 8160495752076755921}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ImagePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
