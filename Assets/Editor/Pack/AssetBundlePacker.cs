@@ -4,22 +4,6 @@ using System.IO;
 using System.Collections.Generic;
 
 public static class AssetBundlePacker{
-    private static string PlatformName() {
-        switch (EditorUserBuildSettings.activeBuildTarget) {
-            case BuildTarget.Android:
-                return "Android";
-            case BuildTarget.iOS:
-                return "iOS";
-            case BuildTarget.StandaloneWindows:
-            case BuildTarget.StandaloneWindows64:
-                return "Windows";
-            case BuildTarget.StandaloneOSX:
-                return "OSX";
-            default:
-                return "UnusePlatform";
-        }
-    }
-
     public static void Pack() {
         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
         // 打包目录不存在则打包失败

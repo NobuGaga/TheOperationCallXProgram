@@ -61,6 +61,7 @@
      <Compile Include="Assets\Editor\Import\AssetImportProcessor.cs" />
      <Compile Include="Assets\Editor\Import\AssetTextureImporter.cs" />
      <Compile Include="Assets\Editor\Pack\AssetBundlePacker.cs" />
+     <Compile Include="Assets\Editor\PatternSample.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
@@ -300,6 +301,9 @@
  </Reference>
  <Reference Include="UnityEditor.Purchasing">
  <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
+ </Reference>
+ <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+ <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0f2/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
