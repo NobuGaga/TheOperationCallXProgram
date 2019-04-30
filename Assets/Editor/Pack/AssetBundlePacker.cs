@@ -22,11 +22,9 @@ public static class AssetBundlePacker{
 
     public static void Pack() {
         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-
-        string packToPath = string.Format("AssetBundle/{0}/", PlatformName());
         // 打包目录不存在则打包失败
-        if (!Directory.Exists(packToPath))
-            Directory.CreateDirectory(packToPath);
+        if (!Directory.Exists(EditorPathConfig.AssetBundleBuildPath))
+            Directory.CreateDirectory(EditorPathConfig.AssetBundleBuildPath);
 
         List<AssetBundleBuild> packBundles = new List<AssetBundleBuild>();
 
@@ -44,7 +42,7 @@ public static class AssetBundlePacker{
                 packBundles.Add(bundleData);
             }
 
-        BuildPipeline.BuildAssetBundles(packToPath, packBundles.ToArray(),
+        BuildPipeline.BuildAssetBundles(EditorPathConfig.AssetBundleBuildPath, packBundles.ToArray(),
             BuildAssetBundleOptions.ForceRebuildAssetBundle, EditorUserBuildSettings.activeBuildTarget);
     }
 }
