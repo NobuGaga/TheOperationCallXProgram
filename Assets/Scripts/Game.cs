@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class StartGame : LogicScript {
+public class Game : LogicScript {
     protected override void Reset() {
         Debug.Log("StartGame::Reset");
     }
@@ -14,7 +14,7 @@ public class StartGame : LogicScript {
     }
 
     protected override void Start() {
-        Debug.Log("StartGame::Start");
+        //Debug.Log("StartGame::Start");
         GameManager.StartGame(this);
     }
 

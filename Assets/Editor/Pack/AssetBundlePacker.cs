@@ -3,7 +3,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 
-public static class AssetBundlePacker{
+public static class AssetBundlePacker {
     public static void Pack() {
         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
         // 打包目录不存在则打包失败

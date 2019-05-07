@@ -60,13 +60,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Base\LogicScript.cs" />
+    <Compile Include="Assets\Scripts\Base\Class\Controller.cs" />
+    <Compile Include="Assets\Scripts\Base\Class\LogicScript.cs" />
+    <Compile Include="Assets\Scripts\Base\Class\Model.cs" />
+    <Compile Include="Assets\Scripts\Base\Class\View.cs" />
+    <Compile Include="Assets\Scripts\Base\Interface\IModel.cs" />
     <Compile Include="Assets\Scripts\Config\GameConfig.cs" />
     <Compile Include="Assets\Scripts\Config\PathConfig.cs" />
+    <Compile Include="Assets\Scripts\Game.cs" />
     <Compile Include="Assets\Scripts\Manager\AssetBundleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
-    <Compile Include="Assets\Scripts\StartGame.cs" />
+    <Compile Include="Assets\Scripts\Moudle\Loading\Loading.cs" />
+    <Compile Include="Assets\Scripts\Moudle\Loading\LoadingData.cs" />
+    <Compile Include="Assets\Scripts\Moudle\Loading\View\LoadingView.cs" />
     <Compile Include="Assets\Scripts\Tool\DebugTool.cs" />
+    <None Include="Assets\Resources\GameConfig.txt" />
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>

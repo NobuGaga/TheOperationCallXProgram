@@ -1,0 +1,4 @@
+{
+	"qualityLevel": 1,
+	"frameRate": 60
+}

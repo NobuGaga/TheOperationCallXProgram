@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class AssetImportProcessor : AssetPostprocessor {
+public class AssetImportProcessor:AssetPostprocessor {
     /// <summary>
     /// 模型导入之前调用
     /// </summary>
@@ -39,12 +39,18 @@ public class AssetImportProcessor : AssetPostprocessor {
     /// </summary>
     public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
         Debug.Log("OnPostprocessAllAssets");
-        foreach (string str in importedAssets)
+        foreach (string str in importedAssets) {
+            if (str.EndsWith("cs"))
+                continue;
             Debug.Log("importedAsset = " + str);
+        }
         foreach (string str in deletedAssets)
             Debug.Log("deletedAssets = " + str);
-        foreach (string str in movedAssets)
+        foreach (string str in movedAssets) {
+            if (str.EndsWith("cs"))
+                continue;
             Debug.Log("movedAssets = " + str);
+        }
         foreach (string str in movedFromAssetPaths)
             Debug.Log("movedFromAssetPaths = " + str);
         AssetTextureImporter.OnPostprocessAllAssets();
