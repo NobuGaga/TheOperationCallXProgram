@@ -60,11 +60,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AssetBundleLoader.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\LogicScript.cs" />
-    <Compile Include="Assets\Scripts\PathConfig.cs" />
+    <Compile Include="Assets\Scripts\Base\LogicScript.cs" />
+    <Compile Include="Assets\Scripts\Config\GameConfig.cs" />
+    <Compile Include="Assets\Scripts\Config\PathConfig.cs" />
+    <Compile Include="Assets\Scripts\Manager\AssetBundleManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\StartGame.cs" />
+    <Compile Include="Assets\Scripts\Tool\DebugTool.cs" />
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
