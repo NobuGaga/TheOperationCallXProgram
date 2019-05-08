@@ -1,35 +1,20 @@
-﻿using UnityEngine;
+﻿public static class GameManager {
+    public static LogicScript m_curLogicScript;
 
-public static class GameManager {
-    private static LogicScript m_curLogicScript;
+    private static void Init() {
+        GameConfig.Init();
+        ControllerManager.Init();
+    }
 
     public static void StartGame(LogicScript startScript) {
         if (startScript == null)
             return;
         m_curLogicScript = startScript;
-
         //GameObject.DontDestroyOnLoad(startScript.gameObject);
 
-        GameConfig.Init();
-        new Loading();
+        Init();
 
-        AssetBundleLoader.Load(m_curLogicScript, "prefabs/moudle/login/mainview", "MainView",
-            delegate (GameObject gameObj)
-            {
-                GameObject gbGreenCubeCopy = UnityEngine.Object.Instantiate(gameObj) as GameObject;
-                gbGreenCubeCopy.transform.SetParent(m_curLogicScript.gameObject.transform, false);
-                //gbGreenCubeCopy.transform.localScale = new Vector3(100, 100, 100);
-            }
-        );
-
-        AssetBundleLoader.Load(m_curLogicScript, "prefabs/moudle/loading/mainview", "MainView",
-            delegate (GameObject gameObj)
-            {
-                GameObject gbGreenCubeCopy = UnityEngine.Object.Instantiate(gameObj) as GameObject;
-                gbGreenCubeCopy.transform.SetParent(m_curLogicScript.gameObject.transform, false);
-                //gbGreenCubeCopy.transform.localScale = new Vector3(100, 100, 100);
-            }
-        );
+        EventManager.Dispatch(GameMoudle.Loading, GameEvent.Type.RefreshMainView);
     }
 
     public static void UpdateGame() {
