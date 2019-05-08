@@ -1,5 +1,4 @@
 ﻿using UnityEditor;
-using UnityEngine;
 
 public static class EditorConst {
     public static string PlatformName() {
@@ -18,5 +17,7 @@ public static class EditorConst {
         }
     }
 
-    public static readonly string AssetBundleMaterialName = string.Format("{0}/Material", Application.dataPath);
+    public static readonly string MoudleString = "Moudle";
+    public static readonly string UIString = "UI";
+    public static readonly int UIStringLength = UIString.Length;
 }

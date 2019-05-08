@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 public class View:MonoBehaviour {
-
     public static View Show() {
         //AssetBundleLoader.Load(m_curLogicScript, "prefabs/greencube", "GreenCube",
         //    delegate (GameObject gameObj) {

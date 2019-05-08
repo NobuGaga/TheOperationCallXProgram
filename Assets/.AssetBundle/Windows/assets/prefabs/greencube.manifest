@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3348980511
+CRC: 1968650622
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 946c66235749940583623154d34c1d28
+    Hash: 5334e0c5e472d0ca00b1ef77f61d5fc9
   TypeTreeHash:
     serializedVersion: 2
-    Hash: cb5cff3a1350143ce413b676b0fb473f
+    Hash: 7d2c76f1b5e572a3feec24931ac2dc91
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -26,5 +26,5 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 Assets:
-- Assets/Prefabs/GreenCube.prefab
+- Assets/Editor/Asset/Prefabs/GreenCube.prefab
 Dependencies: []

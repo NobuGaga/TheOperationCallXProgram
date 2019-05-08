@@ -6,24 +6,24 @@ public class AssetImportProcessor:AssetPostprocessor {
     /// 模型导入之前调用
     /// </summary>
     public void OnPreprocessModel() {
-        Debug.Log("OnPreprocessModel = " + assetPath);
+        DebugTool.Log("OnPreprocessModel = " + assetPath);
     }
     /// <summary>
     /// 模型导入之后调用
     /// </summary>
     public void OnPostprocessModel(GameObject go) {
-        Debug.Log("OnPostprocessModel = " + go.name);
+        DebugTool.Log("OnPostprocessModel = " + go.name);
     }
 
     /// <summary>
     /// 纹理导入之前调用，针对入到的纹理进行设置
     /// </summary>
     public void OnPreprocessTexture() {
-        Debug.Log("OnPreprocessTexture = " + assetPath);
+        DebugTool.Log("OnPreprocessTexture = " + assetPath);
         AssetTextureImporter.OnPreprocessTexture(assetPath);
     }
     public void OnPostprocessTexture(Texture2D texture) {
-        Debug.Log("OnPostProcessTexture = " + assetPath);
+        DebugTool.Log("OnPostProcessTexture = " + assetPath);
     }
 
     public void OnPreprocessAudio() {
@@ -38,21 +38,21 @@ public class AssetImportProcessor:AssetPostprocessor {
     /// 所有的资源的导入，删除，移动，都会调用此方法，注意，这个方法是static的
     /// </summary>
     public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
-        Debug.Log("OnPostprocessAllAssets");
+        DebugTool.Log("OnPostprocessAllAssets");
         foreach (string str in importedAssets) {
             if (str.EndsWith("cs"))
                 continue;
-            Debug.Log("importedAsset = " + str);
+            DebugTool.Log("importedAsset = " + str);
         }
         foreach (string str in deletedAssets)
-            Debug.Log("deletedAssets = " + str);
+            DebugTool.Log("deletedAssets = " + str);
         foreach (string str in movedAssets) {
             if (str.EndsWith("cs"))
                 continue;
-            Debug.Log("movedAssets = " + str);
+            DebugTool.Log("movedAssets = " + str);
         }
         foreach (string str in movedFromAssetPaths)
-            Debug.Log("movedFromAssetPaths = " + str);
+            DebugTool.Log("movedFromAssetPaths = " + str);
         AssetTextureImporter.OnPostprocessAllAssets();
         AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
     }

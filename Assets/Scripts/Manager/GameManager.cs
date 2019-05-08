@@ -3,7 +3,6 @@
 public static class GameManager {
     private static LogicScript m_curLogicScript;
 
-
     public static void StartGame(LogicScript startScript) {
         if (startScript == null)
             return;
@@ -31,8 +30,6 @@ public static class GameManager {
                 //gbGreenCubeCopy.transform.localScale = new Vector3(100, 100, 100);
             }
         );
-
-        
     }
 
     public static void UpdateGame() {

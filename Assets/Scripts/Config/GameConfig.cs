@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 
 public static class GameConfig {
+    private static bool _isDebug = true;
+    public static bool IsDebug {
+        get {
+            return _isDebug;
+        }
+    }
 
     public static void Init() {
         // TODO

@@ -8,7 +8,7 @@ public static class PatternSample {
     private static void ExportAllViewName() {
         string windowRegistPath = "Assets/Editor/LuaScript/Library/Window/WindowRegist.lua";
         if (!File.Exists(windowRegistPath)) {
-            Debug.LogError(string.Format("不存在路径\t{0}", windowRegistPath));
+            DebugTool.LogError(string.Format("不存在路径\t{0}", windowRegistPath));
             return;
         }
         string exportPath = EditorUtility.OpenFolderPanel("导出目录", "", "");
@@ -22,7 +22,7 @@ public static class PatternSample {
         fileWriter.Close();
         fileWriter.Dispose();
         if (File.Exists(exportPath))
-            Debug.Log("导出成功");
+            DebugTool.Log("导出成功");
     }
 
     private static string FilterWindowRegist(string windowRegistText) {

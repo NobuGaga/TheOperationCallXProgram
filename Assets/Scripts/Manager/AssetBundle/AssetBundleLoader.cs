@@ -16,13 +16,13 @@ public static class AssetBundleLoader {
         AssetBundle assetbundle = AssetBundle.LoadFromFile(fullPath, 0, 0);
         yield return null;
         if (assetbundle == null) {
-            Debug.LogError(string.Format("assetbundle load error, path {0}", fullPath));
+            DebugTool.LogError(string.Format("assetbundle load error, path {0}", fullPath));
             yield break;
         }
         Object obj = assetbundle.LoadAsset(objName, type);
         assetbundle.Unload(true);
         if (obj == null) {
-            Debug.LogError(string.Format("assetbundle load asset error, object name {0}", objName));
+            DebugTool.LogError(string.Format("assetbundle load asset error, object name {0}", objName));
             yield break;
         }
         callback(obj);
@@ -33,13 +33,13 @@ public static class AssetBundleLoader {
         AssetBundle assetbundle = AssetBundle.LoadFromFile(fullPath, 0, 0);
         yield return null;
         if (assetbundle == null) {
-            Debug.LogError(string.Format("assetbundle load error, path {0}", fullPath));
+            DebugTool.LogError(string.Format("assetbundle load error, path {0}", fullPath));
             yield break;
         }
         Object obj = assetbundle.LoadAsset<T>(objName);
         assetbundle.Unload(false);
         if (obj == null) {
-            Debug.LogError(string.Format("assetbundle load asset error, object name {0}", objName));
+            DebugTool.LogError(string.Format("assetbundle load asset error, object name {0}", objName));
             yield break;
         }
         callback(obj as T);

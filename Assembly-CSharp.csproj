@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Moudle\Loading\LoadingData.cs" />
     <Compile Include="Assets\Scripts\Moudle\Loading\View\LoadingView.cs" />
     <Compile Include="Assets\Scripts\Tool\DebugTool.cs" />
+    <Compile Include="Assets\Scripts\Tool\StringTool.cs" />
     <Compile Include="Assets\Scripts\UI\UIImage.cs" />
     <None Include="Assets\Resources\GameConfig.txt" />
     <Reference Include="Unity.CollabProxy.Editor">

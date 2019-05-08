@@ -89,7 +89,7 @@ public static class AssetTextureImporter {
     public static void OnPostprocessAllAssets() {
         if (m_deleteTextureList.Count == 0)
             return;
-        Debug.LogError("导入图片资源不在 Assets/Atlas/ 路径下");
+        DebugTool.LogError("导入图片资源不在 Assets/Atlas/ 路径下");
         foreach (string assetPath in m_deleteTextureList) {
             File.Delete(assetPath);
             // 手动删除 meta 文件, Unity 控制台强制刷新删除 meta 时会报错

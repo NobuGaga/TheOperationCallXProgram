@@ -2,40 +2,40 @@
 
 public class Game : LogicScript {
     protected override void Reset() {
-        Debug.Log("StartGame::Reset");
+        DebugTool.Log("StartGame::Reset");
     }
 
     protected override void Awake() {
-        Debug.Log("StartGame::Awake");
+        DebugTool.Log("StartGame::Awake");
     }
 
     protected override void OnEnable() {
-        Debug.Log("StartGame::OnEnable");
+        DebugTool.Log("StartGame::OnEnable");
     }
 
     protected override void Start() {
-        //Debug.Log("StartGame::Start");
+        //DebugTool.Log("StartGame::Start");
         GameManager.StartGame(this);
     }
 
     protected override void FixedUpdate() {
-        //Debug.Log("StartGame::FixedUpdate");
+        //DebugTool.Log("StartGame::FixedUpdate");
     }
 
     protected override void Update() {
-        //Debug.Log("StartGame::Update");
+        //DebugTool.Log("StartGame::Update");
         GameManager.UpdateGame();
     }
 
     protected override void LateUpdate() {
-        //Debug.Log("StartGame::LateUpdate");
+        //DebugTool.Log("StartGame::LateUpdate");
     }
 
     protected override void OnDisable() {
-        Debug.Log("StartGame::OnDisable");
+        DebugTool.Log("StartGame::OnDisable");
     }
 
     protected override void OnDestroy() {
-        Debug.Log("StartGame::OnDestroy");
+        DebugTool.Log("StartGame::OnDestroy");
     }
 }

@@ -5,7 +5,6 @@
 /// Awake() -> OnEnable() -> Start() -> OnDisable() -> OnDestroy()
 /// </summary>
 public abstract class LogicScript:MonoBehaviour {
-
     protected abstract void Reset();
 
     /// <summary>
