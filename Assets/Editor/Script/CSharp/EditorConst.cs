@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEngine;
 
 public static class EditorConst {
     public static string PlatformName() {
@@ -16,4 +17,6 @@ public static class EditorConst {
                 return "UnusePlatform";
         }
     }
+
+    public static readonly string AssetBundleMaterialName = string.Format("{0}/Material", Application.dataPath);
 }

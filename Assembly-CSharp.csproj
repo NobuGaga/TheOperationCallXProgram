@@ -68,12 +68,14 @@
     <Compile Include="Assets\Scripts\Config\GameConfig.cs" />
     <Compile Include="Assets\Scripts\Config\PathConfig.cs" />
     <Compile Include="Assets\Scripts\Game.cs" />
-    <Compile Include="Assets\Scripts\Manager\AssetBundleManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\AssetBundle\AssetBundleLoader.cs" />
+    <Compile Include="Assets\Scripts\Manager\AssetBundle\AssetBundleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\Moudle\Loading\Loading.cs" />
     <Compile Include="Assets\Scripts\Moudle\Loading\LoadingData.cs" />
     <Compile Include="Assets\Scripts\Moudle\Loading\View\LoadingView.cs" />
     <Compile Include="Assets\Scripts\Tool\DebugTool.cs" />
+    <Compile Include="Assets\Scripts\UI\UIImage.cs" />
     <None Include="Assets\Resources\GameConfig.txt" />
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>

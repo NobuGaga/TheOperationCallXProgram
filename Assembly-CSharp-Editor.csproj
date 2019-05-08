@@ -60,13 +60,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\EditorConst.cs" />
-    <Compile Include="Assets\Editor\EditorMenu.cs" />
-    <Compile Include="Assets\Editor\EditorPathConfig.cs" />
-    <Compile Include="Assets\Editor\Import\AssetImportProcessor.cs" />
-    <Compile Include="Assets\Editor\Import\AssetTextureImporter.cs" />
-    <Compile Include="Assets\Editor\Pack\AssetBundlePacker.cs" />
-    <Compile Include="Assets\Editor\PatternSample.cs" />
+    <Compile Include="Assets\Editor\Script\CSharp\EditorConst.cs" />
+    <Compile Include="Assets\Editor\Script\CSharp\EditorMenu.cs" />
+    <Compile Include="Assets\Editor\Script\CSharp\EditorPathConfig.cs" />
+    <Compile Include="Assets\Editor\Script\CSharp\Import\AssetImportProcessor.cs" />
+    <Compile Include="Assets\Editor\Script\CSharp\Import\AssetTextureImporter.cs" />
+    <Compile Include="Assets\Editor\Script\CSharp\Pack\AssetBundlePacker.cs" />
+    <Compile Include="Assets\Editor\Script\CSharp\PatternSample.cs" />
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
