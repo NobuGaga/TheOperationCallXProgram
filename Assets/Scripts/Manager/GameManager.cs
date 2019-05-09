@@ -1,8 +1,11 @@
-﻿public static class GameManager {
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public static class GameManager {
     public static LogicScript m_curLogicScript;
 
-    private static void Init() {
-        GameConfig.Init();
+    static GameManager() {
+        GameSetting.Init();
         ControllerManager.Init();
     }
 
@@ -10,14 +13,13 @@
         if (startScript == null)
             return;
         m_curLogicScript = startScript;
-        //GameObject.DontDestroyOnLoad(startScript.gameObject);
+        GameObject.DontDestroyOnLoad(startScript.gameObject);
 
-        Init();
-
-        EventManager.Dispatch(GameMoudle.Loading, GameEvent.Type.RefreshMainView);
+        EventManager.Dispatch(GameMoudle.Loading, GameEvent.Type.OpenMainView);
     }
 
     public static void UpdateGame() {
-            
+        //AsyncOperation operation = SceneManager.LoadSceneAsync("");
+        
     }
 }

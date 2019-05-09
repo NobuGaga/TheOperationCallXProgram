@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Game\Game.cs" />
     <Compile Include="Assets\Scripts\Game\GameEvent.cs" />
     <Compile Include="Assets\Scripts\Game\GameMoudle.cs" />
+    <Compile Include="Assets\Scripts\Game\GameSetting.cs" />
     <Compile Include="Assets\Scripts\Manager\AssetBundle\AssetBundleLoader.cs" />
     <Compile Include="Assets\Scripts\Manager\AssetBundle\AssetBundleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ControllerManager.cs" />

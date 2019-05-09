@@ -9,10 +9,10 @@ public static class AssetTextureImporter {
     private static Texture2D m_alphaTestTexture = new Texture2D(1024, 1024, TextureFormat.BGRA32, false);
 
     public static void OnPreprocessTexture(string assetPath) {
-        if (!assetPath.Contains("Atlas")) {
-            m_deleteTextureList.Add(assetPath);
-            return;
-        }
+        //if (!assetPath.Contains("Atlas")) {
+        //    m_deleteTextureList.Add(assetPath);
+        //    return;
+        //}
         TextureImporter import = AssetImporter.GetAtPath(assetPath) as TextureImporter;
         import.mipmapEnabled = false;
         SetAssetBundleName(import, assetPath);
@@ -87,6 +87,8 @@ public static class AssetTextureImporter {
     }
 
     public static void OnPostprocessAllAssets() {
+        if (m_deleteTextureList.Count != 0)
+            m_deleteTextureList.Clear();
         if (m_deleteTextureList.Count == 0)
             return;
         DebugTool.LogError("导入图片资源不在 Assets/Atlas/ 路径下");
