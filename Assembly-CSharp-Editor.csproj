@@ -60,12 +60,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\Script\CSharp\AssetBundle\AssetBundleEditorManager.cs" />
+    <Compile Include="Assets\Editor\Script\CSharp\AssetBundle\AssetBundlePacker.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\EditorConst.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\EditorMenu.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\EditorPathConfig.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\Import\AssetImportProcessor.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\Import\AssetTextureImporter.cs" />
-    <Compile Include="Assets\Editor\Script\CSharp\Pack\AssetBundlePacker.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\PatternSample.cs" />
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
@@ -283,6 +284,9 @@
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>C:/Software/Unity/Unity 2019.1.0a8/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions">
+      <HintPath>C:/Software/Unity/Unity 2019.1.0a8/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Software/Unity/Unity 2019.1.0a8/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
@@ -294,6 +298,12 @@
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>C:/Software/Unity/Unity 2019.1.0a8/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>C:/Software/Unity/Unity 2019.1.0a8/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Software/Unity/Unity 2019.1.0a8/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

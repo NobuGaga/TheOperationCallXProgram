@@ -8,7 +8,7 @@ public abstract class LogicScript:MonoBehaviour {
     protected abstract void Reset();
 
     /// <summary>
-    /// unity run function in first time loading MB component
+    /// unity run function in first time loading MB component(also component disactive)
     /// </summary>
     protected abstract void Awake();
 

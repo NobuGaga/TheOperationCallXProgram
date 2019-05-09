@@ -9,17 +9,19 @@ public static class AssetTextureImporter {
     private static Texture2D m_alphaTestTexture = new Texture2D(1024, 1024, TextureFormat.BGRA32, false);
 
     public static void OnPreprocessTexture(string assetPath) {
-        //if (!assetPath.Contains("Atlas")) {
-        //    m_deleteTextureList.Add(assetPath);
-        //    return;
-        //}
+        bool isNotResourceTexture = !assetPath.Contains(EditorPathConfig.ResourcesPath);
+        if (!assetPath.Contains(EditorPathConfig.AtlasPath) && isNotResourceTexture) {
+            m_deleteTextureList.Add(assetPath);
+            return;
+        }
         TextureImporter import = AssetImporter.GetAtPath(assetPath) as TextureImporter;
         import.mipmapEnabled = false;
-        SetAssetBundleName(import, assetPath);
         bool isAlpha = CheckTextureAlpha(assetPath);
         SetAndroidTextureFormat(import, isAlpha);
         SetiOSTextureFormat(import, isAlpha);
         SetWindowsTextureFormat(import, isAlpha);
+        if (isNotResourceTexture)
+            SetAssetBundleName(import, assetPath);
     }
 
     private static void SetAssetBundleName(TextureImporter import, string assetPath) {
@@ -87,15 +89,13 @@ public static class AssetTextureImporter {
     }
 
     public static void OnPostprocessAllAssets() {
-        if (m_deleteTextureList.Count != 0)
-            m_deleteTextureList.Clear();
         if (m_deleteTextureList.Count == 0)
             return;
-        DebugTool.LogError("导入图片资源不在 Assets/Atlas/ 路径下");
+        DebugTool.LogError(string.Format("导入图片资源不在 {0} 路径下", EditorPathConfig.AtlasPath));
         foreach (string assetPath in m_deleteTextureList) {
             File.Delete(assetPath);
             // 手动删除 meta 文件, Unity 控制台强制刷新删除 meta 时会报错
-            string metaPath = string.Format("{0}.meta", Path.GetFileNameWithoutExtension(assetPath));
+            string metaPath = string.Format("{0}.meta", assetPath);
             File.Delete(metaPath);
         }
         m_deleteTextureList.Clear();
