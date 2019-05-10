@@ -10,8 +10,6 @@ public static class GameManager {
     }
 
     public static void StartGame(LogicScript startScript) {
-        if (startScript == null)
-            return;
         m_curLogicScript = startScript;
         GameObject.DontDestroyOnLoad(startScript.gameObject);
 
@@ -20,6 +18,6 @@ public static class GameManager {
 
     public static void UpdateGame() {
         //AsyncOperation operation = SceneManager.LoadSceneAsync("");
-        
+        EventManager.Dispatch(GameEvent.Type.FrameUpdate, Time.time);
     }
 }

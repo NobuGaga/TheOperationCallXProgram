@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1129130430
+CRC: 528186631
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1abf7a29bf2f321a9aeaf990faa6cf3d
+    Hash: 3bf55f5b171344d3de31820a1370606e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: fc139ebdf3ae23529382c77273a280c3
+    Hash: 5e3d7faa90ad3b0266687abd03cd6010
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -15,6 +15,10 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8cf3bf26fbbe20a478d2dadd1f9df3f8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8016f7dbdcbfb5f408cbc8df1db92c9d, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -24,6 +28,5 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/Editor/Asset/Prefabs/Moudle/Loading/UI/LoadingMainView1.prefab
 - Assets/Editor/Asset/Prefabs/Moudle/Loading/UI/LoadingMainView.prefab
 Dependencies: []

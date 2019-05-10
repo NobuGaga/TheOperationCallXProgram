@@ -12,22 +12,17 @@
     }
 
     protected override void Start() {
-        //DebugTool.Log("StartGame::Start");
+        DebugTool.Log("StartGame::Start");
         GameManager.StartGame(this);
     }
 
-    protected override void FixedUpdate() {
-        //DebugTool.Log("StartGame::FixedUpdate");
-    }
+    protected override void FixedUpdate() { }
 
     protected override void Update() {
-        //DebugTool.Log("StartGame::Update");
         GameManager.UpdateGame();
     }
 
-    protected override void LateUpdate() {
-        //DebugTool.Log("StartGame::LateUpdate");
-    }
+    protected override void LateUpdate() { }
 
     protected override void OnDisable() {
         DebugTool.Log("StartGame::OnDisable");

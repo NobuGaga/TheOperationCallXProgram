@@ -2,6 +2,9 @@
 using System;
 
 public class Loading:Controller {
+    private LoadingView m_loadingView;
+    private float m_startTime;
+
     protected override void InitModel() {
         m_data = new LoadingData();
     }
@@ -22,18 +25,24 @@ public class Loading:Controller {
     public void OpenMainView() {
         AssetBundleLoader.Load(GameManager.m_curLogicScript, "prefabs/moudle/loading/ui", "LoadingMainView",
             delegate (GameObject gameObj) {
-                GameObject gbGreenCubeCopy = UnityEngine.Object.Instantiate(gameObj) as GameObject;
-                gbGreenCubeCopy.transform.SetParent(GameManager.m_curLogicScript.gameObject.transform, false);
-                //gbGreenCubeCopy.transform.localScale = new Vector3(100, 100, 100);
-
-                //AssetBundleLoader.Load(GameManager.m_curLogicScript, "prefabs/moudle/loading/ui", "LoadingMainView1",
-                //    delegate (GameObject gameObj1) {
-                //        GameObject gbGreenCubeCopy1 = UnityEngine.Object.Instantiate(gameObj1) as GameObject;
-                //        gbGreenCubeCopy1.transform.SetParent(GameManager.m_curLogicScript.gameObject.transform, false);
-                //        //gbGreenCubeCopy1.transform.localScale = new Vector3(100, 100, 100);
-                //    }
-                //);
+                GameObject view = UnityEngine.Object.Instantiate(gameObj) as GameObject;
+                view.transform.SetParent(GameManager.m_curLogicScript.gameObject.transform, false);
+                m_loadingView = new LoadingView(view.GetComponent<UIView>());
+                EventManager.Register(GameEvent.Type.FrameUpdate, OnFrameUpdate);
+                m_startTime = Time.time;
             }
         );
+    }
+
+    public void OnFrameUpdate(object arg) {
+        float passTime = (float)arg - m_startTime;
+        if (passTime >= 1) {
+            m_loadingView.UpdateLoadingProcess(1);
+            EventManager.Unregister(GameEvent.Type.FrameUpdate, OnFrameUpdate);
+            m_startTime = Time.time;
+            EventManager.Register(GameEvent.Type.FrameUpdate, OnFrameUpdate);
+        }
+        else
+            m_loadingView.UpdateLoadingProcess(passTime);
     }
 }

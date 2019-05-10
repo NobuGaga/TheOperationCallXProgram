@@ -3,11 +3,7 @@ using System.Collections.Generic;
 
 public abstract class Controller :IDisposable {
     protected List<GameEvent.Type> m_eventList = new List<GameEvent.Type>();
-    public List<GameEvent.Type> EventList { 
-        get {
-            return m_eventList;
-        }
-    }
+    public List<GameEvent.Type> EventList => m_eventList;
 
     protected Model m_data;
     public Controller() {

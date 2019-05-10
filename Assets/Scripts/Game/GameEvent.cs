@@ -2,8 +2,9 @@
 
 public class GameEvent {
     public enum Type {
+        FrameUpdate,
+
         OpenMainView,
-        RefreshMainView,
     }
 
     private Dictionary<Type, System.Action> m_dicEventTrigger = new Dictionary<Type, System.Action>();
