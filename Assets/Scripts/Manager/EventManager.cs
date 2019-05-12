@@ -8,9 +8,8 @@ public static class EventManager {
     public static void Dispatch(GameEvent.Type eventType, object arg) {
         if (!m_dicSpecialEvent.ContainsKey(eventType) || m_dicSpecialEvent[eventType].Count == 0)
             return;
-        Action<object>[] listAction = m_dicSpecialEvent[eventType].ToArray();
-        foreach (Action<object> action in listAction)
-            action(arg);
+        for (int i = 0;  i < m_dicSpecialEvent[eventType].Count; i++)
+            m_dicSpecialEvent[eventType][i](arg);
     }
 
     public static void Register(GameEvent.Type eventType, Action<object> action) {
