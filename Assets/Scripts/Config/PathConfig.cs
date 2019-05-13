@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.IO;
 
 public static class PathConfig {
     public static readonly string AssetBundlePath =
@@ -24,4 +25,6 @@ public static class PathConfig {
             m_PersistentDataPath = string.Format("{0}/Documents", m_PersistentDataPath);
 #endif
     }
+
+    public static readonly string AssetBundleMoudlePath = Path.Combine(AssetBundlePath, "prefabs/moudle/");
 }

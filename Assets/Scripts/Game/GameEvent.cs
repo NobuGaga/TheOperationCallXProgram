@@ -2,8 +2,13 @@
 
 public class GameEvent {
     public enum Type {
+        // GameManager Event
+        ChangeScene,
+
+        // Moudle Whole Event(Every Moudle Only One Event)
         FrameUpdate,
 
+        // Moudle Sub Event
         OpenMainView,
     }
 

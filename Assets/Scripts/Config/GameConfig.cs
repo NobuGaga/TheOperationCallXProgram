@@ -3,6 +3,7 @@
 public static class GameConfig {
     private static bool m_isDebug = true;
     public static bool IsDebug => m_isDebug;
+    public static readonly int StartGameLoadTime = 3; // unit:second
 
     public static void Init() {
         // TODO

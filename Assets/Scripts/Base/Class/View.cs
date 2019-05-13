@@ -3,10 +3,16 @@ using System.Collections.Generic;
 
 public abstract class View {
     private UIView m_view;
+    private GameObject m_gameobject;
+    public GameObject Node => m_gameobject;
+    private Transform m_transform;
+    public Transform Trans => m_transform;
     private Dictionary<string, UIImage> m_dicImage;
 
     public View(UIView view) {
         m_view = view;
+        m_gameobject = view.gameObject;
+        m_transform = view.transform;
     }
 
     protected T GetNode<T>(string nodeName) where T:class {
@@ -24,5 +30,21 @@ public abstract class View {
 
     protected GameObject GetNode(string nodeName) {
         return m_view.GetNode(nodeName);
+    }
+
+    public void Show() {
+        m_gameobject.SetActive(true);
+    }
+
+    public void Hide() {
+        m_gameobject.SetActive(false);
+    }
+
+    ~View() {
+        m_view = null;
+        if (m_dicImage != null) {
+            m_dicImage.Clear();
+            m_dicImage = null;
+        }
     }
 }

@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{9B9DC8F7-6F15-951A-50C9-806266A5CF6D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -69,13 +68,15 @@
     <Compile Include="Assets\Scripts\Config\PathConfig.cs" />
     <Compile Include="Assets\Scripts\Game\Game.cs" />
     <Compile Include="Assets\Scripts\Game\GameEvent.cs" />
-    <Compile Include="Assets\Scripts\Game\GameMoudle.cs" />
+    <Compile Include="Assets\Scripts\Game\GameMoudleInfo.cs" />
+    <Compile Include="Assets\Scripts\Game\GameSceneInfo.cs" />
     <Compile Include="Assets\Scripts\Game\GameSetting.cs" />
     <Compile Include="Assets\Scripts\Manager\AssetBundle\AssetBundleLoader.cs" />
     <Compile Include="Assets\Scripts\Manager\AssetBundle\AssetBundleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ControllerManager.cs" />
     <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\ViewManager.cs" />
     <Compile Include="Assets\Scripts\Moudle\Loading\Loading.cs" />
     <Compile Include="Assets\Scripts\Moudle\Loading\LoadingData.cs" />
     <Compile Include="Assets\Scripts\Moudle\Loading\View\LoadingView.cs" />

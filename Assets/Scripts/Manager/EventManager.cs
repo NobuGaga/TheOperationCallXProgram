@@ -5,11 +5,30 @@ public static class EventManager {
     private static Dictionary<GameMoudle, GameEvent> m_dicMoudleEvent = new Dictionary<GameMoudle, GameEvent>();
     private static Dictionary<GameEvent.Type, List<Action<object>>> m_dicSpecialEvent = new Dictionary<GameEvent.Type, List<Action<object>>>();
 
+    public static void Dispatch(GameMoudle moudle, GameEvent.Type eventType) {
+        if (!m_dicMoudleEvent.ContainsKey(moudle))
+            Register(moudle);
+        m_dicMoudleEvent[moudle].Trigger(eventType);
+    }
+
     public static void Dispatch(GameEvent.Type eventType, object arg) {
+        switch (eventType) {
+            case GameEvent.Type.ChangeScene:
+                GameManager.ChangeScene((GameScene)arg);
+                return;
+        }
         if (!m_dicSpecialEvent.ContainsKey(eventType) || m_dicSpecialEvent[eventType].Count == 0)
             return;
         for (int i = 0;  i < m_dicSpecialEvent[eventType].Count; i++)
             m_dicSpecialEvent[eventType][i](arg);
+    }
+
+    private static void Register(GameMoudle moudle) {
+        Controller controller = ControllerManager.GetController(moudle);
+        GameEvent gameEvent = new GameEvent();
+        foreach (GameEvent.Type type in controller.EventList)
+            gameEvent.Add(type, controller.GetEvent(type));
+        m_dicMoudleEvent.Add(moudle, gameEvent);
     }
 
     public static void Register(GameEvent.Type eventType, Action<object> action) {
@@ -24,19 +43,5 @@ public static class EventManager {
         if (!m_dicSpecialEvent.ContainsKey(eventType) || !(m_dicSpecialEvent[eventType].Contains(action)))
             return;
         m_dicSpecialEvent[eventType].Remove(action);
-    }
-
-    public static void Dispatch(GameMoudle moudle, GameEvent.Type eventType) {
-        if (!m_dicMoudleEvent.ContainsKey(moudle))
-            Register(moudle);
-        m_dicMoudleEvent[moudle].Trigger(eventType);
-    }
-
-    private static void Register(GameMoudle moudle) {
-        Controller controller = ControllerManager.GetController(moudle);
-        GameEvent gameEvent = new GameEvent();
-        foreach (GameEvent.Type type in controller.EventList)
-            gameEvent.Add(type, controller.GetEvent(type));
-        m_dicMoudleEvent.Add(moudle, gameEvent);
     }
 }
