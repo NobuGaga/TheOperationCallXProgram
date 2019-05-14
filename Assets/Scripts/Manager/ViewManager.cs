@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 
 public static class ViewManager {
-    public static Transform RootNode => GameManager.LogicScript.gameObject.transform;
-
     private static Dictionary<string, GameViewInfo> m_dicViewNameInfo = new Dictionary<string, GameViewInfo>();
 
     public static void Init() {
         GameViewInfo info = new GameViewInfo(GameMoudle.Loading, GameView.MainView);
+        m_dicViewNameInfo.Add(info.Name, info);
+        info = new GameViewInfo(GameMoudle.Select, GameView.MainView);
         m_dicViewNameInfo.Add(info.Name, info);
     }
 
@@ -21,7 +21,10 @@ public static class ViewManager {
         AssetBundleManager.Load(viewInfo.AssetBundleName, viewInfo.Name,
             delegate (GameObject gameObj) {
                 GameObject view = UnityEngine.Object.Instantiate(gameObj) as GameObject;
-                view.transform.SetParent(RootNode, false);
+                GameObject parent = GameSceneManager.GetNode(viewInfo.ParentName);
+                if (parent == null)
+                    DebugTool.LogError(string.Format("view name : {0}, parent node name : {1} not exit", viewName, viewInfo.ParentName));
+                view.transform.SetParent(parent.transform, false);
                 callback(view);
             }
         );

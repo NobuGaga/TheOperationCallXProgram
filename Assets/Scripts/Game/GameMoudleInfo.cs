@@ -1,5 +1,8 @@
-﻿public enum GameMoudle {
+﻿using System.Collections.Generic;
+
+public enum GameMoudle {
     Loading,
+    Select,
 }
 
 public enum GameView {
@@ -16,6 +19,11 @@ public struct GameViewInfo {
     public string Name => name;
     public bool IsUI => isUI;
     public string AssetBundleName => assetBundleName;
+    public string ParentName {
+        get {
+            return GetParent(moudle, name);
+        }
+    }
 
     /// <summary>
     /// </summary>
@@ -42,14 +50,28 @@ public struct GameViewInfo {
         SetAssetBundleName();
     }
 
-    public static string GetViewName(GameMoudle moudle, GameView viewType) {
-        return string.Format("{0}{1}", moudle.ToString(), viewType.ToString());
-    }
-
     private void SetAssetBundleName() {
         if (isUI)
             assetBundleName = string.Format("{0}{1}/ui", PathConfig.AssetBundleMoudlePath, moudle.ToString().ToLower());
         else
             assetBundleName = string.Format("{0}{1}/{2}", PathConfig.AssetBundleMoudlePath, moudle.ToString().ToLower(), name.ToLower());
+    }
+
+    public static string GetViewName(GameMoudle moudle, GameView viewType) {
+        return string.Format("{0}{1}", moudle.ToString(), viewType.ToString());
+    }
+
+    private static Dictionary<string, string> m_dicViewParent = new Dictionary<string, string>();
+    private static string GetParent(GameMoudle moudle, string viewName) {
+        if (!m_dicViewParent.ContainsKey(viewName)) {
+            DebugTool.LogError(string.Format("GameViewInfo moudle:{0}, view:{1}, not extt parent", moudle.ToString(), viewName));
+            return string.Empty;
+        }
+        return m_dicViewParent[viewName];
+    }
+
+    static GameViewInfo() {
+        m_dicViewParent.Add(GetViewName(GameMoudle.Loading, GameView.MainView), "GameCamera");
+        m_dicViewParent.Add(GetViewName(GameMoudle.Select, GameView.MainView), "UICanvas");
     }
 }

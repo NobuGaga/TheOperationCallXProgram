@@ -1,5 +1,5 @@
 ﻿public class LoadingView:View {
-    public LoadingView(UIView view):base(view) {
+    public LoadingView(UIPrefab view):base(view) {
         GetNode<UIImage>("loadingProcess").FillAmountX = 0;
     }
 

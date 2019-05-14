@@ -1,7 +1,10 @@
 ManifestFileVersion: 0
-CRC: 1217699766
+CRC: 1657617591
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: assets/prefabs/moudle/loading/ui
+      Dependencies: {}
+    Info_1:
+      Name: assets/prefabs/moudle/select/ui
       Dependencies: {}

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class UIView: MonoBehaviour {
+public class UIPrefab: MonoBehaviour {
     [SerializeField]
     private GameObject[] m_useNode = null;
     private Dictionary<string, GameObject> m_dicUseNodeName;
@@ -29,7 +29,7 @@ public class UIView: MonoBehaviour {
         }
         if (m_dicUseNodeName.ContainsKey(nodeName))
             return m_dicUseNodeName[nodeName];
-        DebugTool.LogError(string.Format("{0} is not exit in view", nodeName));
+        DebugTool.LogError(string.Format("{0} is not exit in prefab", nodeName));
         return null;
     }
 }

@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System;
 
-public class Loading:Controller {
+public class CLoading:Controller {
     private LoadingView m_loadingView;
     private float m_startTime;
     private bool isLoadScene = false;
 
-    public Loading(GameMoudle moudle, Type modelType):base(moudle, modelType) { }
+    public CLoading(GameMoudle moudle, Type modelType):base(moudle, modelType) { }
 
     protected override void InitEvent() {
         m_eventList.Add(GameEvent.Type.OpenMainView);
@@ -25,7 +25,7 @@ public class Loading:Controller {
         if (m_loadingView == null)
             ViewManager.Open(GameViewInfo.GetViewName(GameMoudle.Loading, GameView.MainView), 
                 delegate (GameObject gameObject) {
-                    m_loadingView = new LoadingView(gameObject.GetComponent<UIView>());
+                    m_loadingView = new LoadingView(gameObject.GetComponent<UIPrefab>());
                     EventManager.Register(GameEvent.Type.FrameUpdate, OnStartGameFrameUpdate);
                     m_startTime = Time.time;
                 }
@@ -39,10 +39,9 @@ public class Loading:Controller {
     public void OnStartGameFrameUpdate(object arg) {
         float process;
         if (isLoadScene) {
-            float sceneProcess = GameManager.LoadSceneProcess;
+            float sceneProcess = GameSceneManager.LoadSceneProcess;
             if (sceneProcess < 0) {
                 EventManager.Unregister(GameEvent.Type.FrameUpdate, OnStartGameFrameUpdate);
-                DebugTool.LogError("Load Scene Error Current Scene : " + GameManager.CurScene.ToString());
                 return;
             }
             process = (GameConfig.StartGameLoadTime + sceneProcess - 1) / GameConfig.StartGameLoadTime;
@@ -66,10 +65,9 @@ public class Loading:Controller {
     }
 
     public void OnFrameUpdate(object arg) {
-        float process = GameManager.LoadSceneProcess;
+        float process = GameSceneManager.LoadSceneProcess;
         if (process < 0) {
             EventManager.Unregister(GameEvent.Type.FrameUpdate, OnFrameUpdate);
-            DebugTool.LogError("Load Scene Error Current Scene : " + GameManager.CurScene.ToString());
             return;
         }
         if (process >= 1) {

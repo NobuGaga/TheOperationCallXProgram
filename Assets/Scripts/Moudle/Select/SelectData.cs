@@ -1,4 +1,4 @@
-﻿public class LoadingData:Model {
+﻿public class SelectData : Model {
     public override void Init() {
 
     }

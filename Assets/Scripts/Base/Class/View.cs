@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 
 public abstract class View {
-    private UIView m_view;
+    private UIPrefab m_view;
     private GameObject m_gameobject;
     public GameObject Node => m_gameobject;
     private Transform m_transform;
     public Transform Trans => m_transform;
     private Dictionary<string, UIImage> m_dicImage;
 
-    public View(UIView view) {
+    public View(UIPrefab view) {
         m_view = view;
         m_gameobject = view.gameObject;
         m_transform = view.transform;

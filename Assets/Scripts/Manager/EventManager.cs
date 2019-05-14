@@ -14,7 +14,7 @@ public static class EventManager {
     public static void Dispatch(GameEvent.Type eventType, object arg) {
         switch (eventType) {
             case GameEvent.Type.ChangeScene:
-                GameManager.ChangeScene((GameScene)arg);
+                GameSceneManager.ChangeScene((GameScene)arg);
                 return;
         }
         if (!m_dicSpecialEvent.ContainsKey(eventType) || m_dicSpecialEvent[eventType].Count == 0)
