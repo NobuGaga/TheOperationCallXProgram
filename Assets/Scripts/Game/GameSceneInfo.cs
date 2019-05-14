@@ -4,6 +4,9 @@ using System.Collections.Generic;
 public enum GameScene {
     StartScene,
     SelectScene,
+    Forest,
+    Desert,
+    City,
 }
 
 public struct GameSceneInfo {

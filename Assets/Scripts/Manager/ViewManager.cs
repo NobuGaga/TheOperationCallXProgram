@@ -13,13 +13,9 @@ public static class ViewManager {
     }
 
     public static void Open(string viewName, Action<GameObject> callback) {
-        if (!m_dicViewNameInfo.ContainsKey(viewName)) {
-            DebugTool.LogError("ViewManager::Open not exit view : " + viewName);
-            return;
-        }
-        GameViewInfo viewInfo = m_dicViewNameInfo[viewName];
+        GameViewInfo viewInfo = GetViewInfo(viewName);
         AssetBundleManager.Load(viewInfo.AssetBundleName, viewInfo.Name,
-            delegate (GameObject gameObj) {
+            (GameObject gameObj) => {
                 GameObject view = UnityEngine.Object.Instantiate(gameObj) as GameObject;
                 GameObject parent = GameSceneManager.GetNode(viewInfo.ParentName);
                 if (parent == null)
@@ -28,5 +24,25 @@ public static class ViewManager {
                 callback(view);
             }
         );
+    }
+
+    public static void LoadItem(string viewName, string objName, Action<GameObject> callback) {
+        GameViewInfo viewInfo = GetViewInfo(viewName);
+        AssetBundleManager.Load(viewInfo.AssetBundleName, objName, callback);
+    }
+
+    private static GameViewInfo GetViewInfo(string viewName) {
+        if (!m_dicViewNameInfo.ContainsKey(viewName)) {
+            DebugTool.LogError("ViewManager::Open not exit view : " + viewName);
+            return default;
+        }
+        return m_dicViewNameInfo[viewName];
+    }
+
+    public static GameViewInfo GetViewInfo(GameMoudle moudle, GameView view) {
+        string name = GameViewInfo.GetViewName(moudle, view);
+        if (m_dicViewNameInfo.ContainsKey(name))
+            return m_dicViewNameInfo[name];
+        return default;
     }
 }

@@ -1,5 +1,5 @@
 ﻿public class LoadingView:View {
-    public LoadingView(UIPrefab view):base(view) {
+    public LoadingView(GameMoudle moudle, GameView view, UIPrefab prefab):base(moudle, view, prefab) {
         GetNode<UIImage>("loadingProcess").FillAmountX = 0;
     }
 

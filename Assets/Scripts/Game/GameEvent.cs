@@ -10,6 +10,7 @@ public class GameEvent {
 
         // Moudle Sub Event
         OpenMainView,
+        CloseMainView,
     }
 
     private Dictionary<Type, System.Action> m_dicEventTrigger = new Dictionary<Type, System.Action>();
@@ -30,5 +31,9 @@ public class GameEvent {
             return;
         }
         m_dicEventTrigger[eventType]();
+    }
+
+    ~GameEvent() {
+        m_dicEventTrigger.Clear();
     }
 }

@@ -1,4 +1,6 @@
-﻿public class Game:LogicScript {
+﻿using UnityEngine;
+
+public class Game:LogicScript {
     protected override void Reset() {
         DebugTool.Log("StartGame::Reset");
     }

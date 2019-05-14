@@ -60,7 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\Script\CSharp\AssetBundle\AssetBundleEditorManager.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\AssetBundle\AssetBundlePacker.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\EditorConst.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\EditorMenu.cs" />

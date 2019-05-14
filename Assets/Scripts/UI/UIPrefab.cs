@@ -32,4 +32,11 @@ public class UIPrefab: MonoBehaviour {
         DebugTool.LogError(string.Format("{0} is not exit in prefab", nodeName));
         return null;
     }
+
+    ~UIPrefab() {
+        m_dicUseNodeName.Clear();
+        if (m_useNode != null)
+            for (int i = 0; i < m_useNode.Length; i++)
+                m_useNode[i] = null;
+    }
 }

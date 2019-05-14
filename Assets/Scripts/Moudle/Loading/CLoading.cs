@@ -10,27 +10,31 @@ public class CLoading:Controller {
 
     protected override void InitEvent() {
         m_eventList.Add(GameEvent.Type.OpenMainView);
+        m_eventList.Add(GameEvent.Type.CloseMainView);
     }
 
     public override Action GetEvent(GameEvent.Type eventType) {
         switch (eventType) {
             case GameEvent.Type.OpenMainView:
                 return OpenMainView;
+            case GameEvent.Type.CloseMainView:
+                return CloseMainView;
             default:
                 return null;
         }
     }
 
     public void OpenMainView() {
-        if (m_loadingView == null)
-            ViewManager.Open(GameViewInfo.GetViewName(GameMoudle.Loading, GameView.MainView), 
-                delegate (GameObject gameObject) {
-                    m_loadingView = new LoadingView(gameObject.GetComponent<UIPrefab>());
+        if (m_loadingView == null) {
+            GameView viewType = GameView.MainView;
+            ViewManager.Open(GameViewInfo.GetViewName(Moudle, viewType), 
+                (GameObject gameObject) => {
+                    m_loadingView = new LoadingView(Moudle, viewType, gameObject.GetComponent<UIPrefab>());
                     EventManager.Register(GameEvent.Type.FrameUpdate, OnStartGameFrameUpdate);
                     m_startTime = Time.time;
                 }
             );
-        else {
+        } else {
             m_loadingView.Show();
             EventManager.Register(GameEvent.Type.FrameUpdate, OnFrameUpdate);
         }
@@ -58,7 +62,7 @@ public class CLoading:Controller {
         if (process >= 1) {
             m_loadingView.UpdateLoadingProcess(1);
             EventManager.Unregister(GameEvent.Type.FrameUpdate, OnStartGameFrameUpdate);
-            CloseMainView();
+            EventManager.Dispatch(GameMoudle.Loading, GameEvent.Type.CloseMainView);
         }
         else
             m_loadingView.UpdateLoadingProcess(process);
@@ -73,7 +77,7 @@ public class CLoading:Controller {
         if (process >= 1) {
             m_loadingView.UpdateLoadingProcess(1);
             EventManager.Unregister(GameEvent.Type.FrameUpdate, OnFrameUpdate);
-            CloseMainView();
+            EventManager.Dispatch(GameMoudle.Loading, GameEvent.Type.CloseMainView);
         }
         else
             m_loadingView.UpdateLoadingProcess(process);
@@ -81,5 +85,9 @@ public class CLoading:Controller {
 
     public void CloseMainView() {
         m_loadingView.Hide();
+    }
+
+    ~CLoading() {
+        m_loadingView = null;
     }
 }

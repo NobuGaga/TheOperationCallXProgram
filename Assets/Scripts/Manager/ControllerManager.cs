@@ -4,8 +4,8 @@ public static class ControllerManager {
     private static Dictionary<GameMoudle, Controller> m_dicMoudleController = new Dictionary<GameMoudle, Controller>();
 
     public static void Init() {
-        m_dicMoudleController.Add(GameMoudle.Loading, new CLoading(GameMoudle.Loading, typeof(LoadingData)));
-        m_dicMoudleController.Add(GameMoudle.Select, new CSelect(GameMoudle.Select, typeof(SelectData)));
+        m_dicMoudleController.Add(GameMoudle.Loading, new CLoading(GameMoudle.Loading, typeof(MLoadingData)));
+        m_dicMoudleController.Add(GameMoudle.Select, new CSelect(GameMoudle.Select, typeof(MSelectData)));
     }
 
     public static Controller GetController(GameMoudle moudle) {

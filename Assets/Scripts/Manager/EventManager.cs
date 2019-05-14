@@ -9,6 +9,8 @@ public static class EventManager {
         if (!m_dicMoudleEvent.ContainsKey(moudle))
             Register(moudle);
         m_dicMoudleEvent[moudle].Trigger(eventType);
+        if (eventType == GameEvent.Type.CloseMainView)
+            AssetBundleManager.Clean();
     }
 
     public static void Dispatch(GameEvent.Type eventType, object arg) {

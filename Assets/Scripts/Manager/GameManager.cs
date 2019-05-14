@@ -8,6 +8,7 @@ public static class GameManager {
         GameSetting.Init();
         GameSceneManager.Init();
         ControllerManager.Init();
+        // before AssetBundleManager.Init
         ViewManager.Init();
     }
 

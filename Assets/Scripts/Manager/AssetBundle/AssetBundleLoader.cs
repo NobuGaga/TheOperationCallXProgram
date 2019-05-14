@@ -8,7 +8,15 @@ public static class AssetBundleLoader {
     }
 
     public static void Load<T>(MonoBehaviour behaviour, string path, string objName, System.Action<T> callback) where T:Object {
-        behaviour.StartCoroutine(Load(path, objName, callback));
+        behaviour.StartCoroutine(Load(path, 
+            (AssetBundle assetbundle) => {
+                behaviour.StartCoroutine(Load(assetbundle, objName, callback));
+            })
+        );
+    }
+
+    public static void Load<T>(MonoBehaviour behaviour, AssetBundle assetbundle, string objName, System.Action<T> callback) where T:Object {
+        behaviour.StartCoroutine(Load(assetbundle, objName, callback));
     }
 
     private static IEnumerator Load(string path, System.Action<AssetBundle> callback) {
@@ -22,9 +30,8 @@ public static class AssetBundleLoader {
         callback(assetbundle);
     }
 
-    private static IEnumerator Load<T>(string path, string objName, System.Action<T> callback) where T:Object {
+    private static IEnumerator Load<T>(AssetBundle assetbundle, string objName, System.Action<T> callback) where T:Object {
         Object obj = assetbundle.LoadAsset<T>(objName);
-        assetbundle.Unload(false);
         if (obj == null) {
             DebugTool.LogError(string.Format("assetbundle load asset error, object name {0}", objName));
             yield break;
