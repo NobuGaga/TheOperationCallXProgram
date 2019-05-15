@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Moudle\Select\CSelect.cs" />
     <Compile Include="Assets\Scripts\Moudle\Select\MSelectData.cs" />
     <Compile Include="Assets\Scripts\Moudle\Select\View\SelectView.cs" />
+    <Compile Include="Assets\Scripts\Tool\CsvTool.cs" />
     <Compile Include="Assets\Scripts\Tool\DebugTool.cs" />
     <Compile Include="Assets\Scripts\Tool\StringTool.cs" />
     <Compile Include="Assets\Scripts\UI\UIImage.cs" />

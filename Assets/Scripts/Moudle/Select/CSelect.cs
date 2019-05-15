@@ -8,24 +8,33 @@ public class CSelect:Controller {
 
     protected override void InitEvent() {
         m_eventList.Add(GameEvent.Type.OpenMainView);
+        m_eventList.Add(GameEvent.Type.Click);
     }
 
-    public override Action GetEvent(GameEvent.Type eventType) {
+    public override Action<object> GetEvent(GameEvent.Type eventType) {
         switch (eventType) {
             case GameEvent.Type.OpenMainView:
                 return OpenMainView;
+            case GameEvent.Type.Click:
+                return ClickEvent;
             default:
                 return null;
         }
     }
 
-    public void OpenMainView() {
+    public void OpenMainView(object arg = null) {
         GameView viewType = GameView.MainView;
         ViewManager.Open(GameViewInfo.GetViewName(Moudle, GameView.MainView), 
-            (GameObject gameObject) =>
-                m_selectView = new SelectView(GetModel<MSelectData>().SceneCount,
-                                                Moudle, viewType, gameObject.GetComponent<UIPrefab>())
-        );
+            (GameObject gameObject) => {
+                m_selectView = new SelectView(Moudle, viewType, gameObject.GetComponent<UIPrefab>());
+                m_selectView.ShowSelectScene(GetModel<MSelectData>().Scenes);
+            }
+       );
+    }
+
+    public void ClickEvent(object arg) {
+        if (arg is int)
+            EventManager.Dispatch(GameEvent.Type.ChangeScene, GetModel<MSelectData>().GetScene((int)arg));
     }
 
     ~CSelect() {

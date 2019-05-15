@@ -1,16 +1,21 @@
 ﻿using System.Collections.Generic;
 
 public class MSelectData : Model {
-    public int SceneCount => dicSceneIndex.Count;
-    Dictionary<int, GameScene> dicSceneIndex = new Dictionary<int, GameScene>() {
+    private readonly Dictionary<int, GameScene> m_dicSceneIndex = new Dictionary<int, GameScene>() {
         {1, GameScene.Forest},
         {2, GameScene.Desert},
         {3, GameScene.City}
     };
+    public Dictionary<int, GameScene> Scenes => m_dicSceneIndex;
 
     public override void Init() {
-        
+           
+    }
 
+    public GameScene GetScene(int index) {
+        if (m_dicSceneIndex.ContainsKey(index))
+            return m_dicSceneIndex[index];
+        return GameScene.StartScene;
     }
 
     public override void Dispose() {

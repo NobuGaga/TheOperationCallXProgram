@@ -17,7 +17,7 @@ public abstract class Controller :IDisposable {
         InitEvent();
     }
     protected abstract void InitEvent();
-    public abstract Action GetEvent(GameEvent.Type eventType);
+    public abstract Action<object> GetEvent(GameEvent.Type eventType);
 
     protected T GetModel<T>() where T:Model {
         return m_data as T;

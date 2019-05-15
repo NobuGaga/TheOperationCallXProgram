@@ -5,10 +5,10 @@ public static class EventManager {
     private static Dictionary<GameMoudle, GameEvent> m_dicMoudleEvent = new Dictionary<GameMoudle, GameEvent>();
     private static Dictionary<GameEvent.Type, List<Action<object>>> m_dicSpecialEvent = new Dictionary<GameEvent.Type, List<Action<object>>>();
 
-    public static void Dispatch(GameMoudle moudle, GameEvent.Type eventType) {
+    public static void Dispatch(GameMoudle moudle, GameEvent.Type eventType, object arg = null) {
         if (!m_dicMoudleEvent.ContainsKey(moudle))
             Register(moudle);
-        m_dicMoudleEvent[moudle].Trigger(eventType);
+        m_dicMoudleEvent[moudle].Trigger(eventType, arg);
         if (eventType == GameEvent.Type.CloseMainView)
             AssetBundleManager.Clean();
     }

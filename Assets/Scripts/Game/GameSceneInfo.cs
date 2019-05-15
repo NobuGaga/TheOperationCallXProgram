@@ -50,4 +50,15 @@ public struct GameSceneInfo {
             return dicNameNode[nodeName];
         return null;
     }
+
+    private static readonly Dictionary<GameScene, string> m_dicSceneName = new Dictionary<GameScene, string>() {
+        { GameScene.Forest, "森林" },
+        { GameScene.Desert, "沙漠" },
+        { GameScene.City,   "城市" }
+    };
+    public static string GetName(GameScene scene) {
+        if (m_dicSceneName.ContainsKey(scene))
+            return m_dicSceneName[scene];
+        return string.Empty;
+    }
 }

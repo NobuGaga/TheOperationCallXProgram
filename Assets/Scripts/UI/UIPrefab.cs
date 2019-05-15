@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class UIPrefab: MonoBehaviour {
@@ -10,9 +11,14 @@ public class UIPrefab: MonoBehaviour {
         if (m_useNode == null)
             return;
         m_dicUseNodeName = new Dictionary<string, GameObject>();
-        foreach (GameObject gameObject in m_useNode)
-            if (gameObject)
-                m_dicUseNodeName.Add(gameObject.name, gameObject);
+        foreach (GameObject gameObj in m_useNode) {
+            if (gameObj == null)
+                continue;
+            string nodeName = gameObj.name;
+            m_dicUseNodeName.Add(nodeName, gameObj);
+            if (nodeName.Contains("text"))
+                gameObj.GetComponent<Text>().text = string.Empty;
+        }
     }
 
     public T GetNode<T>(string nodeName) {

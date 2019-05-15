@@ -2,25 +2,24 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class SelectView:View {
-    public SelectView(int sceneCount, GameMoudle moudle, GameView view, UIPrefab prefab):base(moudle, view, prefab)  {
-        Transform parent = GetNode<Transform>("selectSceneContent");
+public class SelectView : View {
+    public SelectView(GameMoudle moudle, GameView view, UIPrefab prefab) : base(moudle, view, prefab) { }
+
+    public void ShowSelectScene(Dictionary<int, GameScene> dicScene) {
         string itemName = "SelectSceneItem";
+        Transform parent = GetNode<Transform>("selectSceneContent");
+        int sceneCount = dicScene.Count;
         LoadItem(itemName, parent, sceneCount, () => {
-            
             for (int index = 0; index < sceneCount; index++) {
                 UIPrefab itemPrefab = GetItem(itemName, index);
-                itemPrefab.GetNode<Text>("textScene").text = string.Format("关卡 {0}", index + 1);
+                int indexCopy = index + 1;
+                itemPrefab.GetNode<Text>("textScene").text = GameSceneInfo.GetName(dicScene[indexCopy]);
+                itemPrefab.GetNode<Text>("textBtnOpen").text = CsvTool.Text("common_open");
                 itemPrefab.GetNode<Button>("btnOpenScene").onClick.AddListener(
-                    () => {
-                        OnClickOpenScene(index);
-                    }
+                    () =>
+                        EventManager.Dispatch(GameMoudle.Select, GameEvent.Type.Click, indexCopy)
                 );
             }
         });
-    }
-
-    private void OnClickOpenScene(int index) {
-        DebugTool.Log("OnClickOpenScene " + index);
     }
 }

@@ -13,7 +13,7 @@ public class CLoading:Controller {
         m_eventList.Add(GameEvent.Type.CloseMainView);
     }
 
-    public override Action GetEvent(GameEvent.Type eventType) {
+    public override Action<object> GetEvent(GameEvent.Type eventType) {
         switch (eventType) {
             case GameEvent.Type.OpenMainView:
                 return OpenMainView;
@@ -24,7 +24,7 @@ public class CLoading:Controller {
         }
     }
 
-    public void OpenMainView() {
+    public void OpenMainView(object arg = null) {
         if (m_loadingView == null) {
             GameView viewType = GameView.MainView;
             ViewManager.Open(GameViewInfo.GetViewName(Moudle, viewType), 
@@ -83,7 +83,7 @@ public class CLoading:Controller {
             m_loadingView.UpdateLoadingProcess(process);
     }
 
-    public void CloseMainView() {
+    public void CloseMainView(object arg = null) {
         m_loadingView.Hide();
     }
 
