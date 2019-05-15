@@ -5,8 +5,6 @@ public enum GameScene {
     StartScene,
     SelectScene,
     Forest,
-    Desert,
-    City,
 }
 
 public struct GameSceneInfo {
@@ -52,9 +50,7 @@ public struct GameSceneInfo {
     }
 
     private static readonly Dictionary<GameScene, string> m_dicSceneName = new Dictionary<GameScene, string>() {
-        { GameScene.Forest, "森林" },
-        { GameScene.Desert, "沙漠" },
-        { GameScene.City,   "城市" }
+        { GameScene.Forest, "森林" }
     };
     public static string GetName(GameScene scene) {
         if (m_dicSceneName.ContainsKey(scene))

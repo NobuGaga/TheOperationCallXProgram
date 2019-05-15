@@ -24,7 +24,7 @@ public class CLoading:Controller {
         }
     }
 
-    public void OpenMainView(object arg = null) {
+    public void OpenMainView(object arg) {
         if (m_loadingView == null) {
             GameView viewType = GameView.MainView;
             ViewManager.Open(GameViewInfo.GetViewName(Moudle, viewType), 
@@ -83,7 +83,7 @@ public class CLoading:Controller {
             m_loadingView.UpdateLoadingProcess(process);
     }
 
-    public void CloseMainView(object arg = null) {
+    public void CloseMainView(object arg) {
         m_loadingView.Hide();
     }
 

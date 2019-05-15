@@ -9,6 +9,7 @@ public class CSelect:Controller {
     protected override void InitEvent() {
         m_eventList.Add(GameEvent.Type.OpenMainView);
         m_eventList.Add(GameEvent.Type.Click);
+        m_eventList.Add(GameEvent.Type.CloseMainView);
     }
 
     public override Action<object> GetEvent(GameEvent.Type eventType) {
@@ -17,12 +18,14 @@ public class CSelect:Controller {
                 return OpenMainView;
             case GameEvent.Type.Click:
                 return ClickEvent;
+            case GameEvent.Type.CloseMainView:
+                return CloseMainView;
             default:
                 return null;
         }
     }
 
-    public void OpenMainView(object arg = null) {
+    public void OpenMainView(object arg) {
         GameView viewType = GameView.MainView;
         ViewManager.Open(GameViewInfo.GetViewName(Moudle, GameView.MainView), 
             (GameObject gameObject) => {
@@ -33,8 +36,14 @@ public class CSelect:Controller {
     }
 
     public void ClickEvent(object arg) {
-        if (arg is int)
+        if (arg is int) {
             EventManager.Dispatch(GameEvent.Type.ChangeScene, GetModel<MSelectData>().GetScene((int)arg));
+            EventManager.Dispatch(GameMoudle.Select, GameEvent.Type.CloseMainView);
+        }
+    }
+
+    public void CloseMainView(object arg) {
+        m_selectView = null;
     }
 
     ~CSelect() {

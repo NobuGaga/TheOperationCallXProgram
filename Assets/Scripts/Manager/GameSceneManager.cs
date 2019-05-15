@@ -43,6 +43,8 @@ public static class GameSceneManager {
     }
 
     public static void ChangeScene(GameScene scene) {
+        if (m_curScene != GameScene.StartScene)
+            EventManager.Dispatch(GameMoudle.Loading, GameEvent.Type.OpenMainView);
         m_asyncOperation = SceneManager.LoadSceneAsync(scene.ToString());
         m_asyncOperation.completed += (m_asyncOperation) => {
             m_curScene = scene;
