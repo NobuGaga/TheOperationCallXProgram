@@ -2,7 +2,8 @@
 
 public class MSelectData : Model {
     private readonly Dictionary<int, GameScene> m_dicSceneIndex = new Dictionary<int, GameScene>() {
-        {1, GameScene.Forest}
+        { 1, GameScene.Blade_Warrior_Demo },
+        { 2, GameScene.DesertScene },
     };
     public Dictionary<int, GameScene> Scenes => m_dicSceneIndex;
 

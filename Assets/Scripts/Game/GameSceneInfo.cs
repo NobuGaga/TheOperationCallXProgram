@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public enum GameScene {
     StartScene,
     SelectScene,
-    Forest,
+    Blade_Warrior_Demo,
+    DesertScene,
 }
 
 public struct GameSceneInfo {
@@ -50,7 +51,8 @@ public struct GameSceneInfo {
     }
 
     private static readonly Dictionary<GameScene, string> m_dicSceneName = new Dictionary<GameScene, string>() {
-        { GameScene.Forest, "森林" }
+        { GameScene.Blade_Warrior_Demo, "3D模型Demo" },
+        { GameScene.DesertScene,        "沙漠"       },
     };
     public static string GetName(GameScene scene) {
         if (m_dicSceneName.ContainsKey(scene))

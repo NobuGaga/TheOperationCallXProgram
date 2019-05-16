@@ -30,16 +30,20 @@ public static class GameSceneManager {
             m_dicSceneInfo.Add(scene, new GameSceneInfo(scene, nodes));
     }
 
-    public static GameObject GetNode(string nodeName = null) {
-        switch (m_curScene) {
-            case GameScene.StartScene:
-                return GameManager.LogicScript.gameObject;
-        }
+    public static GameObject GetNode(string nodeName) {
+        if (m_curScene == GameScene.StartScene || IsCacheMoudle(nodeName))
+            return GameManager.LogicScript.gameObject;
         if (!m_dicSceneInfo.ContainsKey(m_curScene))
             return null;
         if (nodeName == null)
             return m_dicSceneInfo[m_curScene].DefaultNode;
         return m_dicSceneInfo[m_curScene].GetNode(nodeName);
+    }
+    
+    private static bool IsCacheMoudle(string nodeName) {
+        if (nodeName == GameViewInfo.GetViewName(GameMoudle.Loading, GameView.MainView))
+            return true;
+        return false;
     }
 
     public static void ChangeScene(GameScene scene) {
