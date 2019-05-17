@@ -34,17 +34,15 @@ public static class ViewManager {
     }
 
     private static GameViewInfo GetViewInfo(string viewName) {
-        if (!dicViewNameInfo.ContainsKey(viewName)) {
+        if (!dicViewNameInfo.ContainsKey(viewName))
             DebugTool.LogError("ViewManager::Open not exit view : " + viewName);
-            return default;
-        }
         return dicViewNameInfo[viewName];
     }
 
     public static GameViewInfo GetViewInfo(GameMoudle moudle, GameView view) {
         string name = GameViewInfo.GetViewName(moudle, view);
-        if (dicViewNameInfo.ContainsKey(name))
-            return dicViewNameInfo[name];
-        return default;
+        if (!dicViewNameInfo.ContainsKey(name))
+            DebugTool.LogError("ViewManager::view info is not exit view name\t" + name);
+        return dicViewNameInfo[name];
     }
 }

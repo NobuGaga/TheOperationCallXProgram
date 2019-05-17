@@ -23,9 +23,9 @@ public class UIPrefab:MonoBehaviour {
 
     public T GetNode<T>(string nodeName) {
         GameObject go = GetNode(nodeName);
-        if (go)
-            return go.GetComponent<T>();
-        return default;
+        if (go == null)
+            DebugTool.LogError(string.Format("{0} is not exit in prefab", nodeName));
+        return go.GetComponent<T>();
     }
 
     public GameObject GetNode(string nodeName) {
