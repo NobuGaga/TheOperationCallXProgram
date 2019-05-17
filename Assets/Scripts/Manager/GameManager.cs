@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 public static class GameManager {
-    public static LogicScript m_logicScript;
-    public static LogicScript LogicScript => m_logicScript;
+    public static LogicScript logicScript;
+    public static LogicScript LogicScript => logicScript;
 
     static GameManager() {
         GameSetting.Init();
@@ -12,13 +12,17 @@ public static class GameManager {
         ViewManager.Init();
     }
 
-    public static void StartGame(LogicScript startScript) {
-        m_logicScript = startScript;
+    public static void Start(LogicScript startScript) {
+        logicScript = startScript;
         GameObject.DontDestroyOnLoad(startScript.gameObject);
         AssetBundleManager.Init(() => EventManager.Dispatch(GameMoudle.Loading, GameEvent.Type.OpenMainView));
     }
 
-    public static void UpdateGame() {
+    public static void FrameUpdate() {
         EventManager.Dispatch(GameEvent.Type.FrameUpdate, Time.time);
+    }
+
+    public static void PhysicsUpdate() {
+
     }
 }

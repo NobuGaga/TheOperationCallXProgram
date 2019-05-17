@@ -11,6 +11,7 @@ public enum GameScene {
 public struct GameSceneInfo {
     public GameScene scene;
     private Dictionary<string, GameObject> dicNameNode;
+    public Dictionary<string, GameObject> AllNameNode => dicNameNode;
     private string defaultNodeName;
     public GameObject DefaultNode {
         get {

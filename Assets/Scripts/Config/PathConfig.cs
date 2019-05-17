@@ -25,16 +25,16 @@ public static class PathConfig {
     /// <summary>
     /// 本地缓存文件路径
     /// </summary>
-    public static string PersistentDataPath => m_persistentDataPath;
-    private static readonly string m_persistentDataPath;
+    public static string PersistentDataPath => persistentDataPath;
+    private static readonly string persistentDataPath;
 
     // 第一次访问成员或者静态方法时调用静态构造
     static PathConfig() {
-        m_persistentDataPath = Application.persistentDataPath.Replace("\\", "/");
+        persistentDataPath = Application.persistentDataPath.Replace("\\", "/");
 #if UNITY_IPHONE
-        DebugTool.Log(string.Format("ios m_persistentDataPath {0}", m_persistentDataPath));
-        if (!m_persistentDataPath.EndsWith("Documents"))
-            m_persistentDataPath = Path.Combine(m_persistentDataPath, "Documents");
+        DebugTool.Log(string.Format("ios persistentDataPath {0}", persistentDataPath));
+        if (!persistentDataPath.EndsWith("Documents"))
+            persistentDataPath = Path.Combine(persistentDataPath, "Documents");
 #endif
     }
 }

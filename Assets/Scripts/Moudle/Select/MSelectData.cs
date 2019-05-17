@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class MSelectData : Model {
+public class MSelectData:Model {
     private readonly Dictionary<int, GameScene> m_dicSceneIndex = new Dictionary<int, GameScene>() {
         { 1, GameScene.Blade_Warrior_Demo },
         { 2, GameScene.DesertScene },

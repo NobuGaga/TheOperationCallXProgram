@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
 public static class GameConfig {
-    private static bool m_isDebug = true;
-    public static bool IsDebug => m_isDebug;
+    private static bool isDebug = true;
+    public static bool IsDebug => isDebug;
     public static readonly int StartGameLoadTime = 3; // unit:second
+    public static readonly GameCameraType CameraType = GameCameraType.Fix;
 
     public static void Init() {
         // TODO
@@ -18,4 +19,13 @@ public static class GameConfig {
         Screen.fullScreen = false;
 #endif
     }
+}
+
+public enum GameCameraType {
+    // 固定视角
+    Fix,
+    // 第一人称
+    FirstPerson,
+    // 第三人称
+    ThirdPerson,
 }

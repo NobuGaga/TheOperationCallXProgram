@@ -2,12 +2,12 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UIPrefab: MonoBehaviour {
+public class UIPrefab:MonoBehaviour {
     [SerializeField]
     private GameObject[] m_useNode = null;
     private Dictionary<string, GameObject> m_dicUseNodeName;
 
-    private void Awake() {
+    protected virtual void Awake() {
         if (m_useNode == null)
             return;
         m_dicUseNodeName = new Dictionary<string, GameObject>();

@@ -3,6 +3,8 @@
 public enum GameMoudle {
     Loading,
     Select,
+    VirtualButton,
+    Player,
 }
 
 public enum GameView {
@@ -61,17 +63,18 @@ public struct GameViewInfo {
         return string.Format("{0}{1}", moudle.ToString(), viewType.ToString());
     }
 
-    private static Dictionary<string, string> m_dicViewParent = new Dictionary<string, string>();
+    private static Dictionary<string, string> dicViewParent = new Dictionary<string, string>();
     private static string GetParent(GameMoudle moudle, string viewName) {
-        if (!m_dicViewParent.ContainsKey(viewName)) {
+        if (!dicViewParent.ContainsKey(viewName)) {
             DebugTool.LogError(string.Format("GameViewInfo moudle:{0}, view:{1}, not extt parent", moudle.ToString(), viewName));
             return string.Empty;
         }
-        return m_dicViewParent[viewName];
+        return dicViewParent[viewName];
     }
 
     static GameViewInfo() {
-        m_dicViewParent.Add(GetViewName(GameMoudle.Loading, GameView.MainView), "GameCamera");
-        m_dicViewParent.Add(GetViewName(GameMoudle.Select, GameView.MainView), "UICanvas");
+        dicViewParent.Add(GetViewName(GameMoudle.Loading, GameView.MainView), GameConst.GameCamera);
+        dicViewParent.Add(GetViewName(GameMoudle.Select, GameView.MainView), "UICanvas");
+        dicViewParent.Add(GetViewName(GameMoudle.VirtualButton, GameView.MainView), GameConst.GameCamera);
     }
 }

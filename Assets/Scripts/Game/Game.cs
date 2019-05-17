@@ -1,36 +1,36 @@
-﻿using UnityEngine;
-
-public class Game:LogicScript {
+﻿public class Game:LogicScript {
     protected override void Reset() {
-        DebugTool.Log("StartGame::Reset");
+        DebugTool.Log("Game::Reset");
     }
 
     protected override void Awake() {
-        DebugTool.Log("StartGame::Awake");
+        DebugTool.Log("Game::Awake");
     }
 
     protected override void OnEnable() {
-        DebugTool.Log("StartGame::OnEnable");
+        DebugTool.Log("Game::OnEnable");
     }
 
     protected override void Start() {
-        DebugTool.Log("StartGame::Start");
-        GameManager.StartGame(this);
+        DebugTool.Log("Game::Start");
+        GameManager.Start(this);
     }
 
-    protected override void FixedUpdate() { }
+    protected override void FixedUpdate() {
+        GameManager.PhysicsUpdate();
+    }
 
     protected override void Update() {
-        GameManager.UpdateGame();
+        GameManager.FrameUpdate();
     }
 
     protected override void LateUpdate() { }
 
     protected override void OnDisable() {
-        DebugTool.Log("StartGame::OnDisable");
+        DebugTool.Log("Game::OnDisable");
     }
 
     protected override void OnDestroy() {
-        DebugTool.Log("StartGame::OnDestroy");
+        DebugTool.Log("Game::OnDestroy");
     }
 }

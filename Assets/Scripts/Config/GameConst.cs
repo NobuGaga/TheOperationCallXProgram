@@ -11,4 +11,7 @@
 #else
     string.Empty;
 #endif
+
+    public static readonly string GameCamera = "GameCamera";
+    public static readonly string PlayerCamera = "PlayerCamera";
 }

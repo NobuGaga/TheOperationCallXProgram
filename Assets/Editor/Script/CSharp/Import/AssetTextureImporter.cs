@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 public static class AssetTextureImporter {
-    private static List<string> m_deleteTextureList = new List<string>();
-    private static Texture2D m_alphaTestTexture = new Texture2D(1024, 1024, TextureFormat.BGRA32, false);
+    private static List<string> deleteTextureList = new List<string>();
+    private static Texture2D alphaTestTexture = new Texture2D(1024, 1024, TextureFormat.BGRA32, false);
 
     public static void OnPreprocessTexture(string assetPath) {
         bool isNotResourceTexture = !assetPath.Contains(EditorPathConfig.ResourcesPath);
         if (!assetPath.Contains(EditorPathConfig.AtlasPath) && isNotResourceTexture) {
-            m_deleteTextureList.Add(assetPath);
+            deleteTextureList.Add(assetPath);
             return;
         }
         TextureImporter import = AssetImporter.GetAtPath(assetPath) as TextureImporter;
@@ -36,8 +36,8 @@ public static class AssetTextureImporter {
     }
 
     private static bool CheckTextureAlpha(string assetPath) {
-        m_alphaTestTexture.LoadImage(File.ReadAllBytes(assetPath));
-        foreach (Color rgba in m_alphaTestTexture.GetPixels())
+        alphaTestTexture.LoadImage(File.ReadAllBytes(assetPath));
+        foreach (Color rgba in alphaTestTexture.GetPixels())
             if (rgba.a < 0.98f)
                 return true;
         return false;
@@ -89,15 +89,15 @@ public static class AssetTextureImporter {
     }
 
     public static void OnPostprocessAllAssets() {
-        if (m_deleteTextureList.Count == 0)
+        if (deleteTextureList.Count == 0)
             return;
         DebugTool.LogError(string.Format("导入图片资源不在 {0} 路径下", EditorPathConfig.AtlasPath));
-        foreach (string assetPath in m_deleteTextureList) {
+        foreach (string assetPath in deleteTextureList) {
             File.Delete(assetPath);
             // 手动删除 meta 文件, Unity 控制台强制刷新删除 meta 时会报错
             string metaPath = string.Format("{0}.meta", assetPath);
             File.Delete(metaPath);
         }
-        m_deleteTextureList.Clear();
+        deleteTextureList.Clear();
     }
 }

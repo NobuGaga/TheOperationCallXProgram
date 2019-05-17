@@ -6,7 +6,7 @@ public class CLoading:Controller {
     private float m_startTime;
     private bool isLoadScene = false;
 
-    public CLoading(GameMoudle moudle, Type modelType):base(moudle, modelType) { }
+    public CLoading(GameMoudle moudle):base(moudle) { }
 
     protected override void InitEvent() {
         m_eventList.Add(GameEvent.Type.OpenMainView);

@@ -3,65 +3,75 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public static class GameSceneManager {
-    private static GameScene m_curScene;
-    private static AsyncOperation m_asyncOperation;
+    private static GameScene curScene;
+    private static AsyncOperation asyncOperation;
     public static float LoadSceneProcess {
         get {
-            if (m_asyncOperation == null)
+            if (asyncOperation == null)
                 return -1;
-            return m_asyncOperation.progress;
+            return asyncOperation.progress;
         }
     }
-    private static Dictionary<GameScene, GameSceneInfo> m_dicSceneInfo = new Dictionary<GameScene, GameSceneInfo>();
+    private static Dictionary<GameScene, GameSceneInfo> dicSceneInfo = new Dictionary<GameScene, GameSceneInfo>();
 
     public static void Init() {
-        m_curScene = GameScene.StartScene;
+        curScene = GameScene.StartScene;
     }
 
     private static void SetSceneInfo(GameScene scene, Scene sceneInfo) {
         GameObject[] nodes = sceneInfo.GetRootGameObjects();
-        if (m_dicSceneInfo.ContainsKey(scene)) {
-            m_dicSceneInfo[scene].Clear();
+        if (dicSceneInfo.ContainsKey(scene)) {
+            dicSceneInfo[scene].Clear();
             if (nodes == null)
                 return;
             for (int i = 0; i < nodes.Length; i++)
-                m_dicSceneInfo[scene].SetNode(nodes[i].name, nodes[i]);
+                dicSceneInfo[scene].SetNode(nodes[i].name, nodes[i]);
         } else
-            m_dicSceneInfo.Add(scene, new GameSceneInfo(scene, nodes));
+            dicSceneInfo.Add(scene, new GameSceneInfo(scene, nodes));
+    }
+
+    public static Dictionary<string, GameObject> GetAllNode(GameScene scene) {
+        if (!dicSceneInfo.ContainsKey(scene))
+            return null;
+        return dicSceneInfo[scene].AllNameNode;
     }
 
     public static GameObject GetNode(string nodeName) {
-        if (m_curScene == GameScene.StartScene || IsCacheMoudle(nodeName))
+        if (IsCacheMoudle(nodeName))
             return GameManager.LogicScript.gameObject;
-        if (!m_dicSceneInfo.ContainsKey(m_curScene))
+        if (!dicSceneInfo.ContainsKey(curScene))
             return null;
         if (nodeName == null)
-            return m_dicSceneInfo[m_curScene].DefaultNode;
-        return m_dicSceneInfo[m_curScene].GetNode(nodeName);
+            return dicSceneInfo[curScene].DefaultNode;
+        return dicSceneInfo[curScene].GetNode(nodeName);
     }
     
     private static bool IsCacheMoudle(string nodeName) {
-        if (nodeName == GameViewInfo.GetViewName(GameMoudle.Loading, GameView.MainView))
+        if (nodeName == GameConst.GameCamera)
             return true;
         return false;
     }
 
     public static void ChangeScene(GameScene scene) {
-        if (m_curScene != GameScene.StartScene)
+        if (curScene != GameScene.StartScene)
             EventManager.Dispatch(GameMoudle.Loading, GameEvent.Type.OpenMainView);
-        m_asyncOperation = SceneManager.LoadSceneAsync(scene.ToString());
-        m_asyncOperation.completed += (m_asyncOperation) => {
-            m_curScene = scene;
-            m_asyncOperation = null;
-            SetSceneInfo(m_curScene, SceneManager.GetSceneByName(m_curScene.ToString()));
+        asyncOperation = SceneManager.LoadSceneAsync(scene.ToString());
+        asyncOperation.completed += (asyncOperation) => {
+            curScene = scene;
+            asyncOperation = null;
+            SetSceneInfo(curScene, SceneManager.GetSceneByName(curScene.ToString()));
             OpenScene();
         };
     }
 
     private static void OpenScene() {
-        switch (m_curScene) {
+        switch (curScene) {
             case GameScene.SelectScene:
                 EventManager.Dispatch(GameMoudle.Select, GameEvent.Type.OpenMainView);
+                break;
+            case GameScene.DesertScene:
+                EventManager.Dispatch(GameMoudle.VirtualButton, GameEvent.Type.OpenMainView);
+                EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.InitPlayer, GetAllNode(curScene));
                 break;
         }
     }

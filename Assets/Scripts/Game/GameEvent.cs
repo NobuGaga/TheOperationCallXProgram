@@ -12,6 +12,14 @@ public class GameEvent {
         OpenMainView,
         CloseMainView,
         Click,
+
+        // Virtual Button Event
+        SteeringWheelDragBegin,
+        SteeringWheelDraging,
+        SteeringWheelDragEnd,
+
+        // Player Event
+        InitPlayer,
     }
 
     private Dictionary<Type, System.Action<object>> m_dicEventTrigger = new Dictionary<Type, System.Action<object>>();

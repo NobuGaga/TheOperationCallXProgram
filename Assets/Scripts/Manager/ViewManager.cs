@@ -3,13 +3,15 @@ using System;
 using System.Collections.Generic;
 
 public static class ViewManager {
-    private static Dictionary<string, GameViewInfo> m_dicViewNameInfo = new Dictionary<string, GameViewInfo>();
+    private static Dictionary<string, GameViewInfo> dicViewNameInfo = new Dictionary<string, GameViewInfo>();
 
     public static void Init() {
         GameViewInfo info = new GameViewInfo(GameMoudle.Loading, GameView.MainView);
-        m_dicViewNameInfo.Add(info.Name, info);
+        dicViewNameInfo.Add(info.Name, info);
         info = new GameViewInfo(GameMoudle.Select, GameView.MainView);
-        m_dicViewNameInfo.Add(info.Name, info);
+        dicViewNameInfo.Add(info.Name, info);
+        info = new GameViewInfo(GameMoudle.VirtualButton, GameView.MainView);
+        dicViewNameInfo.Add(info.Name, info);
     }
 
     public static void Open(string viewName, Action<GameObject> callback) {
@@ -32,17 +34,17 @@ public static class ViewManager {
     }
 
     private static GameViewInfo GetViewInfo(string viewName) {
-        if (!m_dicViewNameInfo.ContainsKey(viewName)) {
+        if (!dicViewNameInfo.ContainsKey(viewName)) {
             DebugTool.LogError("ViewManager::Open not exit view : " + viewName);
             return default;
         }
-        return m_dicViewNameInfo[viewName];
+        return dicViewNameInfo[viewName];
     }
 
     public static GameViewInfo GetViewInfo(GameMoudle moudle, GameView view) {
         string name = GameViewInfo.GetViewName(moudle, view);
-        if (m_dicViewNameInfo.ContainsKey(name))
-            return m_dicViewNameInfo[name];
+        if (dicViewNameInfo.ContainsKey(name))
+            return dicViewNameInfo[name];
         return default;
     }
 }

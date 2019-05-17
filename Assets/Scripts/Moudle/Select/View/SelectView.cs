@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class SelectView : View {
+public class SelectView:View {
     public SelectView(GameMoudle moudle, GameView view, UIPrefab prefab) : base(moudle, view, prefab) { }
 
     public void ShowSelectScene(Dictionary<int, GameScene> dicScene) {
