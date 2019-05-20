@@ -7,6 +7,8 @@ public class GameEvent {
 
         // Moudle Whole Event(Every Moudle Only One Event)
         FrameUpdate,
+        PhysicsUpdate,
+        LastUpdate,
 
         // Moudle Sub Event
         OpenMainView,

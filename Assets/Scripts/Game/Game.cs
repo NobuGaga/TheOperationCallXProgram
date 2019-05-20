@@ -24,7 +24,9 @@
         GameManager.FrameUpdate();
     }
 
-    protected override void LateUpdate() { }
+    protected override void LateUpdate() {
+        GameManager.LastUpdate();
+    }
 
     protected override void OnDisable() {
         DebugTool.Log("Game::OnDisable");

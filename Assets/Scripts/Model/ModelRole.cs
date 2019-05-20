@@ -5,10 +5,11 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody), typeof(Animation))]
 public class ModelRole:MonoBehaviour {
     [SerializeField]
-    private Rigidbody m_rigidBody;
+    protected Rigidbody m_rigidBody;
     [SerializeField]
     private Animation m_animation;
     protected State m_state = State.Stand;
+    public State RoleState => m_state;
     protected Dictionary<string, string> m_dicStateAnimation;
 
     protected virtual void Awake() {
@@ -16,19 +17,21 @@ public class ModelRole:MonoBehaviour {
         m_animation = GetComponent<Animation>();
     }
 
-    private void Start() {
-        PlayAnimation(State.Stand);
+    protected virtual void Start() {
+        m_state = State.Stand;
     }
 
     public virtual void Move(Vector3 speed, float rotationY) {
-        PlayAnimation(State.Run);
         m_rigidBody.velocity = speed;
         transform.rotation = Quaternion.Euler(0, rotationY, 0);
+        m_state = State.Run;
+        PlayAnimation(m_state);
     }
 
     public virtual void Stop() {
-        PlayAnimation(State.Stand);
         m_rigidBody.velocity = Vector3.zero;
+        m_state = State.Stand;
+        PlayAnimation(m_state);
     }
 
     protected virtual void PlayAnimation(State state) {
@@ -58,7 +61,7 @@ public class ModelRole:MonoBehaviour {
         return string.Empty;
     }
 
-    protected enum State {
+    public enum State {
         Stand,
         Walk,
         Run,

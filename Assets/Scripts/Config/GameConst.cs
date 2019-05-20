@@ -14,4 +14,5 @@
 
     public static readonly string GameCamera = "GameCamera";
     public static readonly string PlayerCamera = "PlayerCamera";
+    public static readonly int RoundAngle = 360;
 }

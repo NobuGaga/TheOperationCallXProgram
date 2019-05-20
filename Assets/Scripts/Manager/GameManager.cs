@@ -23,6 +23,10 @@ public static class GameManager {
     }
 
     public static void PhysicsUpdate() {
+        EventManager.Dispatch(GameEvent.Type.PhysicsUpdate, Time.time);
+    }
 
+    public static void LastUpdate() {
+        EventManager.Dispatch(GameEvent.Type.LastUpdate, Time.time);
     }
 }

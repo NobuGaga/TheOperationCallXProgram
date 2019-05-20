@@ -4,7 +4,9 @@ public static class GameConfig {
     private static bool isDebug = true;
     public static bool IsDebug => isDebug;
     public static readonly int StartGameLoadTime = 3; // unit:second
-    public static readonly GameCameraType CameraType = GameCameraType.Fix;
+    public static readonly GameCameraType CameraType = GameCameraType.ThirdPerson;
+    public static readonly int CameraMoveFixTime = 10;
+    public static readonly float CameraHeightFix = 0.17f;
 
     public static void Init() {
         // TODO
