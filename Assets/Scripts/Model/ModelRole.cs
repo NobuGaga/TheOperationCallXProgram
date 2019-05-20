@@ -1,16 +1,41 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
-[ExecuteInEditMode]
 [RequireComponent(typeof(Rigidbody), typeof(Animation))]
-public class ModelRole:MonoBehaviour {
-    [SerializeField]
+public abstract class ModelRole:MonoBehaviour {
     protected Rigidbody m_rigidBody;
-    [SerializeField]
     private Animation m_animation;
-    protected State m_state = State.Stand;
-    public State RoleState => m_state;
-    protected Dictionary<string, string> m_dicStateAnimation;
+    private Dictionary<string, string> m_defaultStateAnimation;
+
+    private RoleState m_curState;
+    public RoleState.Type State {
+        set {
+            bool isFirst = m_curState == null;
+            if (!isFirst && m_curState.GetState() == value)
+                return;
+            if (!isFirst)
+                m_curState.Exit();
+            if (!m_dicStateCache.ContainsKey(value))
+                m_curState = Activator.CreateInstance(Type.GetType(value.ToString()), 
+                                                        this, m_animation) as RoleState;
+            else
+                m_curState = m_dicStateCache[value];
+            m_curState.Enter();
+        }
+        get {
+            return m_curState.GetState();
+        }
+    }
+    private Dictionary<RoleState.Type, RoleState> m_dicStateCache = new Dictionary<RoleState.Type, RoleState>();
+
+    protected float m_rotationY;
+    protected Vector3 m_velocity = Vector3.zero;
+    public Vector3 Velocity {
+        set {
+            m_velocity = value;
+        }
+    }
 
     protected virtual void Awake() {
         m_rigidBody = GetComponent<Rigidbody>();
@@ -18,74 +43,39 @@ public class ModelRole:MonoBehaviour {
     }
 
     protected virtual void Start() {
-        m_state = State.Stand;
+        InitAnimation();
+        State = RoleState.Type.SRoleStand;
     }
 
-    public virtual void Move(Vector3 speed, float rotationY) {
-        m_rigidBody.velocity = speed;
-        transform.rotation = Quaternion.Euler(0, rotationY, 0);
-        m_state = State.Run;
-        PlayAnimation(m_state);
+    public void UpdateState() {
+        m_curState.Update();
     }
 
-    public virtual void Stop() {
-        m_rigidBody.velocity = Vector3.zero;
-        m_state = State.Stand;
-        PlayAnimation(m_state);
-    }
-
-    protected virtual void PlayAnimation(State state) {
-        string animationName = GetAnimationName(state.ToString());
-        if (animationName == string.Empty)
-            animationName = GetAnimationName(state);
-        if (animationName == string.Empty)
-            DebugTool.Log(gameObject.name + " node not exit animation " + animationName);
-        else if (!m_animation.IsPlaying(animationName))
-            m_animation.Play(animationName);
-    }
+    protected abstract void InitAnimation();
 
     protected void AddAnimation(string state, string animationName) {
-        if (m_dicStateAnimation == null)
-            m_dicStateAnimation = new Dictionary<string, string>();
-        if (m_dicStateAnimation.ContainsKey(state))
-            m_dicStateAnimation[state] = animationName;
+        if (m_defaultStateAnimation == null)
+            m_defaultStateAnimation = new Dictionary<string, string>();
+        if (m_defaultStateAnimation.ContainsKey(state))
+            m_defaultStateAnimation[state] = animationName;
         else
-            m_dicStateAnimation.Add(state, animationName);
+            m_defaultStateAnimation.Add(state, animationName);
     }
 
-    protected string GetAnimationName(string state) {
-        if (m_dicStateAnimation == null)
+    public string GetAnimationName(string state) {
+        if (m_defaultStateAnimation == null)
             return string.Empty;
-        if (m_dicStateAnimation.ContainsKey(state))
-            return m_dicStateAnimation[state];
+        if (m_defaultStateAnimation.ContainsKey(state))
+            return m_defaultStateAnimation[state];
         return string.Empty;
     }
 
-    public enum State {
-        Stand,
-        Walk,
-        Run,
-        Jump,
-        ReadyFight,
-        Attack,
-        Damage,
-        Death
+    public void Run() {
+        m_rigidBody.velocity = m_velocity;
+        transform.rotation = Quaternion.Euler(0, m_rotationY, 0);
     }
 
-    private static readonly Dictionary<State, string> dicStateAnimation = new Dictionary<State, string>() {
-        { State.Stand,      "Stand"      },
-        { State.Walk,       "Walk"       },
-        { State.Run,        "Run"        },
-        { State.Jump,       "Jump"       },
-        { State.ReadyFight, "ReadyFight" },
-        { State.Attack,     "Attack"     },
-        { State.Damage,     "Damage"     },
-        { State.Death,      "Death"      }
-    };
-
-    protected static string GetAnimationName(State state) {
-        if (dicStateAnimation.ContainsKey(state))
-            return dicStateAnimation[state];
-        return string.Empty;
+    public virtual void EndRun() {
+        m_rigidBody.velocity = Vector3.zero;
     }
 }

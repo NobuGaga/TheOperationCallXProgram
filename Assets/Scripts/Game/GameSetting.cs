@@ -13,6 +13,9 @@ public static class GameSetting {
         DebugTool.Log(PathConfig.PersistentDataPath);
 
         GameConfig.Init();
+
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer(GameLayerInfo.Player.ToString()), 
+                                     LayerMask.NameToLayer(GameLayerInfo.Enemy.ToString()));
     }
 
     private static void checkResolution() {

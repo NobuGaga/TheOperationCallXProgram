@@ -41,6 +41,8 @@ public class CPlayer:Controller {
         m_cameraTrans = dicNodeName[GameConst.PlayerCamera].transform;
         m_cameraHeight = m_cameraTrans.position.y - GameConfig.CameraHeightFix;
         m_cameraToPlayerDis = m_player.transform.position.z - m_cameraTrans.position.z;
+
+        EventManager.Register(GameEvent.Type.FrameUpdate, (object arg0) => m_player.UpdateState());
     }
 
     private void SteeringWheelDragBegin(object arg) {
@@ -53,46 +55,17 @@ public class CPlayer:Controller {
     }
 
     private void SteeringWheelDraging(object arg) {
-        Vector2 direction2D = (Vector2)arg;
-        switch(GameConfig.CameraType) {
-            case GameCameraType.Fix:
-                MovePlayerFixMode(direction2D);
-                break;
-            case GameCameraType.ThirdPerson:
-                MovePlayerThirdPersonMode(direction2D);
-                break;
-        }
+        m_player.SetVelocityAndRotation((Vector2)arg);
     }
 
     private void SteeringWheelDragEnd(object arg) {
-        m_player.Stop();
-        switch(GameConfig.CameraType) {
-            case GameCameraType.ThirdPerson:
-                m_player.EndMove();
-                break;
-        }
-    }
-
-    private void MovePlayerFixMode(Vector2 direction2D) {
-        direction2D = direction2D.normalized;
-        m_dirPlayerMove.x = direction2D.x;
-        m_dirPlayerMove.z = direction2D.y;
-        m_player.Move(m_dirPlayerMove, Quaternion.LookRotation(m_dirPlayerMove).eulerAngles.y);
-    }
-
-    private void MovePlayerThirdPersonMode(Vector2 direction2D) {
-        direction2D = direction2D.normalized;
-        m_dirPlayerMove.x = direction2D.x;
-        m_dirPlayerMove.z = direction2D.y;
-        Quaternion playerRotation = Quaternion.LookRotation(m_dirPlayerMove, Vector3.up);
-        float rotationY = playerRotation.eulerAngles.y;
-        m_player.Move(m_dirPlayerMove, rotationY);
+        m_player.State = RoleState.Type.SRoleStand;
     }
 
     private void ResetCameraThirdPersonMode(object arg = null) {
         Quaternion cameraRotation = m_cameraTrans.rotation;
         Quaternion playerRotation = m_player.transform.rotation;
-        if (Math.Abs(cameraRotation.eulerAngles.y - playerRotation.eulerAngles.y) < 1 && m_player.RoleState == ModelRole.State.Stand) {
+        if (Math.Abs(cameraRotation.eulerAngles.y - playerRotation.eulerAngles.y) < 1 && m_player.State == RoleState.Type.SRoleStand) {
             EventManager.Unregister(GameEvent.Type.LastUpdate, ResetCameraThirdPersonMode);
             return;
         }

@@ -3,33 +3,39 @@
 public class ModelPlayer:ModelRole {
     private float m_curFoward;
 
+    protected override void InitAnimation() {
+        AddAnimation(RoleState.Type.SRoleStand.ToString(), "DrawBlade");
+        AddAnimation(RoleState.Type.SRoleRun.ToString(), "Run00");
+        AddAnimation(RoleState.Type.SRoleReadyFight.ToString(), "DrawBlade");
+    }
+
     protected override void Start() {
         base.Start();
-        AddAnimation(State.Stand.ToString(), "DrawBlade");
-        AddAnimation(State.Run.ToString(), "Run00");
-        AddAnimation(State.ReadyFight.ToString(), "DrawBlade");
-
         m_curFoward = transform.rotation.eulerAngles.y;
     }
 
-    /// <summary>
-    /// 角色移动
-    /// </summary>
-    /// <param name="speed">虚拟摇杆转换为三维坐标, 该坐标系与 OpenGL 坐标系相同, 经过归一化</param>
-    /// <param name="rotationY">Y 轴旋转角度</param>
-    public override void Move(Vector3 speed, float rotationY) {
-        rotationY += m_curFoward;
-        NormalizedAngle(ref rotationY);
-        speed = Quaternion.Euler(0, m_curFoward, 0) * speed;
-        base.Move(speed, rotationY);
+    public void SetVelocityAndRotation(Vector2 direction2D) {
+        direction2D = direction2D.normalized;
+        m_velocity.x = direction2D.x;
+        m_velocity.z = direction2D.y;
+        switch(GameConfig.CameraType) {
+            case GameCameraType.Fix:
+                m_rotationY = Quaternion.LookRotation(m_velocity).eulerAngles.y;
+                break;
+            case GameCameraType.ThirdPerson:
+                Quaternion playerRotation = Quaternion.LookRotation(m_velocity, Vector3.up);
+                m_rotationY = playerRotation.eulerAngles.y;
+                m_rotationY += m_curFoward;
+                if (m_rotationY > GameConst.RoundAngle || m_rotationY < -GameConst.RoundAngle)
+                    m_rotationY %= GameConst.RoundAngle;
+                m_velocity = Quaternion.Euler(0, m_curFoward, 0) * m_velocity;
+                break;
+        }
+        State = RoleState.Type.SRoleRun;
     }
 
-    public void EndMove() {
+    public override void EndRun() {
+        base.EndRun();
         m_curFoward = transform.rotation.eulerAngles.y;
-    }
-
-    private void NormalizedAngle(ref float angle) {
-        if (angle > GameConst.RoundAngle || angle < -GameConst.RoundAngle)
-            angle %= GameConst.RoundAngle;
     }
 }
