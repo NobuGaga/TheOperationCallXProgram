@@ -12,6 +12,8 @@ public static class ViewManager {
         dicViewNameInfo.Add(info.Name, info);
         info = new GameViewInfo(GameMoudle.VirtualButton, GameView.MainView);
         dicViewNameInfo.Add(info.Name, info);
+        info = new GameViewInfo(GameMoudle.Player, GameView.MainView);
+        dicViewNameInfo.Add(info.Name, info);
     }
 
     public static void Open(string viewName, Action<GameObject> callback) {

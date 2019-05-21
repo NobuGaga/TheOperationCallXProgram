@@ -71,7 +71,9 @@ public static class GameSceneManager {
                 break;
             case GameScene.DesertScene:
                 EventManager.Dispatch(GameMoudle.VirtualButton, GameEvent.Type.OpenMainView);
-                EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.InitPlayer, GetAllNode(curScene));
+                Dictionary<string, GameObject> allNodes = GetAllNode(curScene);
+                EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.OpenMainView, allNodes);
+                EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.InitModel, allNodes);
                 break;
         }
     }

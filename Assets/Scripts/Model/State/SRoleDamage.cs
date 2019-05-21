@@ -6,7 +6,7 @@ public class SRoleDamage:RoleState {
     public SRoleDamage(ModelRole role, Animation animation):base(role, animation) { }
 
     public override void Enter() {
-        base.Enter();
+        PlayAnimation();
         m_isUnattackable = true;
     }
 

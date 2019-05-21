@@ -77,5 +77,6 @@ public struct GameViewInfo {
         dicViewParent.Add(GetViewName(GameMoudle.Loading, GameView.MainView), GameConst.GameCamera);
         dicViewParent.Add(GetViewName(GameMoudle.Select, GameView.MainView), "UICanvas");
         dicViewParent.Add(GetViewName(GameMoudle.VirtualButton, GameView.MainView), GameConst.GameCamera);
+        dicViewParent.Add(GetViewName(GameMoudle.Player, GameView.MainView), GameConst.GameCamera);
     }
 }

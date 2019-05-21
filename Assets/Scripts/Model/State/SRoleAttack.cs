@@ -6,11 +6,10 @@ public class SRoleAttack:RoleState {
     public SRoleAttack(ModelRole role, Animation animation):base(role, animation) { }
 
     public override void Enter() {
-        base.Enter();
+        PlayAnimation();
         m_isAttacking = true;
-        m_role.Attack();
+        m_role.Attack(ModelAttackLevel.Normal);
     }
-
 
     public override void Update() {
         if (!m_isAttacking)
@@ -26,11 +25,4 @@ public class SRoleAttack:RoleState {
     }
 
     public override Type GetState() { return Type.SRoleAttack; }
-
-    public enum AttackLevel {
-        Normal = 1,
-        SkillOne,
-        SkillTwo,
-        SkillThree,
-    }
 }

@@ -35,6 +35,9 @@ public abstract class ModelRole:MonoBehaviour {
         set {
             m_velocity = value;
         }
+        get {
+            return m_velocity;
+        }
     }
 
     protected virtual void Awake() {
@@ -79,5 +82,13 @@ public abstract class ModelRole:MonoBehaviour {
         m_rigidBody.velocity = Vector3.zero;
     }
 
-    public virtual void Attack() { }
+    public virtual void Attack(ModelAttackLevel level) { }
+
+    public virtual void Damage() { }
+
+    public virtual bool IsHPZero {
+        get {
+            return false;
+        }
+    }
 }

@@ -2,13 +2,13 @@
 
 public class VirtualButtonView:View {
     public VirtualButtonView(GameMoudle moudle, GameView view, UIPrefab prefab):base(moudle, view, prefab) {
-        GetNode<Button>("btnNormalAttack").onClick.AddListener(() => OnClick(SRoleAttack.AttackLevel.Normal));
-        GetNode<Button>("btnSkiilOne").onClick.AddListener(() => OnClick(SRoleAttack.AttackLevel.SkillOne));
-        GetNode<Button>("btnSkiilTwo").onClick.AddListener(() => OnClick(SRoleAttack.AttackLevel.SkillTwo));
-        GetNode<Button>("btnSkiilThree").onClick.AddListener(() => OnClick(SRoleAttack.AttackLevel.SkillThree));
+        GetNode<Button>("btnNormalAttack").onClick.AddListener(() => OnClick(ModelAttackLevel.Normal));
+        GetNode<Button>("btnSkiilOne").onClick.AddListener(() => OnClick(ModelAttackLevel.SkillOne));
+        GetNode<Button>("btnSkiilTwo").onClick.AddListener(() => OnClick(ModelAttackLevel.SkillTwo));
+        GetNode<Button>("btnSkiilThree").onClick.AddListener(() => OnClick(ModelAttackLevel.SkillThree));
     }
 
-    private void OnClick(SRoleAttack.AttackLevel level) {
+    private void OnClick(ModelAttackLevel level) {
         EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.Attack, level);
     }
 }

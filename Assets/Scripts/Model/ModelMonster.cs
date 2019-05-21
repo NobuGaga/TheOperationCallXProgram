@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class ModelMonster:ModelRole {
     private Transform m_target;
@@ -6,11 +7,24 @@ public class ModelMonster:ModelRole {
     private Vector3 m_speed;
     private float m_attackDis = 0.5f;
     private int m_attackAngle = 30;
+    private ModelHPData m_healthPoint;
+    public override bool IsHPZero {
+        get {
+            return m_healthPoint.IsZero;
+        }
+    }
 
     protected override void InitAnimation() {
         AddAnimation(RoleState.Type.SRoleStand.ToString(), "DrawBlade");
         AddAnimation(RoleState.Type.SRoleRun.ToString(), "Run00");
         AddAnimation(RoleState.Type.SRoleReadyFight.ToString(), "DrawBlade");
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="healthPoint">血量</param>
+    public void Init(int healthPoint) {
+        m_healthPoint = new ModelHPData(healthPoint);
     }
 
     private void Update() {
@@ -41,7 +55,7 @@ public class ModelMonster:ModelRole {
         UpdateState();
     }
 
-    public override void Attack() {
+    public override void Attack(ModelAttackLevel level) {
         Collider[] colliders = Physics.OverlapSphere(transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Player.ToString()));
         for (int i = 0; i < colliders.Length; i++) {
             if (colliders[i].tag != GameTagInfo.Player.ToString())
@@ -52,9 +66,23 @@ public class ModelMonster:ModelRole {
             float selfToTargetAngle = Vector3.Angle(selfToTarget, transform.forward);
             if (selfToTargetAngle > m_attackAngle)
                 continue;
-            EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.Damage);
+            ModelAttackData attackData = new ModelAttackData(RoleType.MonsterType, 
+                                                            (int)MonsterType.Rubbish, level, gameObject.name, colliders[i].name);
+            EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.Damage, attackData);
             return;
         }
+    }
+
+    public float Damage(ModelAttackData data) {
+        m_healthPoint -= data.Damage;
+        DebugTool.Log("ModelMonster::Damage " + m_healthPoint.ToString());
+        RoleState.Type state;
+        if (IsHPZero)
+            state = RoleState.Type.SRoleDeath;
+        else
+            state = RoleState.Type.SRoleDamage;
+        State = state;
+        return m_healthPoint.Percent;
     }
 
     private void OnTriggerEnter(Collider collider) {

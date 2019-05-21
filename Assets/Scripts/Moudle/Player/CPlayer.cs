@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 
 public class CPlayer:Controller {
+    private PlayerView m_playerView;
     private ModelPlayer m_player;
     private Transform m_cameraTrans;
     private float m_cameraHeight;
@@ -11,7 +12,7 @@ public class CPlayer:Controller {
     public CPlayer(GameMoudle moudle, Type modelType):base(moudle, modelType) { }
 
     protected override void InitEvent() {
-        m_eventList.Add(GameEvent.Type.InitPlayer);
+        m_eventList.Add(GameEvent.Type.OpenMainView);
         m_eventList.Add(GameEvent.Type.Attack);
         m_eventList.Add(GameEvent.Type.Damage);
         m_eventList.Add(GameEvent.Type.SteeringWheelDragBegin);
@@ -21,8 +22,8 @@ public class CPlayer:Controller {
 
     public override Action<object> GetEvent(GameEvent.Type eventType) {
         switch (eventType) {
-            case GameEvent.Type.InitPlayer:
-                return InitPlayer;
+            case GameEvent.Type.OpenMainView:
+                return OpenMainView;
             case GameEvent.Type.Attack:
                 return Attack;
             case GameEvent.Type.Damage:
@@ -38,10 +39,17 @@ public class CPlayer:Controller {
         }
     }
 
-    private void InitPlayer(object arg) {
+    private void OpenMainView(object arg) {
+        GameView viewType = GameView.MainView;
+        ViewManager.Open(GameViewInfo.GetViewName(Moudle, GameView.MainView),
+            (GameObject gameObject) =>
+                m_playerView = new PlayerView(Moudle, viewType, gameObject.GetComponent<UIPrefab>())
+        );
+
         Dictionary<string, GameObject> dicNodeName = arg as Dictionary<string, GameObject>;
         GameObject playerObj = dicNodeName["Blade_Warrior_Prefab"];
         m_player = playerObj.AddComponent<ModelPlayer>();
+        m_player.Init(GetModel<MPlayerData>().PlayerHP);
 
         m_cameraTrans = dicNodeName[GameConst.PlayerCamera].transform;
         m_cameraHeight = m_cameraTrans.position.y - GameConfig.CameraHeightFix;
@@ -51,11 +59,15 @@ public class CPlayer:Controller {
     }
 
     private void Attack(object arg) {
-        m_player.State = RoleState.Type.SRoleAttack;
+        ModelAttackLevel level = (ModelAttackLevel)arg;
+        if (level == ModelAttackLevel.Normal)
+            m_player.State = RoleState.Type.SRoleAttack;
     }
 
     private void Damage(object arg) {
-        m_player.State = RoleState.Type.SRoleDamage;
+        ModelAttackData data = (ModelAttackData)arg;
+        float percent = m_player.Damage(data);
+        m_playerView.UpdateHP(percent);
     }
 
     private void SteeringWheelDragBegin(object arg) {
@@ -72,6 +84,8 @@ public class CPlayer:Controller {
     }
 
     private void SteeringWheelDragEnd(object arg) {
+        //DebugTool.Log(m_player.BeforeMoveFoward);
+        //DebugTool.Log(m_player.transform.rotation.eulerAngles.y);
         m_player.State = RoleState.Type.SRoleStand;
     }
 

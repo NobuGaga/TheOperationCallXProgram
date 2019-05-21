@@ -20,8 +20,8 @@ public class GameEvent {
         SteeringWheelDraging,
         SteeringWheelDragEnd,
 
-        // Player Event
-        InitPlayer,
+        // Model Event
+        InitModel,
         Attack,
         Damage,
     }

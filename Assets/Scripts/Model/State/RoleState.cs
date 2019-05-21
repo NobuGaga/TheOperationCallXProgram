@@ -16,9 +16,7 @@ public abstract class RoleState {
     /// <summary>
     /// 进入状态
     /// </summary>
-    public virtual void Enter() {
-        PlayAnimation();
-    }
+    public abstract void Enter();
 
     /// <summary>
     /// 状态更新
