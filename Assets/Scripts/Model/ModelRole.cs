@@ -70,7 +70,7 @@ public abstract class ModelRole:MonoBehaviour {
         return string.Empty;
     }
 
-    public void Run() {
+    public virtual void Run() {
         m_rigidBody.velocity = m_velocity;
         transform.rotation = Quaternion.Euler(0, m_rotationY, 0);
     }
@@ -78,4 +78,6 @@ public abstract class ModelRole:MonoBehaviour {
     public virtual void EndRun() {
         m_rigidBody.velocity = Vector3.zero;
     }
+
+    public virtual void Attack() { }
 }

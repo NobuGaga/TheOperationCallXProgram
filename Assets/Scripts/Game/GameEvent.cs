@@ -22,6 +22,8 @@ public class GameEvent {
 
         // Player Event
         InitPlayer,
+        Attack,
+        Damage,
     }
 
     private Dictionary<Type, System.Action<object>> m_dicEventTrigger = new Dictionary<Type, System.Action<object>>();

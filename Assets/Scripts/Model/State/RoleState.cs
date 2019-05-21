@@ -17,7 +17,7 @@ public abstract class RoleState {
     /// 进入状态
     /// </summary>
     public virtual void Enter() {
-        PlayAnimation(GetState());
+        PlayAnimation();
     }
 
     /// <summary>
@@ -46,14 +46,25 @@ public abstract class RoleState {
         SRoleDeath,
     }
 
-    protected void PlayAnimation(Type state) {
-        string animationName = m_role.GetAnimationName(state.ToString());
+    protected void PlayAnimation() {
+        string animationName = GetAnimationName();
+        if (!m_animation.IsPlaying(animationName))
+            m_animation.Play(animationName);
+    }
+
+    private string GetAnimationName() {
+        string animationName = m_role.GetAnimationName(GetState().ToString());
         if (animationName == string.Empty)
-            animationName = GetAnimationName(state);
+            animationName = GetAnimationName(GetState());
         if (animationName == string.Empty)
             DebugTool.Log(m_role.gameObject.name + " node not exit animation " + animationName);
-        else if (!m_animation.IsPlaying(animationName))
-            m_animation.Play(animationName);
+        return animationName;
+    }
+
+    protected bool IsPlayingAnimation {
+        get {
+            return m_animation.IsPlaying(GetAnimationName());
+        }
     }
 
     private static readonly Dictionary<Type, string> defaultStateAnimation = new Dictionary<Type, string>() {

@@ -2,6 +2,8 @@
 
 public class ModelPlayer:ModelRole {
     private float m_curFoward;
+    private float m_attackDis = 0.5f;
+    private int m_attackAngle = 30;
 
     protected override void InitAnimation() {
         AddAnimation(RoleState.Type.SRoleStand.ToString(), "DrawBlade");
@@ -37,5 +39,20 @@ public class ModelPlayer:ModelRole {
     public override void EndRun() {
         base.EndRun();
         m_curFoward = transform.rotation.eulerAngles.y;
+    }
+
+    public override void Attack() {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Player.ToString()));
+        for (int i = 0; i < colliders.Length; i++) {
+            if (colliders[i].isTrigger)
+                continue;
+            if (colliders[i].tag != GameTagInfo.Enemy.ToString())
+                continue;
+            Vector3 selfToTarget = colliders[i].transform.position - transform.position;
+            float selfToTargetAngle = Vector3.Angle(selfToTarget, transform.forward);
+            if (selfToTargetAngle > m_attackAngle)
+                continue;
+            EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, colliders[i].name);
+        }
     }
 }

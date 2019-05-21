@@ -14,7 +14,7 @@ public static class GameSetting {
 
         GameConfig.Init();
 
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer(GameLayerInfo.Player.ToString()), 
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer(GameLayerInfo.Player.ToString()),
                                      LayerMask.NameToLayer(GameLayerInfo.Enemy.ToString()));
     }
 

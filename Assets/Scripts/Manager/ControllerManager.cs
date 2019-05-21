@@ -8,6 +8,7 @@ public static class ControllerManager {
         dicMoudleController.Add(GameMoudle.Select, new CSelect(GameMoudle.Select, typeof(MSelectData)));
         dicMoudleController.Add(GameMoudle.VirtualButton, new CVirtualButton(GameMoudle.VirtualButton));
         dicMoudleController.Add(GameMoudle.Player, new CPlayer(GameMoudle.Player, typeof(MPlayerData)));
+        dicMoudleController.Add(GameMoudle.Monster, new CMonster(GameMoudle.Monster, typeof(MMonsterData)));
     }
 
     public static Controller GetController(GameMoudle moudle) {

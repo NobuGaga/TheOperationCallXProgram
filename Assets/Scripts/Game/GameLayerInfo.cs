@@ -8,3 +8,13 @@
     Enemy         = 9,
     Scene         = 10,
 }
+
+public enum GameTagInfo {
+    Respawn,
+    Finish,
+    EditorOnly,
+    MainCamera,
+    Player,
+    GameController,
+    Enemy,
+}

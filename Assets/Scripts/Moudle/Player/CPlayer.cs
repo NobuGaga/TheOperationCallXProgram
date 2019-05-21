@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class CPlayer:Controller {
     private ModelPlayer m_player;
-    private Vector3 m_dirPlayerMove = Vector3.zero;
     private Transform m_cameraTrans;
     private float m_cameraHeight;
     private float m_cameraToPlayerDis;
@@ -13,6 +12,8 @@ public class CPlayer:Controller {
 
     protected override void InitEvent() {
         m_eventList.Add(GameEvent.Type.InitPlayer);
+        m_eventList.Add(GameEvent.Type.Attack);
+        m_eventList.Add(GameEvent.Type.Damage);
         m_eventList.Add(GameEvent.Type.SteeringWheelDragBegin);
         m_eventList.Add(GameEvent.Type.SteeringWheelDraging);
         m_eventList.Add(GameEvent.Type.SteeringWheelDragEnd);
@@ -22,6 +23,10 @@ public class CPlayer:Controller {
         switch (eventType) {
             case GameEvent.Type.InitPlayer:
                 return InitPlayer;
+            case GameEvent.Type.Attack:
+                return Attack;
+            case GameEvent.Type.Damage:
+                return Damage;
             case GameEvent.Type.SteeringWheelDragBegin:
                 return SteeringWheelDragBegin;
             case GameEvent.Type.SteeringWheelDraging:
@@ -42,7 +47,15 @@ public class CPlayer:Controller {
         m_cameraHeight = m_cameraTrans.position.y - GameConfig.CameraHeightFix;
         m_cameraToPlayerDis = m_player.transform.position.z - m_cameraTrans.position.z;
 
-        EventManager.Register(GameEvent.Type.FrameUpdate, (object arg0) => m_player.UpdateState());
+        EventManager.Register(GameEvent.Type.FrameUpdate, PlayerUpdate);
+    }
+
+    private void Attack(object arg) {
+        m_player.State = RoleState.Type.SRoleAttack;
+    }
+
+    private void Damage(object arg) {
+        m_player.State = RoleState.Type.SRoleDamage;
     }
 
     private void SteeringWheelDragBegin(object arg) {
@@ -60,6 +73,10 @@ public class CPlayer:Controller {
 
     private void SteeringWheelDragEnd(object arg) {
         m_player.State = RoleState.Type.SRoleStand;
+    }
+
+    private void PlayerUpdate(object arg = null) {
+        m_player.UpdateState();
     }
 
     private void ResetCameraThirdPersonMode(object arg = null) {

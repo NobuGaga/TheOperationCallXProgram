@@ -5,6 +5,7 @@ public enum GameMoudle {
     Select,
     VirtualButton,
     Player,
+    Monster,
 }
 
 public enum GameView {
