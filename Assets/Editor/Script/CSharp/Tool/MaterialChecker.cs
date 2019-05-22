@@ -5,7 +5,7 @@ public static class MaterialChecker {
     public static void CheckMeshRender() {
         Transform[] trans = Selection.transforms;
         for (int i = 0; i < trans.Length; i++) {
-            MeshRenderer[] meshs = trans[i].GetComponentsInChildren<MeshRenderer>();
+            Renderer[] meshs = trans[i].GetComponentsInChildren<Renderer>();
             if (meshs == null)
                 continue;
             for (int j = 0; j < meshs.Length; j++) {
