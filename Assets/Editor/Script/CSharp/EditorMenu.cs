@@ -5,4 +5,9 @@ public static class EditorMenu {
     private static void PackAssetBundle() {
         AssetBundlePacker.Pack();
     }
+
+    [MenuItem("Custom/Tool/CheckMaterial %M")]
+    private static void CheckMaterial() {
+        MaterialChecker.CheckMeshRender();
+    }
 }
