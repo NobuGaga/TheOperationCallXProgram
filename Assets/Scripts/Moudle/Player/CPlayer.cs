@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class CPlayer:Controller {
     private PlayerView m_playerView;
     private ModelPlayer m_player;
-    private Vector3 m_playerLastPosition;
     private Transform m_cameraTrans;
     private float m_cameraRotationY;
     private float m_cameraHeight;
     private float m_cameraToPlayerDis;
+    private Vector3 m_cameraToPlayerDisVec3;
 
     public CPlayer(GameMoudle moudle, Type modelType):base(moudle, modelType) { }
 
@@ -57,6 +57,7 @@ public class CPlayer:Controller {
         m_cameraRotationY = m_cameraTrans.rotation.eulerAngles.y;
         m_cameraHeight = m_cameraTrans.position.y - GameConfig.CameraHeightFix;
         m_cameraToPlayerDis = m_player.transform.position.z - m_cameraTrans.position.z;
+        m_cameraToPlayerDisVec3 = m_player.transform.position - m_cameraTrans.position;
 
         EventManager.Register(GameEvent.Type.FrameUpdate, PlayerUpdate);
     }
@@ -77,7 +78,6 @@ public class CPlayer:Controller {
         SteeringWheelDraging(arg);
         switch (GameConfig.CameraType) {
             case GameCameraType.Fix:
-                m_playerLastPosition = m_player.transform.position;
                 EventManager.Register(GameEvent.Type.LastUpdate, ResetCameraFixMode);
                 break;
             case GameCameraType.ThirdPerson:
@@ -101,15 +101,12 @@ public class CPlayer:Controller {
     }
 
     private void ResetCameraFixMode(object arg = null) {
-        Vector3 playerCurPos = m_player.transform.position;
-        Vector3 playerMoveDis = playerCurPos - m_playerLastPosition;
-        if (playerMoveDis.magnitude < 0.01f && m_player.State == RoleState.Type.SRoleStand) {
-            EventManager.Unregister(GameEvent.Type.LastUpdate, ResetCameraThirdPersonMode);
+        Vector3 cameraPos = m_player.transform.position - m_cameraToPlayerDisVec3;
+        Vector3 cameraLastPos = m_cameraTrans.position;
+        if ((cameraPos - cameraLastPos).magnitude < 0.01f && m_player.State == RoleState.Type.SRoleStand) {
+            EventManager.Unregister(GameEvent.Type.LastUpdate, ResetCameraFixMode);
             return;
         }
-        m_playerLastPosition = playerCurPos;
-        Vector3 cameraLastPos = m_cameraTrans.position;
-        Vector3 cameraPos = playerMoveDis + cameraLastPos;
         m_cameraTrans.position = Vector3.Lerp(cameraLastPos, cameraPos, Time.deltaTime * GameConfig.CameraMoveFixModeTime);
     }
 
