@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class CPlayer:Controller {
     private PlayerView m_playerView;
     private ModelPlayer m_player;
+    private Vector3 m_playerLastPosition;
     private Transform m_cameraTrans;
+    private float m_cameraRotationY;
     private float m_cameraHeight;
     private float m_cameraToPlayerDis;
 
@@ -52,6 +54,7 @@ public class CPlayer:Controller {
         m_player.Init(GetModel<MPlayerData>().PlayerHP);
 
         m_cameraTrans = dicNodeName[GameConst.PlayerCamera].transform;
+        m_cameraRotationY = m_cameraTrans.rotation.y;
         m_cameraHeight = m_cameraTrans.position.y - GameConfig.CameraHeightFix;
         m_cameraToPlayerDis = m_player.transform.position.z - m_cameraTrans.position.z;
 
@@ -73,6 +76,10 @@ public class CPlayer:Controller {
     private void SteeringWheelDragBegin(object arg) {
         SteeringWheelDraging(arg);
         switch (GameConfig.CameraType) {
+            case GameCameraType.Fix:
+                m_playerLastPosition = m_player.transform.position;
+                EventManager.Register(GameEvent.Type.LastUpdate, ResetCameraFixMode);
+                break;
             case GameCameraType.ThirdPerson:
                 EventManager.Register(GameEvent.Type.LastUpdate, ResetCameraThirdPersonMode);
                 break;
@@ -80,7 +87,7 @@ public class CPlayer:Controller {
     }
 
     private void SteeringWheelDraging(object arg) {
-        m_player.SetVelocityAndRotation((Vector2)arg);
+        m_player.SetVelocityAndRotation((Vector2)arg, m_cameraRotationY);
     }
 
     private void SteeringWheelDragEnd(object arg) {
@@ -93,6 +100,19 @@ public class CPlayer:Controller {
         m_player.UpdateState();
     }
 
+    private void ResetCameraFixMode(object arg = null) {
+        Vector3 playerCurPos = m_player.transform.position;
+        Vector3 playerMoveDis = playerCurPos - m_playerLastPosition;
+        if (playerMoveDis.magnitude < 0.01f && m_player.State == RoleState.Type.SRoleStand) {
+            EventManager.Unregister(GameEvent.Type.LastUpdate, ResetCameraThirdPersonMode);
+            return;
+        }
+        m_playerLastPosition = playerCurPos;
+        Vector3 cameraLastPos = m_cameraTrans.position;
+        Vector3 cameraPos = playerMoveDis + cameraLastPos;
+        m_cameraTrans.position = Vector3.Lerp(cameraLastPos, cameraPos, Time.deltaTime * GameConfig.CameraMoveFixModeTime);
+    }
+
     private void ResetCameraThirdPersonMode(object arg = null) {
         Quaternion cameraRotation = m_cameraTrans.rotation;
         Quaternion playerRotation = m_player.transform.rotation;
@@ -100,11 +120,11 @@ public class CPlayer:Controller {
             EventManager.Unregister(GameEvent.Type.LastUpdate, ResetCameraThirdPersonMode);
             return;
         }
-        cameraRotation = Quaternion.Lerp(cameraRotation, playerRotation, Time.deltaTime * GameConfig.CameraMoveFixTime);
+        cameraRotation = Quaternion.Lerp(cameraRotation, playerRotation, Time.deltaTime * GameConfig.CameraMoveThirdModeTime);
         m_cameraTrans.rotation = cameraRotation;
         Vector3 disCamera = cameraRotation * Vector3.forward * m_cameraToPlayerDis;
         Vector3 cameraPos = m_player.transform.position - disCamera;
         cameraPos.y = m_cameraHeight;
-        m_cameraTrans.position = Vector3.Lerp(m_cameraTrans.position, cameraPos, Time.deltaTime * GameConfig.CameraMoveFixTime);
+        m_cameraTrans.position = Vector3.Lerp(m_cameraTrans.position, cameraPos, Time.deltaTime * GameConfig.CameraMoveThirdModeTime);
     }
 }

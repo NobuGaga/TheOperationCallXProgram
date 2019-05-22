@@ -42,7 +42,7 @@ public class ModelMonster:ModelRole {
                     transform.LookAt(m_target, Vector3.up);
                     m_rotationY = transform.rotation.eulerAngles.y;
                     m_disToTarget = (m_target.position - transform.position).magnitude;
-                    m_speed = (m_target.position - transform.position).normalized * GameConfig.CameraMoveFixTime * 3;
+                    m_speed = (m_target.position - transform.position).normalized * GameConfig.CameraMoveThirdModeTime * 3;
                     m_velocity = m_speed * Time.deltaTime;
                 }
                 break;
