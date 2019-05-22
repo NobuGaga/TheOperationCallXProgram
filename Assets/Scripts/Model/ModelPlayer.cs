@@ -36,8 +36,8 @@ public class ModelPlayer:ModelRole {
         m_velocity.z = direction2D.y;
         switch(GameConfig.CameraType) {
             case GameCameraType.Fix:
-                m_rotationY = Quaternion.LookRotation(m_velocity).eulerAngles.y;
                 m_velocity = Quaternion.Euler(0, cameraRotationY, 0) * m_velocity * GameConfig.PlayerMoveFix;
+                m_rotationY = Quaternion.LookRotation(m_velocity).eulerAngles.y;
                 break;
             case GameCameraType.ThirdPerson:
                 Quaternion playerRotation = Quaternion.LookRotation(m_velocity, Vector3.up);
@@ -49,8 +49,6 @@ public class ModelPlayer:ModelRole {
                 break;
         }
         State = RoleState.Type.SRoleRun;
-        Vector3 vtest = Vector3.zero;
-        vtest -= Vector3.one;
     }
 
     public override void EndRun() {

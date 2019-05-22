@@ -54,7 +54,7 @@ public class CPlayer:Controller {
         m_player.Init(GetModel<MPlayerData>().PlayerHP);
 
         m_cameraTrans = dicNodeName[GameConst.PlayerCamera].transform;
-        m_cameraRotationY = m_cameraTrans.rotation.y;
+        m_cameraRotationY = m_cameraTrans.rotation.eulerAngles.y;
         m_cameraHeight = m_cameraTrans.position.y - GameConfig.CameraHeightFix;
         m_cameraToPlayerDis = m_player.transform.position.z - m_cameraTrans.position.z;
 
