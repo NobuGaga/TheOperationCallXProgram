@@ -6,8 +6,13 @@ public static class EditorMenu {
         AssetBundlePacker.Pack();
     }
 
-    [MenuItem("Custom/Tool/CheckMaterial %M")]
-    private static void CheckMaterial() {
-        MaterialChecker.CheckMeshRender();
+    [MenuItem("Custom/Tool/CheckRenderMaterial %M")]
+    private static void CheckRenderMaterial() {
+        ComponentChecker.CheckRenderMaterial();
+    }
+
+    [MenuItem("Custom/Tool/CheckMissingComponent %L")]
+    private static void CheckMissingComponent() {
+        ComponentChecker.CheckMissingComponent();
     }
 }
