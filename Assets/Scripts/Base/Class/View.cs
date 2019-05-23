@@ -14,8 +14,7 @@ public abstract class View:Prefab {
                 if (m_dicItem == null)
                     m_dicItem = new Dictionary<string, List<UIPrefab>>();
             } else {
-                if (m_dicItem != null)
-                    m_dicItem.Clear();
+                m_dicItem?.Clear();
                 m_dicItem = null;
             }
         }
@@ -53,7 +52,6 @@ public abstract class View:Prefab {
     }
 
     ~View() {
-        if (m_dicItem != null)
-            m_dicItem.Clear();
+        m_dicItem?.Clear();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SRoleAttack:RoleState {
+public class SRoleAttack:SRoleState {
     private bool m_isAttacking = false;
 
     public SRoleAttack(ModelRole role, Animation animation):base(role, animation) { }
@@ -8,7 +8,7 @@ public class SRoleAttack:RoleState {
     public override void Enter() {
         PlayAnimation();
         m_isAttacking = true;
-        m_role.Attack(ModelAttackLevel.Normal);
+        attackRole?.Attack(ModelAttackLevel.Normal);
     }
 
     public override void Update() {
@@ -20,9 +20,15 @@ public class SRoleAttack:RoleState {
         m_role.State = Type.SRoleStand;
     }
 
-    public override void Exit() {
-        
-    }
+    public override void Exit() { }
 
     public override Type GetState() { return Type.SRoleAttack; }
+
+    private ModelAttackRole attackRole {
+        get {
+            if (m_role is ModelAttackRole)
+                return m_role as ModelAttackRole;
+            return null;
+        }
+    }
 }

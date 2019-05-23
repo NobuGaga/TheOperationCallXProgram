@@ -32,8 +32,7 @@ public struct GameSceneInfo {
     }
 
     public void Clear() {
-        if (dicNameNode != null)
-            dicNameNode.Clear();
+        dicNameNode?.Clear();
         defaultNodeName = string.Empty;
     }
 

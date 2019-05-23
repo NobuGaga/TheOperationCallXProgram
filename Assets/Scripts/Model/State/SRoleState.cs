@@ -4,11 +4,11 @@ using System.Collections.Generic;
 /// <summary>
 /// 角色状态的抽象基类
 /// </summary>
-public abstract class RoleState {
+public abstract class SRoleState {
     protected ModelRole m_role;
     private Animation m_animation;
 
-    public RoleState(ModelRole role, Animation animation) {
+    public SRoleState(ModelRole role, Animation animation) {
         m_role = role;
         m_animation = animation;
     }

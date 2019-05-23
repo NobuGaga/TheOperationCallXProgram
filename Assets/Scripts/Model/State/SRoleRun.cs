@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public class SRoleRun:RoleState {
-    public SRoleRun(ModelRole role, Animation animation):base(role, animation) { }
+public class SRoleRun : SRoleState {
+    public SRoleRun(ModelRole role, Animation animation) : base(role, animation) { }
 
     public override void Enter() {
         PlayAnimation();
@@ -9,12 +9,20 @@ public class SRoleRun:RoleState {
 
     public override void Update() {
         PlayAnimation();
-        m_role.Run();
+        runRole?.Run();
     }
 
     public override void Exit() {
-        m_role.EndRun();
+        runRole?.EndRun();
     }
 
     public override Type GetState() { return Type.SRoleRun; }
+
+    private ModelRunRole runRole {
+        get {
+            if (m_role is ModelRunRole)
+                return m_role as ModelRunRole;
+            return null;
+        }
+    }
 }

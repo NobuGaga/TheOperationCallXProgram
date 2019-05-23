@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SRoleStand:RoleState {
+public class SRoleStand:SRoleState {
     public SRoleStand(ModelRole role, Animation animation):base(role, animation) { }
 
     public override void Enter() {

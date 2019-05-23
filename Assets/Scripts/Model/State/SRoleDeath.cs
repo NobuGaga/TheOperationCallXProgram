@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SRoleDeath:RoleState {
+public class SRoleDeath:SRoleState {
     public SRoleDeath(ModelRole role, Animation animation):base(role, animation) { }
 
     public override void Enter() {

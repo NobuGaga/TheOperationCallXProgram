@@ -24,11 +24,11 @@ public abstract class ModelRole {
         m_rigidBody = m_gameObject.GetComponent<Rigidbody>();
         m_animation = m_gameObject.GetComponent<Animation>();
         InitAnimation();
-        State = RoleState.Type.SRoleStand;
+        State = SRoleState.Type.SRoleStand;
     }
 
-    private RoleState m_curState;
-    public RoleState.Type State {
+    private SRoleState m_curState;
+    public SRoleState.Type State {
         set {
             bool isFirst = m_curState == null;
             if (!isFirst && m_curState.GetState() == value)
@@ -37,7 +37,7 @@ public abstract class ModelRole {
                 m_curState.Exit();
             if (!m_dicStateCache.ContainsKey(value))
                 m_curState = Activator.CreateInstance(Type.GetType(value.ToString()), 
-                                                        this, m_animation) as RoleState;
+                                                        this, m_animation) as SRoleState;
             else
                 m_curState = m_dicStateCache[value];
             m_curState.Enter();
@@ -46,18 +46,7 @@ public abstract class ModelRole {
             return m_curState.GetState();
         }
     }
-    private Dictionary<RoleState.Type, RoleState> m_dicStateCache = new Dictionary<RoleState.Type, RoleState>();
-
-    protected float m_rotationY;
-    protected Vector3 m_velocity = Vector3.zero;
-    public Vector3 Velocity {
-        set {
-            m_velocity = value;
-        }
-        get {
-            return m_velocity;
-        }
-    }
+    private Dictionary<SRoleState.Type, SRoleState> m_dicStateCache = new Dictionary<SRoleState.Type, SRoleState>();
 
     public virtual void Update() {
         m_curState.Update();
@@ -84,28 +73,8 @@ public abstract class ModelRole {
         return string.Empty;
     }
 
-    public virtual void Run() {
-        m_rigidBody.velocity = m_velocity;
-        m_transform.rotation = Quaternion.Euler(0, m_rotationY, 0);
-    }
-
-    public virtual void EndRun() {
-        m_rigidBody.velocity = Vector3.zero;
-    }
-
-    public virtual void Attack(ModelAttackLevel level) { }
-
-    public virtual void Damage() { }
-
-    public virtual bool IsHPZero {
-        get {
-            return false;
-        }
-    }
-
     ~ModelRole() {
-        if (m_dicStateCache != null)
-            m_dicStateCache.Clear();
+        m_dicStateCache?.Clear();
         m_animation = null;
         m_rigidBody = null;
         m_transform = null;

@@ -55,10 +55,8 @@ public abstract class Prefab {
     }
 
     ~Prefab() {
-        if (m_dicImage != null)
-            m_dicImage.Clear();
-        if (m_dicText != null)
-            m_dicText.Clear();
+        m_dicImage?.Clear();
+        m_dicText?.Clear();
         if (m_dicButton != null) {
             var enumerator = m_dicButton.GetEnumerator();
             while (enumerator.MoveNext())

@@ -64,7 +64,7 @@ public class CPlayer:Controller {
     private void Attack(object arg) {
         ModelAttackLevel level = (ModelAttackLevel)arg;
         if (level == ModelAttackLevel.Normal)
-            m_player.State = RoleState.Type.SRoleAttack;
+            m_player.State = SRoleState.Type.SRoleAttack;
     }
 
     private void Damage(object arg) {
@@ -90,7 +90,7 @@ public class CPlayer:Controller {
     }
 
     private void SteeringWheelDragEnd(object arg) {
-        m_player.State = RoleState.Type.SRoleStand;
+        m_player.State = SRoleState.Type.SRoleStand;
     }
 
     private void FrameUpdate(object arg = null) {
@@ -100,7 +100,7 @@ public class CPlayer:Controller {
     private void ResetCameraFixMode(object arg = null) {
         Vector3 cameraPos = m_player.transform.position - m_cameraToPlayerDisVec3;
         Vector3 cameraLastPos = m_cameraTrans.position;
-        if ((cameraPos - cameraLastPos).magnitude < 0.01f && m_player.State == RoleState.Type.SRoleStand) {
+        if ((cameraPos - cameraLastPos).magnitude < 0.01f && m_player.State == SRoleState.Type.SRoleStand) {
             EventManager.Unregister(GameEvent.Type.LastUpdate, ResetCameraFixMode);
             return;
         }
@@ -110,7 +110,7 @@ public class CPlayer:Controller {
     private void ResetCameraThirdPersonMode(object arg = null) {
         Quaternion cameraRotation = m_cameraTrans.rotation;
         Quaternion playerRotation = m_player.transform.rotation;
-        if (Math.Abs(cameraRotation.eulerAngles.y - playerRotation.eulerAngles.y) < 1 && m_player.State == RoleState.Type.SRoleStand) {
+        if (Math.Abs(cameraRotation.eulerAngles.y - playerRotation.eulerAngles.y) < 1 && m_player.State == SRoleState.Type.SRoleStand) {
             EventManager.Unregister(GameEvent.Type.LastUpdate, ResetCameraThirdPersonMode);
             return;
         }
