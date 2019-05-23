@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8581208510351936050}
   - component: {fileID: 4113922831273937683}
-  - component: {fileID: 495156435122974054}
+  - component: {fileID: 240236772008142691}
   m_Layer: 8
   m_Name: MonsterVision
   m_TagString: Enemy
@@ -45,7 +45,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 2, z: 0}
---- !u!114 &495156435122974054
+--- !u!114 &240236772008142691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: fbe229825cc542b47820d644731215d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e82b36b844b681408d8bfe124e0b214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_collider: {fileID: 4113922831273937683}
