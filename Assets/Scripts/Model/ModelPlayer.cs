@@ -3,8 +3,7 @@
 public class ModelPlayer:ModelRole {
     private float m_curFoward;
     public float BeforeMoveFoward => m_curFoward;
-    private float m_attackDis = 0.5f;
-    private int m_attackAngle = 30;
+
     private ModelHPData m_healthPoint;
     public override bool IsHPZero {
         get {
@@ -12,22 +11,15 @@ public class ModelPlayer:ModelRole {
         }
     }
 
+    public ModelPlayer(GameObject node, int healthPoint):base(node) {
+        m_curFoward = m_transform.rotation.eulerAngles.y;
+        m_healthPoint = new ModelHPData(healthPoint);
+    }
+
     protected override void InitAnimation() {
         AddAnimation(RoleState.Type.SRoleStand.ToString(), "DrawBlade");
         AddAnimation(RoleState.Type.SRoleRun.ToString(), "Run00");
         AddAnimation(RoleState.Type.SRoleReadyFight.ToString(), "DrawBlade");
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="healthPoint">血量</param>
-    public void Init(int healthPoint) {
-        m_healthPoint = new ModelHPData(healthPoint);
-    }
-
-    protected override void Start() {
-        base.Start();
-        m_curFoward = transform.rotation.eulerAngles.y;
     }
 
     public void SetVelocityAndRotation(Vector2 direction2D, float cameraRotationY) {
@@ -53,22 +45,25 @@ public class ModelPlayer:ModelRole {
 
     public override void EndRun() {
         base.EndRun();
-        m_curFoward = transform.rotation.eulerAngles.y;
+        m_curFoward = m_transform.rotation.eulerAngles.y;
     }
 
+    private float m_attackDis = 0.5f;
+    private int m_attackAngle = 30;
+
     public override void Attack(ModelAttackLevel level) {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Player.ToString()));
+        Collider[] colliders = Physics.OverlapSphere(m_transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Enemy.ToString()));
         for (int i = 0; i < colliders.Length; i++) {
             if (colliders[i].isTrigger)
                 continue;
             if (colliders[i].tag != GameTagInfo.Enemy.ToString())
                 continue;
-            Vector3 selfToTarget = colliders[i].transform.position - transform.position;
-            float selfToTargetAngle = Vector3.Angle(selfToTarget, transform.forward);
+            Vector3 selfToTarget = colliders[i].transform.position - m_transform.position;
+            float selfToTargetAngle = Vector3.Angle(selfToTarget, m_transform.forward);
             if (selfToTargetAngle > m_attackAngle)
                 continue;
             ModelAttackData attackData = new ModelAttackData(RoleType.PlayerType,
-                                                            (int)PlayerType.Master, level, gameObject.name, colliders[i].name);
+                                                            (int)PlayerType.Master, level, m_gameObject.name, colliders[i].name);
             EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
         }
     }

@@ -64,9 +64,9 @@ public abstract class Prefab {
             while (enumerator.MoveNext())
                 enumerator.Current.Value.onClick.RemoveAllListeners();
         }
-        GameObject.Destroy(m_gameobject);
         m_rootNode = null;
-        m_gameobject = null;
         m_transform = null;
+        GameObject.Destroy(m_gameobject);
+        m_gameobject = null;
     }
 }

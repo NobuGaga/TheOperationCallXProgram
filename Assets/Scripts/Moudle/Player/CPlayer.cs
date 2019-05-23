@@ -50,8 +50,7 @@ public class CPlayer:Controller {
 
         Dictionary<string, GameObject> dicNodeName = arg as Dictionary<string, GameObject>;
         GameObject playerObj = dicNodeName["Blade_Warrior_Prefab"];
-        m_player = playerObj.AddComponent<ModelPlayer>();
-        m_player.Init(GetModel<MPlayerData>().PlayerHP);
+        m_player = new ModelPlayer(playerObj, GetModel<MPlayerData>().PlayerHP);
 
         m_cameraTrans = dicNodeName[GameConst.PlayerCamera].transform;
         m_cameraRotationY = m_cameraTrans.rotation.eulerAngles.y;
@@ -59,7 +58,7 @@ public class CPlayer:Controller {
         m_cameraToPlayerDis = m_player.transform.position.z - m_cameraTrans.position.z;
         m_cameraToPlayerDisVec3 = m_player.transform.position - m_cameraTrans.position;
 
-        EventManager.Register(GameEvent.Type.FrameUpdate, PlayerUpdate);
+        EventManager.Register(GameEvent.Type.FrameUpdate, FrameUpdate);
     }
 
     private void Attack(object arg) {
@@ -91,13 +90,11 @@ public class CPlayer:Controller {
     }
 
     private void SteeringWheelDragEnd(object arg) {
-        //DebugTool.Log(m_player.BeforeMoveFoward);
-        //DebugTool.Log(m_player.transform.rotation.eulerAngles.y);
         m_player.State = RoleState.Type.SRoleStand;
     }
 
-    private void PlayerUpdate(object arg = null) {
-        m_player.UpdateState();
+    private void FrameUpdate(object arg = null) {
+        m_player.Update();
     }
 
     private void ResetCameraFixMode(object arg = null) {

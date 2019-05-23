@@ -2,11 +2,30 @@
 using System;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(Rigidbody), typeof(Animation))]
-public abstract class ModelRole:MonoBehaviour {
+public abstract class ModelRole {
+    protected GameObject m_gameObject;
+    public GameObject gameObject {
+        get {
+            return m_gameObject;
+        }
+    }
+    protected Transform m_transform;
+    public Transform transform {
+        get {
+            return m_transform;
+        }
+    }
     protected Rigidbody m_rigidBody;
     private Animation m_animation;
-    private Dictionary<string, string> m_defaultStateAnimation;
+
+    public ModelRole(GameObject node) {
+        m_gameObject = node;
+        m_transform = m_gameObject.transform;
+        m_rigidBody = m_gameObject.GetComponent<Rigidbody>();
+        m_animation = m_gameObject.GetComponent<Animation>();
+        InitAnimation();
+        State = RoleState.Type.SRoleStand;
+    }
 
     private RoleState m_curState;
     public RoleState.Type State {
@@ -40,19 +59,11 @@ public abstract class ModelRole:MonoBehaviour {
         }
     }
 
-    protected virtual void Awake() {
-        m_rigidBody = GetComponent<Rigidbody>();
-        m_animation = GetComponent<Animation>();
-    }
-
-    protected virtual void Start() {
-        InitAnimation();
-        State = RoleState.Type.SRoleStand;
-    }
-
-    public void UpdateState() {
+    public virtual void Update() {
         m_curState.Update();
     }
+
+    private Dictionary<string, string> m_defaultStateAnimation;
 
     protected abstract void InitAnimation();
 
@@ -75,7 +86,7 @@ public abstract class ModelRole:MonoBehaviour {
 
     public virtual void Run() {
         m_rigidBody.velocity = m_velocity;
-        transform.rotation = Quaternion.Euler(0, m_rotationY, 0);
+        m_transform.rotation = Quaternion.Euler(0, m_rotationY, 0);
     }
 
     public virtual void EndRun() {
@@ -90,5 +101,15 @@ public abstract class ModelRole:MonoBehaviour {
         get {
             return false;
         }
+    }
+
+    ~ModelRole() {
+        if (m_dicStateCache != null)
+            m_dicStateCache.Clear();
+        m_animation = null;
+        m_rigidBody = null;
+        m_transform = null;
+        GameObject.Destroy(m_gameObject);
+        m_gameObject = null;
     }
 }

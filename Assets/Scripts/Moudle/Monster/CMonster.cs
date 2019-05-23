@@ -5,10 +5,13 @@ using System.Collections.Generic;
 public class CMonster:Controller {
     private Transform m_parent;
     private GameObject m_monsterPrefab;
+    private GameObject m_monsterVision;
     private Dictionary<string, ModelMonster> m_dicNameMonster = new Dictionary<string, ModelMonster>();
+    private List<ModelMonster> m_listMonster = new List<ModelMonster>();
 
     public CMonster(GameMoudle moudle, Type modelType):base(moudle, modelType) {
         m_monsterPrefab = Resources.Load<GameObject>("Monster_Warrior_Prefab");
+        m_monsterVision = Resources.Load<GameObject>("MonsterVision");
     }
 
     protected override void InitEvent() {
@@ -39,12 +42,16 @@ public class CMonster:Controller {
             float positionZ = UnityEngine.Random.Range(-0.3f, 0.3f);
             float positionY = monster.transform.position.y;
             monster.transform.position = new Vector3(positionX, positionY, positionZ);
-            ModelMonster script = monster.AddComponent<ModelMonster>();
+            GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
+            monsterVision.transform.SetParent(monster.transform);
+            ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
+            ModelMonster script = new ModelMonster(monster, GetModel<MMonsterData>().GetHealthPoint(m_monsterPrefab.name), vision);
             if (m_dicNameMonster.ContainsKey(nodeName))
                 m_dicNameMonster[nodeName] = script;
             else
                 m_dicNameMonster.Add(nodeName, script);
-            script.Init(GetModel<MMonsterData>().GetHealthPoint(m_monsterPrefab.name));
+            m_listMonster.Add(script);
+            EventManager.Register(GameEvent.Type.FrameUpdate, FrameUpdate);
         }
     }
 
@@ -59,5 +66,10 @@ public class CMonster:Controller {
             return m_dicNameMonster[nodeName];
         DebugTool.LogError(string.Format("CMonster node name {0} not exit" + nodeName));
         return null;
+    }
+
+    private void FrameUpdate(object arg) {
+        for (int i = 0; i < m_listMonster.Count; i++)
+            m_listMonster[i].Update();
     }
 }
