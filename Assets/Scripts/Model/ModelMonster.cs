@@ -62,15 +62,9 @@ public class ModelMonster:ModelAttackRole {
     }
 
     public override float Damage(ModelAttackData data) {
-        m_healthPoint -= data.Damage;
+        float percent = base.Damage(data);
         DebugTool.Log("ModelMonster::Damage " + m_healthPoint.ToString());
-        SRoleState.Type state;
-        if (IsHPZero)
-            state = SRoleState.Type.SRoleDeath;
-        else
-            state = SRoleState.Type.SRoleDamage;
-        State = state;
-        return m_healthPoint.Percent;
+        return percent;
     }
 
     private void OnTriggerEnter(Collider collider) {

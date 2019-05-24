@@ -46,6 +46,11 @@ public static class GameSceneManager {
         return dicSceneInfo[curScene].GetNode(nodeName);
     }
     
+    public static T GetNode<T>(string nodeName) {
+        GameObject node = GetNode(nodeName);
+        return node.GetComponent<T>();
+    }
+
     private static bool IsCacheMoudle(string nodeName) {
         if (nodeName == GameConst.GameCamera)
             return true;

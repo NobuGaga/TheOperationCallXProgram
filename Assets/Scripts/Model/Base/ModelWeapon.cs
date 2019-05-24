@@ -18,9 +18,9 @@ public class ModelWeapon:MonoBehaviour {
 
     public void SetHands(Transform leftHand, Transform rightHand) {
         if (m_hand == WeaponHandType.Left)
-            transform.SetParent(leftHand);
+            transform.SetParent(leftHand, false);
         else
-            transform.SetParent(rightHand);
+            transform.SetParent(rightHand, false);
     }
 
     public void SetBullet(GameObject bullet, Action<Collider> beginFunc) {
