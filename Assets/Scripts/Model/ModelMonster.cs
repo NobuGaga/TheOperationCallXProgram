@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
 public class ModelMonster:ModelAttackRole {
-    public ModelMonster(GameObject node, ModelAttackRoleData attackData, ModelMonsterVision vision) :base(node, attackData) {
+    private float m_speed;
+
+    public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, ModelMonsterVision vision) :base(node, attackData) {
+        m_speed = speed;
         vision.SetCallBack(OnTriggerEnter, OnTriggerStay, OnTriggerExit);
     }
 
@@ -13,6 +16,7 @@ public class ModelMonster:ModelAttackRole {
 
     private Transform m_target;
     private float m_disToTarget;
+
 
     public override void Update() {
         base.Update();
@@ -30,7 +34,7 @@ public class ModelMonster:ModelAttackRole {
                     m_transform.LookAt(m_target, Vector3.up);
                     m_rotationY = m_transform.rotation.eulerAngles.y;
                     m_disToTarget = (m_target.position - m_transform.position).magnitude;
-                    Vector3 speed = (m_target.position - m_transform.position).normalized * GameConfig.CameraMoveThirdModeTime * 3;
+                    Vector3 speed = (m_target.position - m_transform.position).normalized * m_speed;
                     m_velocity = speed * Time.deltaTime;
                 }
                 break;

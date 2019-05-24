@@ -11,6 +11,7 @@ public struct ModelMonsterData {
     public GameObject Prefab => prefab;
     private int maxHP;
     private float speed;
+    public float Speed => speed;
     private float attackDis;
     private int attackAngle;
 
