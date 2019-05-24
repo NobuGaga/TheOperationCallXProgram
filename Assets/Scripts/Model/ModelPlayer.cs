@@ -23,6 +23,8 @@ public class ModelPlayer:ModelWeaponRole {
         AddAnimation(SRoleState.Type.SRoleReadyFight.ToString(), "DrawBlade");
     }
 
+    protected override void InitAttackAnimation() { }
+
     public void SetVelocityAndRotation(Vector2 direction2D, float cameraRotationY) {
         direction2D = direction2D.normalized;
         m_velocity.x = direction2D.x;

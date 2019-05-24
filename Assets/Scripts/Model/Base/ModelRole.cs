@@ -65,7 +65,7 @@ public abstract class ModelRole {
             m_defaultStateAnimation.Add(state, animationName);
     }
 
-    public string GetAnimationName(string state) {
+    public virtual string GetAnimationName(string state) {
         if (m_defaultStateAnimation == null)
             return string.Empty;
         if (m_defaultStateAnimation.ContainsKey(state))

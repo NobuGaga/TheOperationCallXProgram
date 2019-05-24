@@ -5,6 +5,7 @@ public class SRoleDeath:SRoleState {
 
     public override void Enter() {
         PlayAnimation();
+        attackRole?.Death();
     }
 
     public override void Update() { }
@@ -12,4 +13,12 @@ public class SRoleDeath:SRoleState {
     public override void Exit() { }
 
     public override Type GetState() { return Type.SRoleDeath; }
+
+    private ModelAttackRole attackRole {
+        get {
+            if (m_role is ModelAttackRole)
+                return m_role as ModelAttackRole;
+            return null;
+        }
+    }
 }

@@ -14,6 +14,8 @@ public class ModelMonster:ModelAttackRole {
         AddAnimation(SRoleState.Type.SRoleReadyFight.ToString(), "DrawBlade");
     }
 
+    protected override void InitAttackAnimation() { }
+
     private Transform m_target;
     private float m_disToTarget;
 

@@ -44,7 +44,7 @@ public class CMonster:Controller {
         monster.transform.SetParent(m_parent);
         monster.transform.position = data.GetScenePostion();
         GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
-        monsterVision.transform.SetParent(monster.transform);
+        monsterVision.transform.SetParent(monster.transform, false);
         ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
         ModelMonster script = new ModelMonster(monster, data.AttackRoleData, data.Speed, vision);
         if (m_dicNameMonster.ContainsKey(nodeName))
