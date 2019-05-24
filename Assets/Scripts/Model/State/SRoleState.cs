@@ -50,7 +50,12 @@ public abstract class SRoleState {
             m_animation.Play(animationName);
     }
 
-    private string GetAnimationName() {
+    protected void PlayAnimation(string animationName) {
+        if (!m_animation.IsPlaying(animationName))
+            m_animation.Play(animationName);
+    }
+
+    protected string GetAnimationName() {
         string animationName = m_role.GetAnimationName(GetState().ToString());
         if (animationName == string.Empty)
             animationName = GetAnimationName(GetState());

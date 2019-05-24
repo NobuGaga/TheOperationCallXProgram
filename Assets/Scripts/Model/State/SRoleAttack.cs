@@ -8,7 +8,7 @@ public class SRoleAttack:SRoleState {
     public override void Enter() {
         PlayAnimation();
         m_isAttacking = true;
-        attackRole?.Attack(ModelAttackLevel.Normal);
+        attackRole?.Attack();
     }
 
     public override void Update() {

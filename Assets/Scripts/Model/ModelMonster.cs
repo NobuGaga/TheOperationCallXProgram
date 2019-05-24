@@ -22,6 +22,8 @@ public class ModelMonster:ModelAttackRole {
         base.Update();
         if (m_target == null)
             return;
+        if (State == SRoleState.Type.SRoleDeath)
+            return;
         switch (State) {
             case SRoleState.Type.SRoleStand:
                 if (m_disToTarget < m_attackDis)
@@ -46,7 +48,7 @@ public class ModelMonster:ModelAttackRole {
         }
     }
 
-    public override void Attack(ModelAttackLevel level) {
+    public override void Attack() {
         Collider[] colliders = Physics.OverlapSphere(m_transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Player.ToString()));
         for (int i = 0; i < colliders.Length; i++) {
             if (colliders[i].tag != GameTagInfo.Player.ToString())
@@ -58,7 +60,7 @@ public class ModelMonster:ModelAttackRole {
             if (selfToTargetAngle > m_attackAngle)
                 continue;
             ModelAttackData attackData = new ModelAttackData(RoleType.Monster, 
-                                                            (int)MonsterType.Rubbish, level, gameObject.name, colliders[i].name);
+                                                            (int)MonsterType.Rubbish, m_attackLevel, gameObject.name, colliders[i].name);
             EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.Damage, attackData);
             return;
         }
@@ -70,8 +72,12 @@ public class ModelMonster:ModelAttackRole {
         return percent;
     }
 
+    public override void Death() {
+        gameObject.GetComponent<Collider>().enabled = false;
+    }
+
     private void OnTriggerEnter(Collider collider) {
-        if (collider.tag != GameTagInfo.Player.ToString())
+        if (collider.tag != GameTagInfo.Player.ToString() || State == SRoleState.Type.SRoleDeath)
             return;
         m_target = collider.transform;
         m_transform.LookAt(m_target, Vector3.up);

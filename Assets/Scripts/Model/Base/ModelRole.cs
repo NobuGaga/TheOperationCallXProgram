@@ -31,7 +31,7 @@ public abstract class ModelRole {
     public SRoleState.Type State {
         set {
             bool isFirst = m_curState == null;
-            if (!isFirst && m_curState.GetState() == value)
+            if (!isFirst && (m_curState.GetState() == value || m_curState.GetState() == SRoleState.Type.SRoleDeath))
                 return;
             if (!isFirst)
                 m_curState.Exit();

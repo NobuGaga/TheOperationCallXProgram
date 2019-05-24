@@ -49,7 +49,7 @@ public class ModelPlayer:ModelWeaponRole {
         m_curFoward = m_transform.rotation.eulerAngles.y;
     }
 
-    public override void Attack(ModelAttackLevel level) {
+    public override void Attack() {
         Collider[] colliders = Physics.OverlapSphere(m_transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Enemy.ToString()));
         for (int i = 0; i < colliders.Length; i++) {
             if (colliders[i].isTrigger)
@@ -61,8 +61,9 @@ public class ModelPlayer:ModelWeaponRole {
             if (selfToTargetAngle > m_attackAngle)
                 continue;
             ModelAttackData attackData = new ModelAttackData(RoleType.Player,
-                                                            (int)PlayerType.Master, level, m_gameObject.name, colliders[i].name);
+                                                            (int)PlayerType.Master, m_attackLevel, m_gameObject.name, colliders[i].name);
             EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
+            break;
         }
         //m_weapon.Shoot(transform.forward);
     }
@@ -72,6 +73,8 @@ public class ModelPlayer:ModelWeaponRole {
         DebugTool.Log("ModelPlayer::Damage " + m_healthPoint.ToString());
         return percent;
     }
+
+    public override void Death() { }
 
     private void OnTriggerEnter(Collider collider) {
         ModelAttackData attackData = new ModelAttackData(RoleType.Player, (int)PlayerType.Master, 

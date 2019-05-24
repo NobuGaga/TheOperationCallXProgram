@@ -9,10 +9,12 @@ public class ModelDamageText:MonoBehaviour {
     [SerializeField]
     private int m_moveDis = 100;
     private float m_originY;
+    private Transform m_camera;
 
     private void Awake() {
         Canvas canvas = GetComponent<Canvas>();
-        canvas.worldCamera = GameSceneManager.GetNode<Camera>("PlayerCamera");
+        m_camera = GameSceneManager.GetNode<Transform>("PlayerCamera");
+        canvas.worldCamera = m_camera.GetComponent<Camera>();
         if (m_text != null)
             return;
         Transform[] nodes = GetComponentsInChildren<Transform>();
@@ -41,7 +43,9 @@ public class ModelDamageText:MonoBehaviour {
             return;
         if (Math.Abs(transform.localPosition.y - m_originY) > m_moveDis)
             DestroyImmediate(gameObject, false);
-        else
+        else {
             transform.Translate(Vector3.up * Time.deltaTime);
+            transform.LookAt(m_camera);
+        }
     }
 }

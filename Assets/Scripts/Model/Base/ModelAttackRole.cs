@@ -11,6 +11,12 @@ public abstract class ModelAttackRole:ModelRunRole {
     protected float m_attackDis;
     protected int m_attackAngle;
     private GameObject m_damageText;
+    protected ModelAttackLevel m_attackLevel = ModelAttackLevel.Normal;
+    public ModelAttackLevel AttackLevel {
+        set {
+            m_attackLevel = value;
+        }
+    }
 
     public ModelAttackRole(GameObject node, ModelAttackRoleData data):base(node) {
         m_healthPoint = new ModelHPData(data.MaxHP);
@@ -19,7 +25,7 @@ public abstract class ModelAttackRole:ModelRunRole {
         m_damageText = Resources.Load<GameObject>("ModelDamageText");
     }
 
-    public abstract void Attack(ModelAttackLevel level);
+    public abstract void Attack();
     public virtual float Damage(ModelAttackData data) {
         int damage = data.Damage;
         GameObject damageObj = GameObject.Instantiate<GameObject>(m_damageText);
@@ -35,4 +41,5 @@ public abstract class ModelAttackRole:ModelRunRole {
         State = state;
         return m_healthPoint.Percent;
     }
+    public abstract void Death();
 }

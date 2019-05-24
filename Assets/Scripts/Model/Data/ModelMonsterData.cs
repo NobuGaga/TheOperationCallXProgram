@@ -21,8 +21,9 @@ public struct ModelMonsterData {
             this.dicScenePos = new Dictionary<GameScene, Vector3[]>();
         else
             this.dicScenePos = dicScenePos;
-        this.prefabName = prefabName;
         prefab = Resources.Load<GameObject>(prefabName);
+        string[] paths = prefabName.Split('/');
+        this.prefabName = paths[paths.Length - 1];
         this.maxHP = maxHP;
         this.speed = speed;
         this.attackDis = attackDis;

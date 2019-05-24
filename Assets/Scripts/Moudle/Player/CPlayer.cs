@@ -64,8 +64,8 @@ public class CPlayer:Controller {
 
     private void Attack(object arg) {
         ModelAttackLevel level = (ModelAttackLevel)arg;
-        if (level == ModelAttackLevel.Normal)
-            m_player.State = SRoleState.Type.SRoleAttack;
+        m_player.AttackLevel = level;
+        m_player.State = SRoleState.Type.SRoleAttack;
     }
 
     private void Damage(object arg) {

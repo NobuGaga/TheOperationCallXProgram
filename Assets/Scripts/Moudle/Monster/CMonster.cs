@@ -31,24 +31,27 @@ public class CMonster:Controller {
     public void InitModel(object arg) {
         Dictionary<string, GameObject> dicNodeName = arg as Dictionary<string, GameObject>;
         m_parent = dicNodeName["MonsterGroup"].transform;
-        for (int i = 0; i < 2; i++) {
-            ModelMonsterData data = GetModel<MMonsterData>().GetMonsterData(MonsterType.Rubbish);
-            GameObject monster = GameObject.Instantiate(data.Prefab);
-            string nodeName = string.Concat(data.PrefabName, i);
-            monster.name = nodeName;
-            monster.transform.SetParent(m_parent);
-            monster.transform.position = data.GetScenePostion();
-            GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
-            monsterVision.transform.SetParent(monster.transform);
-            ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
-            ModelMonster script = new ModelMonster(monster, data.AttackRoleData, data.Speed, vision);
-            if (m_dicNameMonster.ContainsKey(nodeName))
-                m_dicNameMonster[nodeName] = script;
-            else
-                m_dicNameMonster.Add(nodeName, script);
-            m_listMonster.Add(script);
-            EventManager.Register(GameEvent.Type.FrameUpdate, FrameUpdate);
-        }
+        for (int i = 0; i < 2; i++)
+            CreateMonster(i);
+        EventManager.Register(GameEvent.Type.FrameUpdate, FrameUpdate);
+    }
+
+    private void CreateMonster(int index, MonsterType type = MonsterType.Rubbish) {
+        ModelMonsterData data = GetModel<MMonsterData>().GetMonsterData(type);
+        GameObject monster = GameObject.Instantiate(data.Prefab);
+        string nodeName = string.Concat(data.PrefabName, index);
+        monster.name = nodeName;
+        monster.transform.SetParent(m_parent);
+        monster.transform.position = data.GetScenePostion();
+        GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
+        monsterVision.transform.SetParent(monster.transform);
+        ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
+        ModelMonster script = new ModelMonster(monster, data.AttackRoleData, data.Speed, vision);
+        if (m_dicNameMonster.ContainsKey(nodeName))
+            m_dicNameMonster[nodeName] = script;
+        else
+            m_dicNameMonster.Add(nodeName, script);
+        m_listMonster.Add(script);
     }
 
     public void Damage(object arg) {
@@ -65,7 +68,29 @@ public class CMonster:Controller {
     }
 
     private void FrameUpdate(object arg) {
-        for (int i = 0; i < m_listMonster.Count; i++)
-            m_listMonster[i].Update();
+        List<int> deleteIndexList = null;
+        List<string> deleteNameList = null;
+        for (int i = 0; i < m_listMonster.Count; i++) {
+            if (m_listMonster[i].State != SRoleState.Type.SRoleDeath) {
+                m_listMonster[i].Update();
+                continue;
+            }
+            if (deleteIndexList == null)
+                deleteIndexList = new List<int>();
+            if (deleteNameList == null)
+                deleteNameList = new List<string>();
+            deleteIndexList.Add(i);
+            deleteNameList.Add(m_listMonster[i].gameObject.name);
+        }
+        if (deleteIndexList == null)
+            return;
+        for (int i = 0; i < deleteIndexList.Count; i++) {
+            int index = deleteIndexList[i];
+            string name = deleteNameList[i];
+            m_listMonster.RemoveAt(index);
+            if (m_dicNameMonster.ContainsKey(name))
+                m_dicNameMonster.Remove(name);
+            CreateMonster(index);
+        }
     }
 }
