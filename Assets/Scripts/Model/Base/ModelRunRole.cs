@@ -4,7 +4,7 @@ public abstract class ModelRunRole:ModelRole {
     protected float m_rotationY;
     protected Vector3 m_velocity = Vector3.zero;
 
-    public ModelRunRole(GameObject node) : base(node) { }
+    public ModelRunRole(GameObject node):base(node) { }
 
     public Vector3 Velocity {
         set {

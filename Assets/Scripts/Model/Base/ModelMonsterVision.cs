@@ -31,7 +31,7 @@ public class ModelMonsterVision:MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider collider) {
-        m_beginFunc(collider);
+        m_beginFunc?.Invoke(collider);
     }
 
     private void OnTriggerStay(Collider collider) {

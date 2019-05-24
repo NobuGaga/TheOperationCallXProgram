@@ -54,7 +54,7 @@ public class ModelMonster:ModelAttackRole {
             float selfToTargetAngle = Vector3.Angle(selfToTarget, m_transform.forward);
             if (selfToTargetAngle > m_attackAngle)
                 continue;
-            ModelAttackData attackData = new ModelAttackData(RoleType.MonsterType, 
+            ModelAttackData attackData = new ModelAttackData(RoleType.Monster, 
                                                             (int)MonsterType.Rubbish, level, gameObject.name, colliders[i].name);
             EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.Damage, attackData);
             return;

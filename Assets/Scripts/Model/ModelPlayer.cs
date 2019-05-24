@@ -1,11 +1,20 @@
 ﻿using UnityEngine;
 
-public class ModelPlayer:ModelAttackRole {
+public class ModelPlayer:ModelWeaponRole {
     private float m_curFoward;
     public float BeforeMoveFoward => m_curFoward;
+    private ModelWeapon m_weapon;
+    private GameObject m_bulletObj;
 
     public ModelPlayer(GameObject node, int healthPoint):base(node, healthPoint) {
         m_curFoward = m_transform.rotation.eulerAngles.y;
+        SetHands("Glove", "Glove");
+        UIPrefab prefab = gameObject.GetComponent<UIPrefab>();
+        Transform weaponNode = prefab.GetNode<Transform>("headusOBJexport009");
+        m_weapon = weaponNode.GetComponent<ModelWeapon>();
+        SetWeapon(m_weapon);
+        m_bulletObj = Resources.Load<GameObject>("ModelBullet");
+        m_weapon.SetBullet(m_bulletObj, OnTriggerEnter);
     }
 
     protected override void InitAnimation() {
@@ -51,10 +60,11 @@ public class ModelPlayer:ModelAttackRole {
             float selfToTargetAngle = Vector3.Angle(selfToTarget, m_transform.forward);
             if (selfToTargetAngle > m_attackAngle)
                 continue;
-            ModelAttackData attackData = new ModelAttackData(RoleType.PlayerType,
+            ModelAttackData attackData = new ModelAttackData(RoleType.Player,
                                                             (int)PlayerType.Master, level, m_gameObject.name, colliders[i].name);
             EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
         }
+        //m_weapon.Shoot(transform.forward);
     }
 
     public override float Damage(ModelAttackData data) {
@@ -67,5 +77,11 @@ public class ModelPlayer:ModelAttackRole {
             state = SRoleState.Type.SRoleDamage;
         State = state;
         return m_healthPoint.Percent;
+    }
+
+    private void OnTriggerEnter(Collider collider) {
+        ModelAttackData attackData = new ModelAttackData(RoleType.Player, (int)PlayerType.Master, 
+                                                            ModelAttackLevel.Normal, m_gameObject.name, collider.name);
+        EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
     }
 }
