@@ -8,7 +8,7 @@ public abstract class ModelWeaponRole:ModelAttackRole {
     private Transform m_rightHand;
     private Dictionary<string, Transform> m_dicNodeName;
 
-    public ModelWeaponRole(GameObject node, int healthPoint, string leftHandName = "", string rightHandName = ""):base(node, healthPoint) {
+    public ModelWeaponRole(GameObject node, ModelAttackRoleData attackData, string leftHandName = "", string rightHandName = ""):base(node, attackData) {
         SetHands(leftHandName, rightHandName);
     }
 

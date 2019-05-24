@@ -4,13 +4,11 @@ using System.Collections.Generic;
 
 public class CMonster:Controller {
     private Transform m_parent;
-    private GameObject m_monsterPrefab;
     private GameObject m_monsterVision;
     private Dictionary<string, ModelMonster> m_dicNameMonster = new Dictionary<string, ModelMonster>();
     private List<ModelMonster> m_listMonster = new List<ModelMonster>();
 
     public CMonster(GameMoudle moudle, Type modelType):base(moudle, modelType) {
-        m_monsterPrefab = Resources.Load<GameObject>("Monster_Warrior_Prefab");
         m_monsterVision = Resources.Load<GameObject>("MonsterVision");
     }
 
@@ -34,18 +32,16 @@ public class CMonster:Controller {
         Dictionary<string, GameObject> dicNodeName = arg as Dictionary<string, GameObject>;
         m_parent = dicNodeName["MonsterGroup"].transform;
         for (int i = 0; i < 2; i++) {
-            GameObject monster = GameObject.Instantiate(m_monsterPrefab);
-            string nodeName = string.Concat(m_monsterPrefab.name, i);
+            ModelMonsterData data = GetModel<MMonsterData>().GetMonsterData(MonsterType.Rubbish);
+            GameObject monster = GameObject.Instantiate(data.Prefab);
+            string nodeName = string.Concat(data.PrefabName, i);
             monster.name = nodeName;
             monster.transform.SetParent(m_parent);
-            float positionX = UnityEngine.Random.Range(-0.2f, 0.2f);
-            float positionZ = UnityEngine.Random.Range(-0.3f, 0.3f);
-            float positionY = monster.transform.position.y;
-            monster.transform.position = new Vector3(positionX, positionY, positionZ);
+            monster.transform.position = data.GetScenePostion();
             GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
             monsterVision.transform.SetParent(monster.transform);
             ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
-            ModelMonster script = new ModelMonster(monster, GetModel<MMonsterData>().GetHealthPoint(m_monsterPrefab.name), vision);
+            ModelMonster script = new ModelMonster(monster, data.AttackRoleData, vision);
             if (m_dicNameMonster.ContainsKey(nodeName))
                 m_dicNameMonster[nodeName] = script;
             else

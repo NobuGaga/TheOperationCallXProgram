@@ -1,17 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class MMonsterData:Model {
-    private Dictionary<string, int> m_dicMonsterHP;
+    private Dictionary<MonsterType, ModelMonsterData> m_dicMonsterData;
 
     public override void Init() {
-        m_dicMonsterHP = new Dictionary<string, int>();
-        m_dicMonsterHP.Add("Monster_Warrior_Prefab", 100);
+        m_dicMonsterData = new Dictionary<MonsterType, ModelMonsterData>();
+        ModelMonsterData data = new ModelMonsterData(MonsterType.Rubbish, "Monster_Warrior_Prefab", 100, 30, 0.5f, 30);
+        data.AddScenePosition(GameScene.DesertScene, new Vector3(-0.2f, -0.48f, -0.3f), new Vector3(0.2f, -0.48f, 0.3f));
+        m_dicMonsterData.Add(data.Type, data);
     }
 
-    public int GetHealthPoint(string name) {
-        if (m_dicMonsterHP.ContainsKey(name))
-            return m_dicMonsterHP[name];
-        return 0;
+    public ModelMonsterData GetMonsterData(MonsterType type) {
+        if (!m_dicMonsterData.ContainsKey(type))
+            DebugTool.LogError(string.Format("MMonsterData::GetAttackRoleData not exit type \"{0}\" data", type.ToString()));
+        return m_dicMonsterData[type];
+    }
+
+    public ModelAttackRoleData GetAttackRoleData(MonsterType type) {
+        return GetMonsterData(type).AttackRoleData;
     }
 
     public override void Dispose() {

@@ -6,7 +6,7 @@ public class ModelPlayer:ModelWeaponRole {
     private ModelWeapon m_weapon;
     private GameObject m_bulletObj;
 
-    public ModelPlayer(GameObject node, int healthPoint):base(node, healthPoint) {
+    public ModelPlayer(GameObject node, ModelAttackRoleData attackData) :base(node, attackData) {
         m_curFoward = m_transform.rotation.eulerAngles.y;
         SetHands("Glove", "Glove");
         UIPrefab prefab = gameObject.GetComponent<UIPrefab>();

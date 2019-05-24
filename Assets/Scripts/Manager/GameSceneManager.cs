@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public static class GameSceneManager {
     private static GameScene curScene;
+    public static GameScene CurScene => curScene;
     private static AsyncOperation asyncOperation;
     public static float LoadSceneProcess {
         get {

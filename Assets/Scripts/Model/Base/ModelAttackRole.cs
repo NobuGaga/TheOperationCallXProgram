@@ -8,15 +8,16 @@ public abstract class ModelAttackRole:ModelRunRole {
         }
     }
 
+    protected float m_attackDis;
+    protected int m_attackAngle;
     private GameObject m_damageText;
 
-    public ModelAttackRole(GameObject node, int healthPoint):base(node) {
-        m_healthPoint = new ModelHPData(healthPoint);
+    public ModelAttackRole(GameObject node, ModelAttackRoleData data):base(node) {
+        m_healthPoint = new ModelHPData(data.MaxHP);
+        m_attackDis = data.attackDis;
+        m_attackAngle = data.attackAngle;
         m_damageText = Resources.Load<GameObject>("ModelDamageText");
     }
-
-    protected float m_attackDis = 0.5f;
-    protected int m_attackAngle = 30;
 
     public abstract void Attack(ModelAttackLevel level);
     public virtual float Damage(ModelAttackData data) {

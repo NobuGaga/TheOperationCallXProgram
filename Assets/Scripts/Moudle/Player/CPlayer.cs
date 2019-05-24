@@ -50,7 +50,8 @@ public class CPlayer:Controller {
 
         Dictionary<string, GameObject> dicNodeName = arg as Dictionary<string, GameObject>;
         GameObject playerObj = dicNodeName["Blade_Warrior_Prefab"];
-        m_player = new ModelPlayer(playerObj, GetModel<MPlayerData>().PlayerHP);
+        ModelAttackRoleData data = new ModelAttackRoleData(GetModel<MPlayerData>().PlayerHP, 0.5f, 30);
+        m_player = new ModelPlayer(playerObj, data);
 
         m_cameraTrans = dicNodeName[GameConst.PlayerCamera].transform;
         m_cameraRotationY = m_cameraTrans.rotation.eulerAngles.y;
