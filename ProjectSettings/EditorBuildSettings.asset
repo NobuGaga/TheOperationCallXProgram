@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/StartScene.unity
     guid: 03fe2d8ee92b3974ba9383689859f052
   - enabled: 1
     path: Assets/Scenes/SelectScene.unity
     guid: 801dd7164a9984747b5bcdf931cd7f22
+  - enabled: 1
+    path: Assets/Resources/Blade_Warrior/Scene/Blade_Warrior_Demo.unity
+    guid: 196c76cc94064c2458335dc00af89fae
+  - enabled: 1
+    path: Assets/Scenes/DesertScene.unity
+    guid: 16eadd66b16638d4dba91e2f2efd4394
   m_configObjects: {}

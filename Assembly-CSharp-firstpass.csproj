@@ -9,10 +9,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{9B9DC8F7-6F15-951A-50C9-806266A5CF6D}</ProjectGuid>
+    <ProjectGuid>{9EF4CF73-F7C5-A8E4-A33F-EF4774048AE9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.1.0a8</UnityVersion>
   </PropertyGroup>
@@ -60,71 +60,86 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Base\Class\Controller.cs" />
-    <Compile Include="Assets\Scripts\Base\Class\LogicScript.cs" />
-    <Compile Include="Assets\Scripts\Base\Class\Model.cs" />
-    <Compile Include="Assets\Scripts\Base\Class\Prefab.cs" />
-    <Compile Include="Assets\Scripts\Base\Class\View.cs" />
-    <Compile Include="Assets\Scripts\Config\GameConfig.cs" />
-    <Compile Include="Assets\Scripts\Config\GameConst.cs" />
-    <Compile Include="Assets\Scripts\Config\PathConfig.cs" />
-    <Compile Include="Assets\Scripts\Game\Game.cs" />
-    <Compile Include="Assets\Scripts\Game\GameEvent.cs" />
-    <Compile Include="Assets\Scripts\Game\GameLayerInfo.cs" />
-    <Compile Include="Assets\Scripts\Game\GameMoudleInfo.cs" />
-    <Compile Include="Assets\Scripts\Game\GameSceneInfo.cs" />
-    <Compile Include="Assets\Scripts\Game\GameSetting.cs" />
-    <Compile Include="Assets\Scripts\Manager\AssetBundle\AssetBundleLoader.cs" />
-    <Compile Include="Assets\Scripts\Manager\AssetBundle\AssetBundleManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\ControllerManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\GameSceneManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\TimerManager.cs" />
-    <Compile Include="Assets\Scripts\Manager\ViewManager.cs" />
-    <Compile Include="Assets\Scripts\Model\Base\ModelAttackRole.cs" />
-    <Compile Include="Assets\Scripts\Model\Base\ModelBullet.cs" />
-    <Compile Include="Assets\Scripts\Model\Base\ModelMonsterVision.cs" />
-    <Compile Include="Assets\Scripts\Model\Base\ModelRole.cs" />
-    <Compile Include="Assets\Scripts\Model\Base\ModelRunRole.cs" />
-    <Compile Include="Assets\Scripts\Model\Base\ModelWeapon.cs" />
-    <Compile Include="Assets\Scripts\Model\Base\ModelWeaponRole.cs" />
-    <Compile Include="Assets\Scripts\Model\Data\ModelAttackData.cs" />
-    <Compile Include="Assets\Scripts\Model\Data\ModelAttackRoleData.cs" />
-    <Compile Include="Assets\Scripts\Model\Data\ModelHPData.cs" />
-    <Compile Include="Assets\Scripts\Model\Data\ModelMonsterData.cs" />
-    <Compile Include="Assets\Scripts\Model\Data\ModelRoleType.cs" />
-    <Compile Include="Assets\Scripts\Model\ModelMonster.cs" />
-    <Compile Include="Assets\Scripts\Model\ModelPlayer.cs" />
-    <Compile Include="Assets\Scripts\Model\State\SRoleAttack.cs" />
-    <Compile Include="Assets\Scripts\Model\State\SRoleDamage.cs" />
-    <Compile Include="Assets\Scripts\Model\State\SRoleDeath.cs" />
-    <Compile Include="Assets\Scripts\Model\State\SRoleRun.cs" />
-    <Compile Include="Assets\Scripts\Model\State\SRoleStand.cs" />
-    <Compile Include="Assets\Scripts\Model\State\SRoleState.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Loading\CLoading.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Loading\View\LoadingView.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Monster\CMonster.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Monster\MMonsterData.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Player\CPlayer.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Player\MPlayerData.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Player\View\PlayerView.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Select\CSelect.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Select\MSelectData.cs" />
-    <Compile Include="Assets\Scripts\Moudle\Select\View\SelectView.cs" />
-    <Compile Include="Assets\Scripts\Moudle\VirtualButton\CVirtualButton.cs" />
-    <Compile Include="Assets\Scripts\Moudle\VirtualButton\View\VirtualButtonView.cs" />
-    <Compile Include="Assets\Scripts\Tool\CsvTool.cs" />
-    <Compile Include="Assets\Scripts\Tool\DebugTool.cs" />
-    <Compile Include="Assets\Scripts\Tool\StringTool.cs" />
-    <Compile Include="Assets\Scripts\UI\UIImage.cs" />
-    <Compile Include="Assets\Scripts\UI\UIPrefab.cs" />
-    <Compile Include="Assets\Scripts\UI\UISteeringWheel.cs" />
-    <None Include="Assets\Resources\Blade_Warrior\Shaders\Glass.shader" />
-    <None Include="Assets\Resources\GameConfig.txt" />
-    <None Include="Assets\Resources\Blade_Warrior\ReadMe.txt" />
-    <None Include="Assets\Resources\Blade_Warrior\Shaders\StandOutline.shader" />
-    <None Include="Assets\Resources\Blade_Warrior\Shaders\Glass2.shader" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\BlurEffect.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\ColorCorrectionEffect.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\ContrastStretchEffect.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\GlowEffect.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\GrayscaleEffect.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\ImageEffectBase.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\ImageEffects.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\MotionBlur.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\NoiseEffect.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\SepiaToneEffect.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\SSAOEffect.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\TwirlEffect.cs" />
+    <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\VortexEffect.cs" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowConeTap.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SunShaftsComposite.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ColorCorrectionCurves.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ScreenSpaceAmbientObscurance.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\NFAA.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\VignetteShader.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfFieldScatter.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\MotionBlur.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\MobileBloom.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowCompose.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\MinMaxReduction.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\SSAA.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\RadialBlur.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfFieldDX11.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ContrastComposite.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAAPreset3.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\FisheyeShader.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Apply.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfField34.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\MobileBlur.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SSAOShader.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ConvertDepth.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ColorCorrectionCurvesSimple.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderYUV.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowEffectDownsample.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\CreaseApply.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ChromaticAberrationShader.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlobalFog.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Luminance.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ColorCorrectionSelective.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\Bokeh34.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\CameraMotionBlurDX11.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\BlurEffectConeTaps.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\CameraMotionBlur.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\DLAA.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseAndGrainDX11.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableBlur.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\MotionBlurClear.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ColorCorrectionEffect.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GrayscaleEffect.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SepiaToneEffect.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\TwirlEffect.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\VortexEffect.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Adaptation.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseAndGrain.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\VignettingShader.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Tonemapper.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAA2.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ColorCorrection3DLut.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\EdgeDetectNormals.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\PrepareSunShaftsBlur.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\Blend.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\BlendModesOverlay.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SimpleClear.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAA3Console.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAAPreset2.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
+    <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendForBloom.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

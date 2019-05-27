@@ -35,7 +35,6 @@ public static class TimerManager {
         for (int i = m_listEvent.Count - 1; i >= 0; i--) {
             DelayCallData data = m_listEvent[i];
             m_listEvent[i] = new DelayCallData(data.delay - Time.deltaTime, data.callback);
-            DebugTool.Log("m_listEvent[i].delay " + m_listEvent[i].delay);
             if (m_listEvent[i].delay <= 0) {
                 m_listEvent[i].callback();
                 m_listEvent.RemoveAt(i);

@@ -20,7 +20,6 @@ public class PlayerView:View {
             Text textNode = itemPrefab.GetComponent<Text>();
             textNode.text = damage;
             itemPrefab.transform.position = Camera.main.WorldToScreenPoint(target.position);
-            int index = m_damageText.Count;
             m_damageText.Push(itemPrefab.transform);
             TimerManager.Register(1, () => {
                 m_damageText.Pop();

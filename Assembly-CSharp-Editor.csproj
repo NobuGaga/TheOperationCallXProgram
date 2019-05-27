@@ -67,6 +67,7 @@
     <Compile Include="Assets\Editor\Script\CSharp\Import\AssetImportProcessor.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\Import\AssetTextureImporter.cs" />
     <Compile Include="Assets\Editor\Script\CSharp\PatternSample.cs" />
+    <Compile Include="Assets\Editor\Script\CSharp\Tool\ComponentChecker.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Develop/Unity/TheOperationCallXProgram/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
