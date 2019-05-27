@@ -1,25 +1,35 @@
 ManifestFileVersion: 0
-CRC: 2025872935
+CRC: 1595603043
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 781b747e2885d0de9edb591dfbb4a6c0
+    Hash: f4794700bed26ef06e5b213a7498c2c0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 25ad761588e334a2d81987809e681061
+    Hash: affc07bf7887057e5a1088df986028bb
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
 - Class: 28
+  Script: {instanceID: 0}
+- Class: 48
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 8cf3bf26fbbe20a478d2dadd1f9df3f8, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 8016f7dbdcbfb5f408cbc8df1db92c9d, type: 3}
 - Class: 115
+  Script: {instanceID: 0}
+- Class: 128
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
@@ -28,5 +38,6 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
+- Assets/Editor/Asset/Prefabs/Moudle/Player/UI/DamageTextItem.prefab
 - Assets/Editor/Asset/Prefabs/Moudle/Player/UI/PlayerMainView.prefab
 Dependencies: []

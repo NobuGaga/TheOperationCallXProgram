@@ -20,6 +20,7 @@ public static class GameManager {
 
     public static void FrameUpdate() {
         EventManager.Dispatch(GameEvent.Type.FrameUpdate, Time.time);
+        TimerManager.Update();
     }
 
     public static void PhysicsUpdate() {

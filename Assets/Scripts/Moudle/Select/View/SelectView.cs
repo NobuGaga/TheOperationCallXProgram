@@ -9,17 +9,16 @@ public class SelectView:View {
         string itemName = "SelectSceneItem";
         Transform parent = GetNode<Transform>("selectSceneContent");
         int sceneCount = dicScene.Count;
-        LoadItem(itemName, parent, sceneCount, () => {
-            for (int index = 0; index < sceneCount; index++) {
-                UIPrefab itemPrefab = GetItem(itemName, index);
-                int indexCopy = index + 1;
-                itemPrefab.GetNode<Text>("textScene").text = GameSceneInfo.GetName(dicScene[indexCopy]);
-                itemPrefab.GetNode<Text>("textBtnOpen").text = CsvTool.Text("common_open");
-                itemPrefab.GetNode<Button>("btnOpenScene").onClick.AddListener(
-                    () =>
-                        EventManager.Dispatch(GameMoudle.Select, GameEvent.Type.Click, indexCopy)
-                );
-            }
+        int index = 1;
+        LoadItem(itemName, parent, sceneCount, (UIPrefab itemPrefab) => {
+            itemPrefab.GetNode<Text>("textScene").text = GameSceneInfo.GetName(dicScene[index]);
+            itemPrefab.GetNode<Text>("textBtnOpen").text = CsvTool.Text("common_open");
+            int indexCopy = index;
+            itemPrefab.GetNode<Button>("btnOpenScene").onClick.AddListener(
+                () =>
+                    EventManager.Dispatch(GameMoudle.Select, GameEvent.Type.Click, indexCopy)
+            );
+            index++;
         });
     }
 }

@@ -3,9 +3,9 @@ using System;
 
 public class ModelWeapon:MonoBehaviour {
     [SerializeField]
-    private WeaponType m_type;
+    private WeaponType m_type = WeaponType.ShortRange;
     [SerializeField]
-    private WeaponHandType m_hand;
+    private WeaponHandType m_hand = WeaponHandType.Right;
 
     private GameObject m_bulletObj;
     private Action<Collider> m_beginFunc;

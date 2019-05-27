@@ -50,7 +50,6 @@ public abstract class ModelAttackRole:ModelRunRole {
         m_healthPoint = new ModelHPData(data.MaxHP);
         m_attackDis = data.attackDis;
         m_attackAngle = data.attackAngle;
-        m_damageText = Resources.Load<GameObject>("ModelDamageText");
     }
 
     protected abstract void InitAttackAnimation();
@@ -58,10 +57,8 @@ public abstract class ModelAttackRole:ModelRunRole {
     public abstract void Attack();
     public virtual float Damage(ModelAttackData data) {
         int damage = data.Damage;
-        GameObject damageObj = GameObject.Instantiate<GameObject>(m_damageText);
-        damageObj.transform.SetParent(transform, false);
-        ModelDamageText text = damageObj.GetComponent<ModelDamageText>();
-        text.SetText(damage.ToString());
+        KeyValuePair<Transform, string> message = new KeyValuePair<Transform, string>(transform, damage.ToString());
+        EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.ShowDamageText, message);
         m_healthPoint -= damage;
         SRoleState.Type state;
         if (IsHPZero)

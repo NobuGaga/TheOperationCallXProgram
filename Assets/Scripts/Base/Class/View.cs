@@ -25,27 +25,32 @@ public abstract class View:Prefab {
         m_view = view;
     }
 
-    protected void LoadItem(string itemName, Transform parent, int count = 1, System.Action callback = null) {
+    protected void LoadItem(string itemName, Transform parent, System.Action<UIPrefab> callback = null) {
+        LoadItem(itemName, parent, 1, callback);
+    }
+
+    protected void LoadItem(string itemName, Transform parent, int count, System.Action<UIPrefab> callback = null) {
         IsHaveItem = true;
         ViewManager.LoadItem(GameViewInfo.GetViewName(m_moudle, m_view), itemName, 
             (GameObject gameObject) => {
                 for (int i = 0; i < count; i++) {
                     GameObject item = Object.Instantiate(gameObject) as GameObject;
                     item.transform.SetParent(parent);
-                    AddItem(itemName, item.GetComponent<UIPrefab>());
+                    int index = AddItem(itemName, item.GetComponent<UIPrefab>());
+                    callback?.Invoke(GetItem(itemName, index));
                 }
-                callback?.Invoke();
             }
         );
     }
 
-    private void AddItem(string itemName, UIPrefab item) {
+    private int AddItem(string itemName, UIPrefab item) {
         if (!m_dicItem.ContainsKey(itemName))
             m_dicItem.Add(itemName, new List<UIPrefab>());
         m_dicItem[itemName].Add(item);
+        return m_dicItem[itemName].Count - 1;
     }
 
-    protected UIPrefab GetItem(string itemName, int index) {
+    private UIPrefab GetItem(string itemName, int index) {
         if (m_dicItem.ContainsKey(itemName) && index < m_dicItem[itemName].Count)
             return m_dicItem[itemName][index];
         return null;

@@ -17,6 +17,7 @@ public class CPlayer:Controller {
         m_eventList.Add(GameEvent.Type.OpenMainView);
         m_eventList.Add(GameEvent.Type.Attack);
         m_eventList.Add(GameEvent.Type.Damage);
+        m_eventList.Add(GameEvent.Type.ShowDamageText);
         m_eventList.Add(GameEvent.Type.SteeringWheelDragBegin);
         m_eventList.Add(GameEvent.Type.SteeringWheelDraging);
         m_eventList.Add(GameEvent.Type.SteeringWheelDragEnd);
@@ -30,6 +31,8 @@ public class CPlayer:Controller {
                 return Attack;
             case GameEvent.Type.Damage:
                 return Damage;
+            case GameEvent.Type.ShowDamageText:
+                return ShowDamageText;
             case GameEvent.Type.SteeringWheelDragBegin:
                 return SteeringWheelDragBegin;
             case GameEvent.Type.SteeringWheelDraging:
@@ -74,6 +77,13 @@ public class CPlayer:Controller {
         m_playerView.UpdateHP(percent);
     }
 
+    private void ShowDamageText(object arg) {
+        if (!(arg is KeyValuePair<Transform, string>))
+            return;
+        KeyValuePair<Transform, string> data = (KeyValuePair<Transform, string>)arg;
+        m_playerView.ShowDamageText(data.Key, data.Value);
+    }
+
     private void SteeringWheelDragBegin(object arg) {
         SteeringWheelDraging(arg);
         switch (GameConfig.CameraType) {
@@ -95,6 +105,7 @@ public class CPlayer:Controller {
     }
 
     private void FrameUpdate(object arg = null) {
+        m_playerView?.Update();
         m_player.Update();
     }
 
