@@ -14,7 +14,7 @@ public class ModelMonster:ModelAttackRole {
         AddAnimation(SRoleState.Type.SRoleReadyFight.ToString(), "DrawBlade");
     }
 
-    protected override void InitAttackAnimation() { }
+    protected override void InitAttackSkillAnimation() { }
 
     private Transform m_target;
     private float m_disToTarget;
@@ -75,6 +75,7 @@ public class ModelMonster:ModelAttackRole {
     }
 
     public override void Death() {
+        m_rigidBody.useGravity = false;
         gameObject.GetComponent<Collider>().enabled = false;
     }
 

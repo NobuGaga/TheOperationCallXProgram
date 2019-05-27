@@ -45,14 +45,78 @@ public abstract class ModelAttackRole:ModelRunRole {
         return animationName;
     }
 
+    private Dictionary<ModelAttackLevel, string[]> m_SkillAnimation;
+    private Dictionary<ModelAttackLevel, List<Animator>> m_SkillAnimator;
+    protected void AddSkillAnimation(ModelAttackLevel level, string[] animationNames) {
+        if (m_SkillAnimation == null)
+            m_SkillAnimation = new Dictionary<ModelAttackLevel, string[]>();
+        if (m_SkillAnimation.ContainsKey(level))
+            m_SkillAnimation[level] = animationNames;
+        else
+            m_SkillAnimation.Add(level, animationNames);
+    }
+
+    private string[] GetSkillAnimationName() {
+        if (m_SkillAnimation == null)
+            return null;
+        if (m_SkillAnimation.ContainsKey(m_attackLevel))
+            return m_SkillAnimation[m_attackLevel];
+        return null;
+    }
+
+    private void InitSkillAnimator() {
+        if (m_SkillAnimation == null || m_SkillAnimation.Count == 0)
+            return;
+        m_SkillAnimator = new Dictionary<ModelAttackLevel, List<Animator>>();
+        foreach (var keyValue in m_SkillAnimation) {
+            if (keyValue.Value == null || keyValue.Value.Length == 0)
+                continue;
+            List<Animator> listAnimator = new List<Animator>();
+            for (int i = 0; i < keyValue.Value.Length; i++) {
+                string prefabPath = keyValue.Value[i];
+                GameObject obj = Resources.Load<GameObject>(prefabPath);
+                GameObject initObj = GameObject.Instantiate<GameObject>(obj);
+                initObj.transform.SetParent(transform);
+                initObj.SetActive(false);
+                Animator animator = initObj.GetComponent<Animator>();
+                listAnimator.Add(animator);
+            }
+            m_SkillAnimator.Add(keyValue.Key, listAnimator);
+        }
+    }
+
+    public void PlaySkillAnimator() {
+        if (m_SkillAnimator == null)
+            return;
+        if (!m_SkillAnimation.ContainsKey(m_attackLevel))
+            return;
+        List<Animator> list = m_SkillAnimator[m_attackLevel];
+        PlaySkillAnimator(list, 0);
+    }
+
+    private void PlaySkillAnimator(List<Animator> list, int index) {
+        if (index >= list.Count)
+            return;
+        AnimatorClipInfo[] clipInfos = list[index].GetCurrentAnimatorClipInfo(0);
+        float time = clipInfos[0].clip.length;
+        GameObject obj = list[index].gameObject;
+        obj.SetActive(true);
+        int indexCopy = index;
+        TimerManager.Register(time, () => {
+            obj.SetActive(false);
+            PlaySkillAnimator(list, indexCopy++);
+        });
+    }
+
     public ModelAttackRole(GameObject node, ModelAttackRoleData data):base(node) {
-        InitAttackAnimation();
+        InitAttackSkillAnimation();
+        InitSkillAnimator();
         m_healthPoint = new ModelHPData(data.MaxHP);
         m_attackDis = data.attackDis;
         m_attackAngle = data.attackAngle;
     }
 
-    protected abstract void InitAttackAnimation();
+    protected abstract void InitAttackSkillAnimation();
 
     public abstract void Attack();
     public virtual float Damage(ModelAttackData data) {

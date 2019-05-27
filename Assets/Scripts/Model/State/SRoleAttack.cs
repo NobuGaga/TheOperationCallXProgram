@@ -9,6 +9,7 @@ public class SRoleAttack:SRoleState {
         PlayAnimation();
         m_isAttacking = true;
         attackRole?.Attack();
+        attackRole?.PlaySkillAnimator();
     }
 
     public override void Update() {
