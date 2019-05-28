@@ -11,8 +11,9 @@ public class ModelSkill {
             return attackDelay;
         }
     }
+    private float startDelay;
 
-    public ModelSkill(ModelAttackLevel level, string[] prefabPaths, int[] positionPrefab, Transform parent, float attackDelay) {
+    public ModelSkill(ModelAttackLevel level, string[] prefabPaths, int[] positionPrefab, Transform parent, float startDelay, float attackDelay) {
         this.level = level;
         listAnimators = new List<Animator>();
         if (positionPrefab != null && positionPrefab.Length > 0)
@@ -28,11 +29,15 @@ public class ModelSkill {
             if (positionPrefab != null && i < positionPrefab.Length && positionPrefab[i] != 0)
                 dicPostitionNode.Add(i, true);
         }
+        this.startDelay = startDelay;
         this.attackDelay = attackDelay;
     }
 
     public void Play(Vector3 position) {
-        PlaySkillAnimator(listAnimators, 0, position);
+        if (startDelay == 0)
+            PlaySkillAnimator(listAnimators, 0, position);
+        else
+            TimerManager.Register(startDelay, () => PlaySkillAnimator(listAnimators, 0, position));
     }
 
     private void PlaySkillAnimator(List<Animator> list, int index, Vector3 position) {

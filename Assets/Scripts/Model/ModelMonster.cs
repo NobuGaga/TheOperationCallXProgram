@@ -2,10 +2,12 @@
 
 public class ModelMonster:ModelAttackRole {
     private float m_speed;
+    private ModelMonsterVision m_vision;
 
     public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, ModelMonsterVision vision) :base(node, attackData) {
         m_speed = speed;
         vision.SetCallBack(OnTriggerEnter, OnTriggerStay, OnTriggerExit);
+        m_vision = vision;
         m_visionArea = vision.Area;
     }
 
@@ -81,6 +83,7 @@ public class ModelMonster:ModelAttackRole {
         m_rigidBody.useGravity = false;
         m_rigidBody.isKinematic = true;
         gameObject.GetComponent<Collider>().enabled = false;
+        m_vision.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider collider) {

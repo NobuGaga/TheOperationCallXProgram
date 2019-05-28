@@ -63,7 +63,7 @@ public class CMonster:Controller {
     private ModelMonster GetMonster(string nodeName) {
         if (m_dicNameMonster.ContainsKey(nodeName))
             return m_dicNameMonster[nodeName];
-        DebugTool.LogError(string.Format("CMonster node name {0} not exit" + nodeName));
+        DebugTool.LogError(string.Format("CMonster node name {0} not exit", nodeName));
         return null;
     }
 

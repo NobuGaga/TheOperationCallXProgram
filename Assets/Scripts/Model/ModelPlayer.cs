@@ -7,7 +7,7 @@ public class ModelPlayer:ModelWeaponRole {
     private ModelWeapon m_weapon;
     private GameObject m_bulletObj;
 
-    public ModelPlayer(GameObject node, ModelAttackRoleData attackData) :base(node, attackData) {
+    public ModelPlayer(GameObject node, ModelAttackRoleData attackData):base(node, attackData) {
         m_curFoward = m_transform.rotation.eulerAngles.y;
         SetHands("Glove", "Glove");
         UIPrefab prefab = gameObject.GetComponent<UIPrefab>();
@@ -56,11 +56,18 @@ public class ModelPlayer:ModelWeaponRole {
         float lastTime = Time.time;
         Collider[] targets = SearchAttactTarget();
         float passTime = Time.time - lastTime;
-        if (targets == null || targets.Length <= 0) {
-            PlaySkillAnimator(Vector3.zero);
-            return;
+        switch (m_attackLevel) {
+            case ModelAttackLevel.Normal:
+            case ModelAttackLevel.SkillOne:
+                PlaySkillAnimator(Vector3.zero);
+                break;
+            case ModelAttackLevel.SkillTwo:
+            case ModelAttackLevel.SkillThree:
+                PlaySkillAnimator(targets[0].transform.position);
+                break;
         }
-        PlaySkillAnimator(targets[0].transform.position);
+        if (targets == null)
+            return;
         for (int i = 0; i < targets.Length; i++) {
             ModelAttackData attackData = new ModelAttackData(RoleType.Player, (int)PlayerType.Master, m_attackLevel, m_gameObject.name, targets[i].name);
             EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);

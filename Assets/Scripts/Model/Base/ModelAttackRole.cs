@@ -46,12 +46,12 @@ public abstract class ModelAttackRole:ModelRunRole {
     }
 
     private Dictionary<ModelAttackLevel, ModelSkill> m_dicSkill;
-    protected void AddSkillData(ModelAttackLevel level, string[] prefabPaths, int[] positionPrefab, Transform parent, float attackDelay) {
+    protected void AddSkillData(ModelAttackLevel level, string[] prefabPaths, int[] positionPrefab, Transform parent, float startDelay, float attackDelay) {
         if (m_dicSkill == null)
             m_dicSkill = new Dictionary<ModelAttackLevel, ModelSkill>();
         if (m_dicSkill.ContainsKey(level))
             m_dicSkill.Remove(level);
-        ModelSkill skillData = new ModelSkill(level, prefabPaths, positionPrefab, parent, attackDelay);
+        ModelSkill skillData = new ModelSkill(level, prefabPaths, positionPrefab, parent, startDelay, attackDelay);
         m_dicSkill.Add(level, skillData);
     }
     protected void PlaySkillAnimator(Vector3 position) {
