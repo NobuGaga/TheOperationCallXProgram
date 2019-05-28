@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class ModelPlayer:ModelWeaponRole {
     private float m_curFoward;
@@ -52,33 +53,46 @@ public class ModelPlayer:ModelWeaponRole {
     }
 
     public override void Attack() {
+        float lastTime = Time.time;
+        Collider[] targets = SearchAttactTarget();
+        float passTime = Time.time - lastTime;
+        if (targets == null || targets.Length <= 0) {
+            PlaySkillAnimator(Vector3.zero);
+            return;
+        }
+        PlaySkillAnimator(targets[0].transform.position);
+        for (int i = 0; i < targets.Length; i++) {
+            ModelAttackData attackData = new ModelAttackData(RoleType.Player, (int)PlayerType.Master, m_attackLevel, m_gameObject.name, targets[i].name);
+            EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
+        }
+    }
+
+    private Collider[] SearchAttactTarget() {
         Collider[] colliders = Physics.OverlapSphere(m_transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Enemy.ToString()));
         float minAngle = GameConst.RoundAngle;
-        string targetName = string.Empty;
-        ModelAttackData attackData;
+        //ModelAttackData attackData;
+        List<Collider> listTarget = new List<Collider>();
         for (int i = 0; i < colliders.Length; i++) {
-            if (colliders[i].isTrigger)
-                continue;
-            if (colliders[i].tag != GameTagInfo.Enemy.ToString())
+            if (colliders[i].isTrigger || colliders[i].tag != GameTagInfo.Enemy.ToString())
                 continue;
             Vector3 selfToTarget = colliders[i].transform.position - m_transform.position;
             float selfToTargetAngle = Vector3.Angle(selfToTarget, m_transform.forward);
             if (selfToTargetAngle > m_attackAngle)
                 continue;
-            if (IsShortWeapon) {
-                attackData = new ModelAttackData(RoleType.Player,
-                                                            (int)PlayerType.Master, m_attackLevel, m_gameObject.name, colliders[i].name);
-                EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
-            }else if (selfToTargetAngle < minAngle) {
+            if (IsShortWeapon)
+                listTarget.Add(colliders[i]);
+            else if (selfToTargetAngle < minAngle) {
+                listTarget.Clear();
                 minAngle = selfToTargetAngle;
-                targetName = colliders[i].name;
+                listTarget.Add(colliders[i]);
             }
         }
-        if (targetName == string.Empty || IsShortWeapon)
-            return;
-        attackData = new ModelAttackData(RoleType.Player, (int)PlayerType.Master, m_attackLevel, m_gameObject.name, targetName);
-        EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
         //m_weapon.Shoot(transform.forward);
+        if (IsShortWeapon)
+            return listTarget.ToArray();
+        if (minAngle == GameConst.RoundAngle)
+            return null;
+        return listTarget.ToArray();
     }
 
     public override float Damage(ModelAttackData data) {

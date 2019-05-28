@@ -91,10 +91,14 @@ public class ModelMonster:ModelAttackRole {
     private void OnTriggerStay(Collider collider) {
         if (collider.tag != GameTagInfo.Player.ToString())
             return;
+        m_transform.LookAt(m_target, Vector3.up);
+        m_disToTarget = (m_target.position - m_transform.position).magnitude;
     }
 
     private void OnTriggerExit(Collider collider) {
         if (collider.tag != GameTagInfo.Player.ToString())
             return;
+        m_target = null;
+        State = SRoleState.Type.SRoleStand;
     }
 }

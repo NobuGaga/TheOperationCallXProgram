@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\Model\Base\ModelMonsterVision.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelRole.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelRunRole.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\ModelSkill.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelWeapon.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelWeaponRole.cs" />
     <Compile Include="Assets\Scripts\Model\Data\ModelAttackData.cs" />

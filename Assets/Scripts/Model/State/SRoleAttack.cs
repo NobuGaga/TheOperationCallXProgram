@@ -7,14 +7,10 @@ public class SRoleAttack:SRoleState {
 
     public override void Enter() {
         PlayAnimation();
-        attackRole?.PlaySkillAnimator();
+        attackRole?.Attack();
         m_isAttacking = true;
-        float time = attackRole.AttackDelayTime;
-        if (time <= 0)
-            attackRole?.Attack();
-        else
-            TimerManager.Register(time, attackRole.Attack);
     }
+
 
     public override void Update() {
         if (!m_isAttacking)

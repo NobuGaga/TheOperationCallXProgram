@@ -20,7 +20,7 @@ public class SRoleDamage:SRoleState {
     }
 
     public override bool Exit() {
-        return !m_isUnattackable;
+        return true;
     }
 
     public override Type GetState() { return Type.SRoleDamage; }
