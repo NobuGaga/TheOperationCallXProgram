@@ -33,8 +33,11 @@ public abstract class ModelRole {
             bool isFirst = m_curState == null;
             if (!isFirst && (m_curState.GetState() == value || m_curState.GetState() == SRoleState.Type.SRoleDeath))
                 return;
+            bool isExit = true;
             if (!isFirst)
-                m_curState.Exit();
+                isExit = m_curState.Exit();
+            if (!isExit)
+                return;
             if (!m_dicStateCache.ContainsKey(value))
                 m_curState = Activator.CreateInstance(Type.GetType(value.ToString()), 
                                                         this, m_animation) as SRoleState;
