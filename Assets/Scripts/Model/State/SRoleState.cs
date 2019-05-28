@@ -44,7 +44,7 @@ public abstract class SRoleState {
         SRoleDeath,
     }
 
-    protected virtual void PlayAnimation() {
+    protected void PlayAnimation() {
         string animationName = GetAnimationName();
         if (!m_animation.IsPlaying(animationName))
             m_animation.Play(animationName);

@@ -97,14 +97,14 @@ public abstract class ModelAttackRole:ModelRunRole {
     private void PlaySkillAnimator(List<Animator> list, int index) {
         if (index >= list.Count)
             return;
-        AnimatorClipInfo[] clipInfos = list[index].GetCurrentAnimatorClipInfo(0);
-        float time = clipInfos[0].clip.length;
         GameObject obj = list[index].gameObject;
         obj.SetActive(true);
-        int indexCopy = index;
+        AnimatorClipInfo[] clipInfos = list[index].GetCurrentAnimatorClipInfo(0);
+        float time = clipInfos[0].clip.length;
+        int indexCopy = ++index;
         TimerManager.Register(time, () => {
             obj.SetActive(false);
-            PlaySkillAnimator(list, indexCopy++);
+            PlaySkillAnimator(list, indexCopy);
         });
     }
 
@@ -133,5 +133,4 @@ public abstract class ModelAttackRole:ModelRunRole {
         return m_healthPoint.Percent;
     }
     public abstract void Death();
-
 }
