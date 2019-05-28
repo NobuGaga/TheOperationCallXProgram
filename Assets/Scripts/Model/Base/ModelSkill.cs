@@ -25,7 +25,7 @@ public class ModelSkill {
             initObj.SetActive(false);
             Animator animator = initObj.GetComponent<Animator>();
             listAnimators.Add(animator);
-            if (i < positionPrefab.Length && positionPrefab[i] != 0)
+            if (positionPrefab != null && i < positionPrefab.Length && positionPrefab[i] != 0)
                 dicPostitionNode.Add(i, true);
         }
         this.attackDelay = attackDelay;
@@ -40,7 +40,7 @@ public class ModelSkill {
             return;
         GameObject obj = list[index].gameObject;
         obj.SetActive(true);
-        if (dicPostitionNode.ContainsKey(index))
+        if (dicPostitionNode != null && dicPostitionNode.ContainsKey(index))
             obj.transform.position = position;
         AnimatorClipInfo[] clipInfos = list[index].GetCurrentAnimatorClipInfo(0);
         float time = clipInfos[0].clip.length;

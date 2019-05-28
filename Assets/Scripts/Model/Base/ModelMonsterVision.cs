@@ -6,7 +6,11 @@ using System;
 public class ModelMonsterVision:MonoBehaviour {
     [SerializeField]
     private SphereCollider m_collider;
-
+    public float Area {
+        get {
+            return m_collider.radius;
+        }
+    }
     private Action<Collider> m_beginFunc;
     private Action<Collider> m_ingFunc = null;
     private Action<Collider> m_endFunc = null;

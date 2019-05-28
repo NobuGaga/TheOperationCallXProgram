@@ -6,6 +6,7 @@ public class ModelMonster:ModelAttackRole {
     public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, ModelMonsterVision vision) :base(node, attackData) {
         m_speed = speed;
         vision.SetCallBack(OnTriggerEnter, OnTriggerStay, OnTriggerExit);
+        m_visionArea = vision.Area;
     }
 
     protected override void InitAnimation() {
@@ -18,7 +19,7 @@ public class ModelMonster:ModelAttackRole {
 
     private Transform m_target;
     private float m_disToTarget;
-
+    private float m_visionArea;
 
     public override void Update() {
         base.Update();
@@ -30,6 +31,8 @@ public class ModelMonster:ModelAttackRole {
             case SRoleState.Type.SRoleStand:
                 if (m_disToTarget < m_attackDis)
                     State = SRoleState.Type.SRoleAttack;
+                else if (m_disToTarget < m_visionArea)
+                    State = SRoleState.Type.SRoleRun;
                 break;
             case SRoleState.Type.SRoleRun:
                 if (m_disToTarget < m_attackDis)
@@ -76,6 +79,7 @@ public class ModelMonster:ModelAttackRole {
 
     public override void Death() {
         m_rigidBody.useGravity = false;
+        m_rigidBody.isKinematic = true;
         gameObject.GetComponent<Collider>().enabled = false;
     }
 
@@ -89,7 +93,7 @@ public class ModelMonster:ModelAttackRole {
     }
 
     private void OnTriggerStay(Collider collider) {
-        if (collider.tag != GameTagInfo.Player.ToString())
+        if (collider.tag != GameTagInfo.Player.ToString() || m_target == null)
             return;
         m_transform.LookAt(m_target, Vector3.up);
         m_disToTarget = (m_target.position - m_transform.position).magnitude;
