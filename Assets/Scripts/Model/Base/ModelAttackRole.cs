@@ -108,6 +108,23 @@ public abstract class ModelAttackRole:ModelRunRole {
         });
     }
 
+    private Dictionary<ModelAttackLevel, float> m_dicAttackDelayTime;
+    protected void AddAttackDelay(ModelAttackLevel level, float time) {
+        if (m_dicAttackDelayTime == null)
+            m_dicAttackDelayTime = new Dictionary<ModelAttackLevel, float>();
+        if (m_dicAttackDelayTime.ContainsKey(level))
+            m_dicAttackDelayTime[level] = time;
+        else
+            m_dicAttackDelayTime.Add(level, time);
+    }
+    public float AttackDelayTime {
+        get {
+            if (m_dicAttackDelayTime == null || !m_dicAttackDelayTime.ContainsKey(m_attackLevel))
+                return 0;
+            return m_dicAttackDelayTime[m_attackLevel];
+        }
+    }
+
     public ModelAttackRole(GameObject node, ModelAttackRoleData data):base(node) {
         InitAttackSkillAnimation();
         InitSkillAnimator();

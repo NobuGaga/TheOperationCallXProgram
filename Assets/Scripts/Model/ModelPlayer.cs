@@ -53,6 +53,9 @@ public class ModelPlayer:ModelWeaponRole {
 
     public override void Attack() {
         Collider[] colliders = Physics.OverlapSphere(m_transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Enemy.ToString()));
+        float minAngle = GameConst.RoundAngle;
+        string targetName = string.Empty;
+        ModelAttackData attackData;
         for (int i = 0; i < colliders.Length; i++) {
             if (colliders[i].isTrigger)
                 continue;
@@ -62,11 +65,19 @@ public class ModelPlayer:ModelWeaponRole {
             float selfToTargetAngle = Vector3.Angle(selfToTarget, m_transform.forward);
             if (selfToTargetAngle > m_attackAngle)
                 continue;
-            ModelAttackData attackData = new ModelAttackData(RoleType.Player,
+            if (IsShortWeapon) {
+                attackData = new ModelAttackData(RoleType.Player,
                                                             (int)PlayerType.Master, m_attackLevel, m_gameObject.name, colliders[i].name);
-            EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
-            break;
+                EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
+            }else if (selfToTargetAngle < minAngle) {
+                minAngle = selfToTargetAngle;
+                targetName = colliders[i].name;
+            }
         }
+        if (targetName == string.Empty || IsShortWeapon)
+            return;
+        attackData = new ModelAttackData(RoleType.Player, (int)PlayerType.Master, m_attackLevel, m_gameObject.name, targetName);
+        EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
         //m_weapon.Shoot(transform.forward);
     }
 

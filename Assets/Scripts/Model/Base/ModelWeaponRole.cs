@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public abstract class ModelWeaponRole:ModelAttackRole {
     private ModelWeapon m_weapon;
+    protected bool IsShortWeapon {
+        get {
+            return m_weapon.IsShortWeapon;
+        }
+    }
     private Transform m_leftHand;
     private Transform m_rightHand;
     private Dictionary<string, Transform> m_dicNodeName;
