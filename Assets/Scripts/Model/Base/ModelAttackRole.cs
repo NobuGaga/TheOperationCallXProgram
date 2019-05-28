@@ -76,7 +76,7 @@ public abstract class ModelAttackRole:ModelRunRole {
                 string prefabPath = keyValue.Value[i];
                 GameObject obj = Resources.Load<GameObject>(prefabPath);
                 GameObject initObj = GameObject.Instantiate<GameObject>(obj);
-                initObj.transform.SetParent(transform);
+                initObj.transform.SetParent(transform, false);
                 initObj.SetActive(false);
                 Animator animator = initObj.GetComponent<Animator>();
                 listAnimator.Add(animator);

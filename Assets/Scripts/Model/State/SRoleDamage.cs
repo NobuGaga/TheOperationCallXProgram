@@ -19,7 +19,9 @@ public class SRoleDamage:SRoleState {
         m_role.State = Type.SRoleStand;
     }
 
-    public override void Exit() { }
+    public override bool Exit() {
+        return !m_isUnattackable;
+    }
 
     public override Type GetState() { return Type.SRoleDamage; }
 

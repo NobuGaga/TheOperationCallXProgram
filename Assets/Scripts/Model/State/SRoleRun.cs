@@ -12,8 +12,9 @@ public class SRoleRun : SRoleState {
         runRole?.Run();
     }
 
-    public override void Exit() {
+    public override bool Exit() {
         runRole?.EndRun();
+        return true;
     }
 
     public override Type GetState() { return Type.SRoleRun; }

@@ -9,7 +9,9 @@ public class SRoleStand:SRoleState {
 
     public override void Update() { }
 
-    public override void Exit() { }
+    public override bool Exit() {
+        return true;
+    }
 
     public override Type GetState() { return Type.SRoleStand; }
 }

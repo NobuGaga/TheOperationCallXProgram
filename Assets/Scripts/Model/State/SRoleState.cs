@@ -26,7 +26,7 @@ public abstract class SRoleState {
     /// <summary>
     /// 离开状态
     /// </summary>
-    public abstract void Exit();
+    public abstract bool Exit();
 
     public abstract Type GetState();
 

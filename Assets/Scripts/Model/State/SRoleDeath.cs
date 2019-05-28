@@ -10,7 +10,9 @@ public class SRoleDeath:SRoleState {
 
     public override void Update() { }
 
-    public override void Exit() { }
+    public override bool Exit() {
+        return false;
+    }
 
     public override Type GetState() { return Type.SRoleDeath; }
 
