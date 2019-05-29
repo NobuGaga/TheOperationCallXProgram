@@ -12,8 +12,22 @@ public class ModelSkill {
         }
     }
     private float startDelay;
+    private bool isPlaying = false;
+
+    private string[] m_prefabPaths;
+    private int[] m_positionPrefab;
+    private Transform m_parent;
+
+    public ModelSkill() { }
 
     public ModelSkill(ModelAttackLevel level, string[] prefabPaths, int[] positionPrefab, Transform parent, float startDelay, float attackDelay) {
+        m_prefabPaths = prefabPaths;
+        m_positionPrefab = positionPrefab;
+        m_parent = parent;
+        SetData(level, prefabPaths, positionPrefab, parent, startDelay, attackDelay);
+    }
+
+    private void SetData(ModelAttackLevel level, string[] prefabPaths, int[] positionPrefab, Transform parent, float startDelay, float attackDelay) {
         this.level = level;
         listAnimators = new List<Animator>();
         if (positionPrefab != null && positionPrefab.Length > 0)
@@ -34,6 +48,12 @@ public class ModelSkill {
     }
 
     public void Play(Vector3 position) {
+        if (isPlaying) {
+            ModelSkill copy = Copy();
+            copy.Play(position);
+            return;
+        }
+        isPlaying = true;
         if (startDelay == 0)
             PlaySkillAnimator(listAnimators, 0, position);
         else
@@ -41,8 +61,10 @@ public class ModelSkill {
     }
 
     private void PlaySkillAnimator(List<Animator> list, int index, Vector3 position) {
-        if (index >= list.Count)
+        if (index >= list.Count) {
+            isPlaying = false;
             return;
+        }
         GameObject obj = list[index].gameObject;
         obj.SetActive(true);
         if (dicPostitionNode != null && dicPostitionNode.ContainsKey(index))
@@ -54,5 +76,15 @@ public class ModelSkill {
             obj.SetActive(false);
             PlaySkillAnimator(list, indexCopy, position);
         });
+    }
+
+    public ModelSkill Copy() {
+        ModelSkill copy = new ModelSkill();
+        copy.SetData(level, m_prefabPaths, m_positionPrefab, m_parent, startDelay, attackDelay);
+        return copy;
+    }
+
+    ~ModelSkill() {
+        
     }
 }

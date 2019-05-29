@@ -57,7 +57,7 @@ public class CMonster:Controller {
     public void Damage(object arg) {
         ModelAttackData data = (ModelAttackData)arg;
         ModelMonster monster = GetMonster(data.receiver);
-        monster.Damage(data);
+        monster?.Damage(data);
     }
 
     private ModelMonster GetMonster(string nodeName) {
