@@ -6,6 +6,8 @@ public class ModelWeapon:MonoBehaviour {
     private WeaponType m_type = WeaponType.ShortRange;
     [SerializeField]
     private WeaponHandType m_hand = WeaponHandType.Right;
+    [SerializeField]
+    private Transform m_shootPoint;
 
     private GameObject m_bulletObj;
     private Action<Collider> m_beginFunc;
@@ -28,11 +30,14 @@ public class ModelWeapon:MonoBehaviour {
         m_bulletObj = bullet;
     }
 
-    public void Shoot(Vector3 direction) {
+    public void Shoot(Transform target, float time) {
         GameObject bullet = GameObject.Instantiate(m_bulletObj);
-        bullet.transform.SetParent(transform, false);
+        if (m_shootPoint == null)
+            m_shootPoint = transform;
+        bullet.transform.SetParent(m_shootPoint, false);
         ModelBullet script = bullet.GetComponent<ModelBullet>();
-        script.Shoot(direction, 10, m_beginFunc);
+        script.Shoot(target, time);
+        TimerManager.Register(time, () => GameObject.DestroyImmediate(bullet));
     }
 
     public void SetCallBack(Action<Collider> beginFunc) {

@@ -76,8 +76,7 @@ public class ModelPlayer:ModelWeaponRole {
 
     private Collider[] SearchAttactTarget() {
         Collider[] colliders = Physics.OverlapSphere(m_transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Enemy.ToString()));
-        float minAngle = GameConst.RoundAngle;
-        //ModelAttackData attackData;
+        float minDistance = m_attackDis;
         List<Collider> listTarget = new List<Collider>();
         for (int i = 0; i < colliders.Length; i++) {
             if (colliders[i].isTrigger || colliders[i].tag != GameTagInfo.Enemy.ToString())
@@ -88,16 +87,15 @@ public class ModelPlayer:ModelWeaponRole {
                 continue;
             if (IsShortWeapon)
                 listTarget.Add(colliders[i]);
-            else if (selfToTargetAngle < minAngle) {
+            else if (selfToTarget.magnitude < minDistance) {
                 listTarget.Clear();
-                minAngle = selfToTargetAngle;
+                minDistance = selfToTarget.magnitude;
                 listTarget.Add(colliders[i]);
             }
         }
-        //m_weapon.Shoot(transform.forward);
         if (IsShortWeapon)
             return listTarget.ToArray();
-        if (minAngle == GameConst.RoundAngle)
+        if (minDistance == m_attackDis)
             return null;
         return listTarget.ToArray();
     }
