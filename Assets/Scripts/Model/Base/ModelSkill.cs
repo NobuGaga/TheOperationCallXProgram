@@ -6,7 +6,7 @@ public class ModelSkill {
     private List<Animator> listAnimators;
     private Dictionary<int, bool> dicPostitionNode;
     private float attackDelay;
-    private float AttackDelayTime {
+    public float AttackDelayTime {
         get {
             return attackDelay;
         }

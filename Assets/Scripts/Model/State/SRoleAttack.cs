@@ -11,7 +11,6 @@ public class SRoleAttack:SRoleState {
         m_isAttacking = true;
     }
 
-
     public override void Update() {
         if (!m_isAttacking)
             return;

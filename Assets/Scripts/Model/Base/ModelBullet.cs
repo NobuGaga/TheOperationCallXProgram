@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 
 public class ModelBullet:MonoBehaviour {
     [SerializeField]
@@ -21,7 +20,7 @@ public class ModelBullet:MonoBehaviour {
         transform.LookAt(lookPoint);
         Vector3 rotation = transform.rotation.eulerAngles;
         transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z + Time.deltaTime * 179);
-        transform.Translate(direction * Time.deltaTime * m_speed, Space.World);
+        transform.Translate(direction.normalized * Time.deltaTime * m_speed, Space.World);
     }
 
     public void Shoot(Transform target, float time) {
@@ -37,7 +36,6 @@ public class ModelBullet:MonoBehaviour {
             Vector3 selfPos = transform.position;
             Vector3 lookPoint = new Vector3(targetPos.x, selfPos.y, targetPos.z);
             return lookPoint;
-
         }
     }
 

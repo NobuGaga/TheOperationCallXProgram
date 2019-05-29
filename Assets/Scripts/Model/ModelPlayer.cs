@@ -53,9 +53,7 @@ public class ModelPlayer:ModelWeaponRole {
     }
 
     public override void Attack() {
-        float lastTime = Time.time;
         Collider[] targets = SearchAttactTarget();
-        float passTime = Time.time - lastTime;
         switch (m_attackLevel) {
             case ModelAttackLevel.Normal:
             case ModelAttackLevel.SkillOne:

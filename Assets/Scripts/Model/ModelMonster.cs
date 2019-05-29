@@ -3,12 +3,14 @@
 public class ModelMonster:ModelAttackRole {
     private float m_speed;
     private ModelMonsterVision m_vision;
+    private MonsterType m_type;
 
-    public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, ModelMonsterVision vision) :base(node, attackData) {
+    public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, ModelMonsterVision vision, MonsterType type) :base(node, attackData) {
         m_speed = speed;
         vision.SetCallBack(OnTriggerEnter, OnTriggerStay, OnTriggerExit);
         m_vision = vision;
         m_visionArea = vision.Area;
+        m_type = type;
     }
 
     protected override void InitAnimation() {
@@ -67,7 +69,7 @@ public class ModelMonster:ModelAttackRole {
             if (selfToTargetAngle > m_attackAngle)
                 continue;
             ModelAttackData attackData = new ModelAttackData(RoleType.Monster, 
-                                                            (int)MonsterType.Rubbish, m_attackLevel, gameObject.name, colliders[i].name);
+                                                            (int)m_type, m_attackLevel, gameObject.name, colliders[i].name);
             EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.Damage, attackData);
             return;
         }
@@ -76,14 +78,21 @@ public class ModelMonster:ModelAttackRole {
     public override float Damage(ModelAttackData data) {
         float percent = base.Damage(data);
         DebugTool.Log("ModelMonster::Damage " + m_healthPoint.ToString());
+        if (m_target == null)
+            m_target = GameSceneManager.GetNode<Transform>(data.sender);
         return percent;
     }
 
     public override void Death() {
         m_rigidBody.useGravity = false;
-        m_rigidBody.isKinematic = true;
+        Vector3 force = transform.position - m_target.position;
+        force.y = 0;
+        m_rigidBody.AddForce(force.normalized * 2.5f, ForceMode.Impulse);
         gameObject.GetComponent<Collider>().enabled = false;
         m_vision.gameObject.SetActive(false);
+        float time = 1;
+        TimerManager.Register(time / 2, () => m_rigidBody.isKinematic = true);
+        TimerManager.Register(time, () => GameObject.Destroy(gameObject));
     }
 
     private void OnTriggerEnter(Collider collider) {

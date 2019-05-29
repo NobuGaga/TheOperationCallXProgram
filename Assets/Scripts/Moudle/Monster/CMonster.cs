@@ -46,7 +46,7 @@ public class CMonster:Controller {
         GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
         monsterVision.transform.SetParent(monster.transform, false);
         ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
-        ModelMonster script = new ModelMonster(monster, data.AttackRoleData, data.Speed, vision);
+        ModelMonster script = new ModelMonster(monster, data.AttackRoleData, data.Speed, vision, type);
         if (m_dicNameMonster.ContainsKey(nodeName))
             m_dicNameMonster[nodeName] = script;
         else

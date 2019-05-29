@@ -2,7 +2,7 @@
     private RoleType roleType;
     private int roleLevel;
     private ModelAttackLevel attackLevel;
-    private string sender;
+    public string sender;
     public string receiver;
 
     /// <summary>

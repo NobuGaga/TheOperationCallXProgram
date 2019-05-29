@@ -54,11 +54,12 @@ public abstract class ModelAttackRole:ModelRunRole {
         ModelSkill skillData = new ModelSkill(level, prefabPaths, positionPrefab, parent, startDelay, attackDelay);
         m_dicSkill.Add(level, skillData);
     }
-    protected void PlaySkillAnimator(Vector3 position) {
+    protected float PlaySkillAnimator(Vector3 position) {
         if (m_dicSkill == null)
-            return;
+            return 0;
         if (m_dicSkill.ContainsKey(m_attackLevel))
             m_dicSkill[m_attackLevel].Play(position);
+        return m_dicSkill[m_attackLevel].AttackDelayTime;
     }
 
     public ModelAttackRole(GameObject node, ModelAttackRoleData data):base(node) {
