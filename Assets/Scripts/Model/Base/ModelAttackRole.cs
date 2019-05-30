@@ -74,7 +74,7 @@ public abstract class ModelAttackRole:ModelRunRole {
     public abstract void Attack();
     public virtual float Damage(ModelAttackData data) {
         int damage = data.Damage;
-        KeyValuePair<Transform, string> message = new KeyValuePair<Transform, string>(transform, damage.ToString());
+        KeyValuePair<Vector3, int> message = new KeyValuePair<Vector3, int>(transform.position, damage);
         EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.ShowDamageText, message);
         m_healthPoint -= damage;
         SRoleState.Type state;

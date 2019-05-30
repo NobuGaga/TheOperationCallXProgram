@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2901040044
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4ec289d60796ed82b3ae76fe1e5619a9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: df05da807f9b5764a3b7ab22c6b5553b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor/Asset/Atlas/Base/btn_close.png
+Dependencies: []

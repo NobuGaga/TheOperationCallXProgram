@@ -13,19 +13,20 @@ public class PlayerView:View {
         GetNode<UIImage>("hpProcess").FillAmountX = hp;
     }
 
-    public void ShowDamageText(Transform target, string damage) {
-        string itemName = "DamageTextItem";
+    public void ShowDamageText(Vector3 position, int damage) {
         Transform parent = GetNode<Transform>("damageTextGroup");
-        LoadItem(itemName, parent, (UIPrefab itemPrefab) => {
-            Text textNode = itemPrefab.GetComponent<Text>();
-            textNode.text = damage;
-            itemPrefab.transform.position = Camera.main.WorldToScreenPoint(target.position);
-            m_damageText.Push(itemPrefab.transform);
-            TimerManager.Register(1, () => {
-                m_damageText.Pop();
-                Object.Destroy(itemPrefab.gameObject);
-            });
-        });
+        //string itemName = "DamageTextItem";
+        //LoadItem(itemName, parent, (UIPrefab itemPrefab) => {
+        //    Text textNode = itemPrefab.GetComponent<Text>();
+        //    textNode.text = damage.ToString();
+        //    itemPrefab.transform.position = Camera.main.WorldToScreenPoint(position);
+        //    m_damageText.Push(itemPrefab.transform);
+        //    TimerManager.Register(1, () => {
+        //        m_damageText.Pop();
+        //        Object.Destroy(itemPrefab.gameObject);
+        //    });
+        //});
+        UINumberManager.ShowDamageText(parent, Camera.main.WorldToScreenPoint(position), damage);
     }
 
     public void Update() {

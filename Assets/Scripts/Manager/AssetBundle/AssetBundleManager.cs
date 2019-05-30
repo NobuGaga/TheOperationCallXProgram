@@ -10,7 +10,7 @@ public static class AssetBundleManager {
 
     public static void Init(System.Action callback) {
         InitCache();
-        Load(PathConfig.AssetBundlePlatformPath, (AssetBundle assetBundle) => callback());
+        Load(PathConfig.AssetBundlePlatformPath, (AssetBundle assetBundle) => UINumberManager.Init(callback));
     }
 
     #region InitCache
@@ -22,6 +22,8 @@ public static class AssetBundleManager {
         dicCacheObjectName = new Dictionary<string, string>();
 
         dicCacheAssetBundleName.Add(PathConfig.AssetBundlePlatformPath, true);
+        dicCacheAssetBundleName.Add(PathConfig.AssetBundleNumberAtlasPath, true);
+        dicCacheAssetBundleName.Add(PathConfig.AssetBundleNumberPrefabPath, true);
         GameViewInfo viewInfo = ViewManager.GetViewInfo(GameMoudle.Loading, GameView.MainView);
         dicCacheObjectName.Add(viewInfo.AssetBundleName, viewInfo.Name);
         viewInfo = ViewManager.GetViewInfo(GameMoudle.Select, GameView.MainView);

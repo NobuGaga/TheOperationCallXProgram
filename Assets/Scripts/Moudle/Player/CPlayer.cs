@@ -78,9 +78,9 @@ public class CPlayer:Controller {
     }
 
     private void ShowDamageText(object arg) {
-        if (!(arg is KeyValuePair<Transform, string>))
+        if (!(arg is KeyValuePair<Vector3, int>))
             return;
-        KeyValuePair<Transform, string> data = (KeyValuePair<Transform, string>)arg;
+        KeyValuePair<Vector3, int> data = (KeyValuePair<Vector3, int>)arg;
         m_playerView.ShowDamageText(data.Key, data.Value);
     }
 

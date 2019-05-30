@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameSceneManager.cs" />
     <Compile Include="Assets\Scripts\Manager\TimerManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\UINumberManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ViewManager.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelAttackRole.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelBullet.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Assets\Scripts\Tool\DebugTool.cs" />
     <Compile Include="Assets\Scripts\Tool\StringTool.cs" />
     <Compile Include="Assets\Scripts\UI\UIImage.cs" />
+    <Compile Include="Assets\Scripts\UI\UINumberImage.cs" />
     <Compile Include="Assets\Scripts\UI\UIPrefab.cs" />
     <Compile Include="Assets\Scripts\UI\UISteeringWheel.cs" />
     <None Include="Assets\Resources\Blade_Warrior\Shaders\Glass.shader" />

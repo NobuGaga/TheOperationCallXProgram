@@ -21,6 +21,9 @@ public static class PathConfig {
 #endif
 
     public static readonly string AssetBundleMoudlePath = Path.Combine(AssetBundlePath, "prefabs/moudle/");
+    public static readonly string AssetBundleAtlasPath = Path.Combine(AssetBundlePath, "atlas/");
+    public static readonly string AssetBundleNumberAtlasPath = Path.Combine(AssetBundleAtlasPath, "number");
+    public static readonly string AssetBundleNumberPrefabPath = Path.Combine(AssetBundleMoudlePath, "player/ui");
 
     /// <summary>
     /// 本地缓存文件路径

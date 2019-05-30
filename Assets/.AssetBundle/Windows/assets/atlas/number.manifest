@@ -1,0 +1,28 @@
+ManifestFileVersion: 0
+CRC: 2342808864
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5a97d621507884aa7324d1ba4e377964
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: df05da807f9b5764a3b7ab22c6b5553b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Editor/Asset/Atlas/Number/number_8.png
+- Assets/Editor/Asset/Atlas/Number/number_-.png
+- Assets/Editor/Asset/Atlas/Number/number_6.png
+- Assets/Editor/Asset/Atlas/Number/number_9.png
+- Assets/Editor/Asset/Atlas/Number/number_5.png
+- Assets/Editor/Asset/Atlas/Number/number_7.png
+- Assets/Editor/Asset/Atlas/Number/number_4.png
+- Assets/Editor/Asset/Atlas/Number/number_1.png
+- Assets/Editor/Asset/Atlas/Number/number_2.png
+- Assets/Editor/Asset/Atlas/Number/number_3.png
+- Assets/Editor/Asset/Atlas/Number/number_0.png
+Dependencies: []
