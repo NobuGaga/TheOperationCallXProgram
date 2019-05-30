@@ -58,7 +58,9 @@ public class CMonster:Controller {
     public void Damage(object arg) {
         ModelAttackData data = (ModelAttackData)arg;
         ModelMonster monster = GetMonster(data.receiver);
-        float hpPercent = (float)(monster?.Damage(data));
+        if (monster == null || monster.gameObject == null)
+            return;
+        float hpPercent = monster.Damage(data);
         KeyValuePair<string, float> hpData = new KeyValuePair<string, float>(monster.gameObject.name, hpPercent);
         EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterDamage, hpData);
     }

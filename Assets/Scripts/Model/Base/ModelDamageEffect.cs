@@ -20,7 +20,9 @@ public class ModelDamageEffect {
     }
 
     public void Show(Transform parent) {
-        GameObject effect = effectPool.Pop();
+        GameObject effect = null;
+        if (effectPool.Count != 0)
+            effect = effectPool.Pop();
         if (effect == null)
             effect = GameObject.Instantiate(m_prefab, parent, false);
         else {

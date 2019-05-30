@@ -67,6 +67,8 @@ public class ModelPlayer:ModelWeaponRole {
         if (targets == null)
             return;
         for (int i = 0; i < targets.Length; i++) {
+            if (targets[i] == null)
+                continue;
             ModelAttackData attackData = new ModelAttackData(RoleType.Player, (int)PlayerType.Master, m_attackLevel, m_gameObject.name, targets[i].name);
             EventManager.Dispatch(GameMoudle.Monster, GameEvent.Type.Damage, attackData);
         }
