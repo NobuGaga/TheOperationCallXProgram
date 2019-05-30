@@ -27,7 +27,7 @@ public class AssetImportProcessor:AssetPostprocessor {
     }
 
     public void OnPreprocessAudio() {
-        AudioImporter audio = assetImporter as AudioImporter;
+        //AudioImporter audio = assetImporter as AudioImporter;
         //audio.format = AudioImporterFormat.Compressed;
     }
     public void OnPostprocessAudio(AudioClip clip) {

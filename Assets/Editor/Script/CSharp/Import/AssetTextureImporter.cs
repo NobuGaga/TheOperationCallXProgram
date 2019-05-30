@@ -25,7 +25,6 @@ public static class AssetTextureImporter {
     }
 
     private static void SetAssetBundleName(TextureImporter import, string assetPath) {
-        string[] pathFolder = assetPath.Split('/');
         Regex filter = new Regex("Atlas/.+/");
         Match match = filter.Match(assetPath);
         if (match.Success) {
