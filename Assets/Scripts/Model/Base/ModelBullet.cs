@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
 public class ModelBullet:MonoBehaviour {
-    [SerializeField]
-    private GameTagInfo m_targetType = GameTagInfo.Enemy;
     private float m_speed;
     private Transform m_target;
 
