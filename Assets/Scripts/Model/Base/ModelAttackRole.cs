@@ -71,6 +71,14 @@ public abstract class ModelAttackRole:ModelRunRole {
 
     protected abstract void InitAttackSkillAnimation();
 
+    private ModelDamageEffect m_damageEffect;
+    protected void InitDamageEffect(string prefabPath) {
+        m_damageEffect = new ModelDamageEffect(prefabPath);
+    }
+    private void PlayDamageEffect() {
+        m_damageEffect?.Show(transform);
+    }
+
     public abstract void Attack();
     public virtual float Damage(ModelAttackData data) {
         int damage = data.Damage;
@@ -83,6 +91,7 @@ public abstract class ModelAttackRole:ModelRunRole {
         else
             state = SRoleState.Type.SRoleDamage;
         State = state;
+        PlayDamageEffect();
         return m_healthPoint.Percent;
     }
     public abstract void Death();

@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Manager\ViewManager.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelAttackRole.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelBullet.cs" />
+    <Compile Include="Assets\Scripts\Model\Base\ModelDamageEffect.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelMonsterVision.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelRole.cs" />
     <Compile Include="Assets\Scripts\Model\Base\ModelRunRole.cs" />
