@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 790391595
+CRC: 1949955977
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 58de57d243fce4ba0dcd2a5c8f8eb92b
+    Hash: 55235db225dc550835716087a38c2b07
   TypeTreeHash:
     serializedVersion: 2
     Hash: b33b036c7f0b3dd4c2705e15a0de4bed
@@ -44,6 +44,7 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
+- Assets/Editor/Asset/Prefabs/Moudle/Player/UI/RoleHPItem.prefab
 - Assets/Editor/Asset/Prefabs/Moudle/Player/UI/NumberItem.prefab
 - Assets/Editor/Asset/Prefabs/Moudle/Player/UI/NumberGroup.prefab
 - Assets/Editor/Asset/Prefabs/Moudle/Player/UI/DamageTextItem.prefab

@@ -83,4 +83,10 @@ public static class GameSceneManager {
                 break;
         }
     }
+
+    public static Vector3 ToScreenPoint(Vector3 point) {
+        if (curScene == GameScene.DesertScene)
+            return Camera.main.WorldToScreenPoint(point);
+        return Camera.main.WorldToScreenPoint(point);
+    }
 }

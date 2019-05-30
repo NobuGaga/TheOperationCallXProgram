@@ -52,12 +52,15 @@ public class CMonster:Controller {
         else
             m_dicNameMonster.Add(nodeName, script);
         m_listMonster.Add(script);
+        EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterCreate, monster);
     }
 
     public void Damage(object arg) {
         ModelAttackData data = (ModelAttackData)arg;
         ModelMonster monster = GetMonster(data.receiver);
-        monster?.Damage(data);
+        float hpPercent = (float)(monster?.Damage(data));
+        KeyValuePair<string, float> hpData = new KeyValuePair<string, float>(monster.gameObject.name, hpPercent);
+        EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterDamage, hpData);
     }
 
     private ModelMonster GetMonster(string nodeName) {
@@ -71,6 +74,10 @@ public class CMonster:Controller {
         List<int> deleteIndexList = null;
         List<string> deleteNameList = null;
         for (int i = 0; i < m_listMonster.Count; i++) {
+            string nodeName = m_listMonster[i].gameObject.name;
+            Vector3 position = m_listMonster[i].transform.position;
+            KeyValuePair<string, Vector3> data = new KeyValuePair<string, Vector3>(nodeName, position);
+            EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterMove, data);
             if (m_listMonster[i].State != SRoleState.Type.SRoleDeath) {
                 m_listMonster[i].Update();
                 continue;
@@ -80,7 +87,7 @@ public class CMonster:Controller {
             if (deleteNameList == null)
                 deleteNameList = new List<string>();
             deleteIndexList.Add(i);
-            deleteNameList.Add(m_listMonster[i].gameObject.name);
+            deleteNameList.Add(nodeName);
         }
         if (deleteIndexList == null)
             return;

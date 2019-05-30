@@ -9,6 +9,7 @@ public static class GameConfig {
     public static readonly int CameraMoveFixModeTime = 30;
     public static readonly int CameraMoveThirdModeTime = 10;
     public static readonly float CameraHeightFix = 0.17f;
+    public static readonly bool isDamageUseTextImage = true;
 
     public static void Init() {
         // TODO

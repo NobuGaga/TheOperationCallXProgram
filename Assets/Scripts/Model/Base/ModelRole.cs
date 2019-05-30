@@ -36,7 +36,7 @@ public abstract class ModelRole {
             bool isExit = true;
             if (!isFirst)
                 isExit = m_curState.Exit();
-            if (!isExit)
+            if (!isExit && value != SRoleState.Type.SRoleDeath && value != SRoleState.Type.SRoleDamage)
                 return;
             if (!m_dicStateCache.ContainsKey(value))
                 m_curState = Activator.CreateInstance(Type.GetType(value.ToString()), 

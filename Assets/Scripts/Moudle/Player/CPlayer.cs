@@ -18,6 +18,9 @@ public class CPlayer:Controller {
         m_eventList.Add(GameEvent.Type.Attack);
         m_eventList.Add(GameEvent.Type.Damage);
         m_eventList.Add(GameEvent.Type.ShowDamageText);
+        m_eventList.Add(GameEvent.Type.MonsterCreate);
+        m_eventList.Add(GameEvent.Type.MonsterMove);
+        m_eventList.Add(GameEvent.Type.MonsterDamage);
         m_eventList.Add(GameEvent.Type.SteeringWheelDragBegin);
         m_eventList.Add(GameEvent.Type.SteeringWheelDraging);
         m_eventList.Add(GameEvent.Type.SteeringWheelDragEnd);
@@ -33,6 +36,12 @@ public class CPlayer:Controller {
                 return Damage;
             case GameEvent.Type.ShowDamageText:
                 return ShowDamageText;
+            case GameEvent.Type.MonsterCreate:
+                return MonsterCreate;
+            case GameEvent.Type.MonsterMove:
+                return MonsterMove;
+            case GameEvent.Type.MonsterDamage:
+                return MonsterDamage;
             case GameEvent.Type.SteeringWheelDragBegin:
                 return SteeringWheelDragBegin;
             case GameEvent.Type.SteeringWheelDraging:
@@ -45,12 +54,6 @@ public class CPlayer:Controller {
     }
 
     private void OpenMainView(object arg) {
-        GameView viewType = GameView.MainView;
-        ViewManager.Open(GameViewInfo.GetViewName(Moudle, GameView.MainView),
-            (GameObject gameObject) =>
-                m_playerView = new PlayerView(Moudle, viewType, gameObject.GetComponent<UIPrefab>())
-        );
-
         Dictionary<string, GameObject> dicNodeName = arg as Dictionary<string, GameObject>;
         GameObject playerObj = dicNodeName["Blade_Warrior_Prefab"];
         ModelAttackRoleData data = new ModelAttackRoleData(GetModel<MPlayerData>().PlayerHP, 0.5f, 30);
@@ -61,6 +64,14 @@ public class CPlayer:Controller {
         m_cameraHeight = m_cameraTrans.position.y - GameConfig.CameraHeightFix;
         m_cameraToPlayerDis = m_player.transform.position.z - m_cameraTrans.position.z;
         m_cameraToPlayerDisVec3 = m_player.transform.position - m_cameraTrans.position;
+
+        GameView viewType = GameView.MainView;
+        ViewManager.Open(GameViewInfo.GetViewName(Moudle, GameView.MainView),
+            (GameObject gameObject) => {
+                m_playerView = new PlayerView(Moudle, viewType, gameObject.GetComponent<UIPrefab>());
+                m_playerView.CreateHPProcess(playerObj.name, GameSceneManager.ToScreenPoint(playerObj.transform.position), true);
+            }
+        );
 
         EventManager.Register(GameEvent.Type.FrameUpdate, FrameUpdate);
     }
@@ -82,6 +93,23 @@ public class CPlayer:Controller {
             return;
         KeyValuePair<Vector3, int> data = (KeyValuePair<Vector3, int>)arg;
         m_playerView.ShowDamageText(data.Key, data.Value);
+    }
+
+    private void MonsterCreate(object arg) {
+        GameObject monster = arg as GameObject;
+        Vector3 monsterPos = monster.transform.position;
+        m_playerView.CreateHPProcess(monster.name, GameSceneManager.ToScreenPoint(monsterPos));
+    }
+
+    private void MonsterMove(object arg) {
+        KeyValuePair<string, Vector3> data = (KeyValuePair<string, Vector3>)arg;
+        Vector3 position = GameSceneManager.ToScreenPoint(data.Value);
+        m_playerView.MoveHPProcess(data.Key, position);
+    }
+
+    private void MonsterDamage(object arg) {
+        KeyValuePair<string, float> data = (KeyValuePair<string, float>)arg;
+        m_playerView.UpdateHPProcess(data.Key, data.Value);
     }
 
     private void SteeringWheelDragBegin(object arg) {
@@ -107,6 +135,7 @@ public class CPlayer:Controller {
     private void FrameUpdate(object arg = null) {
         m_playerView?.Update();
         m_player.Update();
+        m_playerView?.MoveHPProcess(string.Empty, GameSceneManager.ToScreenPoint(m_player.transform.position), true);
     }
 
     private void ResetCameraFixMode(object arg = null) {
