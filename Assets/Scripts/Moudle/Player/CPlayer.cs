@@ -116,10 +116,10 @@ public class CPlayer:Controller {
         SteeringWheelDraging(arg);
         switch (GameConfig.CameraType) {
             case GameCameraType.Fix:
-                EventManager.Register(GameEvent.Type.LastUpdate, ResetCameraFixMode);
+                EventManager.Register(GameEvent.Type.LastUpdate, LastUpdateFixMode);
                 break;
             case GameCameraType.ThirdPerson:
-                EventManager.Register(GameEvent.Type.LastUpdate, ResetCameraThirdPersonMode);
+                EventManager.Register(GameEvent.Type.LastUpdate, LastUpdateThirdPersonMode);
                 break;
         }
     }
@@ -135,24 +135,37 @@ public class CPlayer:Controller {
     private void FrameUpdate(object arg = null) {
         m_playerView?.Update();
         m_player.Update();
+    }
+
+    private void LastUpdateFixMode(object arg) {
+        PlayerHPUpdatePosition();
+        ResetCameraFixMode();
+    }
+
+    private void LastUpdateThirdPersonMode(object arg) {
+        PlayerHPUpdatePosition();
+        ResetCameraThirdPersonMode();
+    }
+
+    private void PlayerHPUpdatePosition() {
         m_playerView?.MoveHPProcess(string.Empty, GameSceneManager.ToScreenPoint(m_player.transform.position), true);
     }
 
-    private void ResetCameraFixMode(object arg = null) {
+    private void ResetCameraFixMode() {
         Vector3 cameraPos = m_player.transform.position - m_cameraToPlayerDisVec3;
         Vector3 cameraLastPos = m_cameraTrans.position;
         if ((cameraPos - cameraLastPos).magnitude < 0.01f && m_player.State == SRoleState.Type.SRoleStand) {
-            EventManager.Unregister(GameEvent.Type.LastUpdate, ResetCameraFixMode);
+            EventManager.Unregister(GameEvent.Type.LastUpdate, LastUpdateFixMode);
             return;
         }
         m_cameraTrans.position = Vector3.Lerp(cameraLastPos, cameraPos, Time.deltaTime * GameConfig.CameraMoveFixModeTime);
     }
 
-    private void ResetCameraThirdPersonMode(object arg = null) {
+    private void ResetCameraThirdPersonMode() {
         Quaternion cameraRotation = m_cameraTrans.rotation;
         Quaternion playerRotation = m_player.transform.rotation;
         if (Math.Abs(cameraRotation.eulerAngles.y - playerRotation.eulerAngles.y) < 1 && m_player.State == SRoleState.Type.SRoleStand) {
-            EventManager.Unregister(GameEvent.Type.LastUpdate, ResetCameraThirdPersonMode);
+            EventManager.Unregister(GameEvent.Type.LastUpdate, LastUpdateThirdPersonMode);
             return;
         }
         cameraRotation = Quaternion.Lerp(cameraRotation, playerRotation, Time.deltaTime * GameConfig.CameraMoveThirdModeTime);

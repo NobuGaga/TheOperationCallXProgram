@@ -34,6 +34,7 @@ public class CMonster:Controller {
         for (int i = 0; i < 2; i++)
             CreateMonster(i);
         EventManager.Register(GameEvent.Type.FrameUpdate, FrameUpdate);
+        EventManager.Register(GameEvent.Type.LastUpdate, LastUpdate);
     }
 
     private void CreateMonster(int index, MonsterType type = MonsterType.Rubbish) {
@@ -76,10 +77,6 @@ public class CMonster:Controller {
         List<int> deleteIndexList = null;
         List<string> deleteNameList = null;
         for (int i = 0; i < m_listMonster.Count; i++) {
-            string nodeName = m_listMonster[i].gameObject.name;
-            Vector3 position = m_listMonster[i].transform.position;
-            KeyValuePair<string, Vector3> data = new KeyValuePair<string, Vector3>(nodeName, position);
-            EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterMove, data);
             if (m_listMonster[i].State != SRoleState.Type.SRoleDeath) {
                 m_listMonster[i].Update();
                 continue;
@@ -89,7 +86,7 @@ public class CMonster:Controller {
             if (deleteNameList == null)
                 deleteNameList = new List<string>();
             deleteIndexList.Add(i);
-            deleteNameList.Add(nodeName);
+            deleteNameList.Add(m_listMonster[i].gameObject.name);
         }
         if (deleteIndexList == null)
             return;
@@ -100,6 +97,15 @@ public class CMonster:Controller {
             if (m_dicNameMonster.ContainsKey(name))
                 m_dicNameMonster.Remove(name);
             CreateMonster(index);
+        }
+    }
+
+    private void LastUpdate(object arg) {
+        for (int i = 0; i < m_listMonster.Count; i++) {
+            string nodeName = m_listMonster[i].gameObject.name;
+            Vector3 position = m_listMonster[i].transform.position;
+            KeyValuePair<string, Vector3> data = new KeyValuePair<string, Vector3>(nodeName, position);
+            EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterMove, data);
         }
     }
 }
