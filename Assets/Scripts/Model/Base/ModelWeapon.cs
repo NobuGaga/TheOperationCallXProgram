@@ -6,7 +6,7 @@ public class ModelWeapon:MonoBehaviour {
     private WeaponType m_type = WeaponType.ShortRange;
     [SerializeField]
     private WeaponHandType m_hand = WeaponHandType.Right;
-    private Transform m_bulletParent;;
+    private Transform m_bulletParent;
 
     private GameObject m_bulletObj;
     private Action<Collider> m_beginFunc;
