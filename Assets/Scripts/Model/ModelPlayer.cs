@@ -77,15 +77,19 @@ public class ModelPlayer:ModelWeaponRole {
     private Collider[] SearchAttactTarget() {
         Collider[] colliders = Physics.OverlapSphere(m_transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Enemy.ToString()));
         float minDistance = m_attackDis;
+        bool isInAttackArea = false;
         List<Collider> listTarget = new List<Collider>();
         for (int i = 0; i < colliders.Length; i++) {
             if (colliders[i].isTrigger || colliders[i].tag != GameTagInfo.Enemy.ToString())
                 continue;
             Vector3 selfToTarget = colliders[i].transform.position - m_transform.position;
             float selfToTargetAngle = Vector3.Angle(selfToTarget, m_transform.forward);
-            if (selfToTargetAngle > m_attackAngle)
+            bool isInAttackAngle = selfToTargetAngle <= m_attackAngle;
+            if (isInAttackAngle)
+                isInAttackArea = true;
+            if (!GameConfig.isAutoAttack && !isInAttackAngle)
                 continue;
-            if (IsShortWeapon)
+            if (IsShortWeapon && isInAttackAngle)
                 listTarget.Add(colliders[i]);
             else if (selfToTarget.magnitude < minDistance) {
                 listTarget.Clear();
@@ -93,10 +97,18 @@ public class ModelPlayer:ModelWeaponRole {
                 listTarget.Add(colliders[i]);
             }
         }
-        if (IsShortWeapon)
+        if (!GameConfig.isAutoAttack && isInAttackArea) {
+            if (IsShortWeapon)
+                return listTarget.ToArray();
+            if (minDistance == m_attackDis)
+                return null;
             return listTarget.ToArray();
-        if (minDistance == m_attackDis)
+        }
+        if (listTarget.Count == 0)
             return null;
+        Vector3 lookPoint = listTarget[0].transform.position;
+        lookPoint.y = m_transform.position.y;
+        m_transform.LookAt(lookPoint);
         return listTarget.ToArray();
     }
 
