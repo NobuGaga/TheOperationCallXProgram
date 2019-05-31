@@ -4,6 +4,15 @@ public class ModelMonster:ModelAttackRole {
     private float m_speed;
     private ModelMonsterVision m_vision;
     private MonsterType m_type;
+    private int m_hpPosY;
+    public int HPPosY {
+        set {
+            m_hpPosY = value;
+        }
+        get {
+            return m_hpPosY;
+        }
+    }
 
     public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, ModelMonsterVision vision, MonsterType type) :base(node, attackData) {
         m_speed = speed;

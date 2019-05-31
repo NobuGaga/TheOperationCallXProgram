@@ -10,6 +10,7 @@ public static class GameManager {
         ControllerManager.Init();
         // before AssetBundleManager.Init
         ViewManager.Init();
+        ModelRoleManager.Init();
     }
 
     public static void Start(LogicScript startScript) {

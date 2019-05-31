@@ -55,7 +55,8 @@ public class CPlayer:Controller {
 
     private void OpenMainView(object arg) {
         Dictionary<string, GameObject> dicNodeName = arg as Dictionary<string, GameObject>;
-        GameObject playerObj = dicNodeName["Blade_Warrior_Prefab"];
+        string playerPrefabName = "Blade_Warrior_Prefab";
+        GameObject playerObj = dicNodeName[playerPrefabName];
         ModelAttackRoleData data = new ModelAttackRoleData(GetModel<MPlayerData>().PlayerHP, 0.5f, 30);
         m_player = new ModelPlayer(playerObj, data);
 
@@ -69,7 +70,9 @@ public class CPlayer:Controller {
         ViewManager.Open(GameViewInfo.GetViewName(Moudle, GameView.MainView),
             (GameObject gameObject) => {
                 m_playerView = new PlayerView(Moudle, viewType, gameObject.GetComponent<UIPrefab>());
-                m_playerView.CreateHPProcess(playerObj.name, GameSceneManager.ToScreenPoint(playerObj.transform.position), true);
+                Vector3 position = GameSceneManager.ToScreenPoint(playerObj.transform.position);
+                position.y += ModelRoleManager.GetModelRoleHpPosY(playerPrefabName);
+                m_playerView.CreateHPProcess(playerPrefabName, position, true);
             }
         );
 
@@ -96,15 +99,13 @@ public class CPlayer:Controller {
     }
 
     private void MonsterCreate(object arg) {
-        GameObject monster = arg as GameObject;
-        Vector3 monsterPos = monster.transform.position;
-        m_playerView.CreateHPProcess(monster.name, GameSceneManager.ToScreenPoint(monsterPos));
+        KeyValuePair<string, Vector3> data = (KeyValuePair<string, Vector3>)arg;
+        m_playerView.CreateHPProcess(data.Key, data.Value);
     }
 
     private void MonsterMove(object arg) {
         KeyValuePair<string, Vector3> data = (KeyValuePair<string, Vector3>)arg;
-        Vector3 position = GameSceneManager.ToScreenPoint(data.Value);
-        m_playerView.MoveHPProcess(data.Key, position);
+        m_playerView.MoveHPProcess(data.Key, data.Value);
     }
 
     private void MonsterDamage(object arg) {
@@ -148,7 +149,9 @@ public class CPlayer:Controller {
     }
 
     private void PlayerHPUpdatePosition() {
-        m_playerView?.MoveHPProcess(string.Empty, GameSceneManager.ToScreenPoint(m_player.transform.position), true);
+        Vector3 position = GameSceneManager.ToScreenPoint(m_player.transform.position);
+        position.y += ModelRoleManager.GetModelRoleHpPosY(m_player.gameObject.name);
+        m_playerView?.MoveHPProcess(string.Empty, position, true);
     }
 
     private void ResetCameraFixMode() {

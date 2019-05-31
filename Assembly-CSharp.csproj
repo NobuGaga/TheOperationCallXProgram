@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\Manager\EventManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GameSceneManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\ModelRoleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\TimerManager.cs" />
     <Compile Include="Assets\Scripts\Manager\UINumberManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ViewManager.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Assets\Scripts\Model\Data\ModelAttackRoleData.cs" />
     <Compile Include="Assets\Scripts\Model\Data\ModelHPData.cs" />
     <Compile Include="Assets\Scripts\Model\Data\ModelMonsterData.cs" />
+    <Compile Include="Assets\Scripts\Model\Data\ModelRoleData.cs" />
     <Compile Include="Assets\Scripts\Model\Data\ModelRoleType.cs" />
     <Compile Include="Assets\Scripts\Model\ModelMonster.cs" />
     <Compile Include="Assets\Scripts\Model\ModelPlayer.cs" />

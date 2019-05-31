@@ -53,7 +53,11 @@ public class CMonster:Controller {
         else
             m_dicNameMonster.Add(nodeName, script);
         m_listMonster.Add(script);
-        EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterCreate, monster);
+        Vector3 screenPos = GameSceneManager.ToScreenPoint(monster.transform.position);
+        script.HPPosY = ModelRoleManager.GetModelRoleHpPosY(data.PrefabName);
+        screenPos.y += script.HPPosY;
+        KeyValuePair<string, Vector3> hpProcessData = new KeyValuePair<string, Vector3>(monster.name, screenPos);
+        EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterCreate, hpProcessData);
     }
 
     public void Damage(object arg) {
@@ -104,6 +108,8 @@ public class CMonster:Controller {
         for (int i = 0; i < m_listMonster.Count; i++) {
             string nodeName = m_listMonster[i].gameObject.name;
             Vector3 position = m_listMonster[i].transform.position;
+            position = GameSceneManager.ToScreenPoint(position);
+            position.y += m_listMonster[i].HPPosY;
             KeyValuePair<string, Vector3> data = new KeyValuePair<string, Vector3>(nodeName, position);
             EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterMove, data);
         }
