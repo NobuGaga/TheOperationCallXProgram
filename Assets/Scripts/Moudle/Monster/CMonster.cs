@@ -4,13 +4,10 @@ using System.Collections.Generic;
 
 public class CMonster:Controller {
     private Transform m_parent;
-    private GameObject m_monsterVision;
     private Dictionary<string, ModelMonster> m_dicNameMonster = new Dictionary<string, ModelMonster>();
     private List<ModelMonster> m_listMonster = new List<ModelMonster>();
 
-    public CMonster(GameMoudle moudle, Type modelType):base(moudle, modelType) {
-        m_monsterVision = Resources.Load<GameObject>("MonsterVision");
-    }
+    public CMonster(GameMoudle moudle, Type modelType):base(moudle, modelType) { }
 
     protected override void InitEvent() {
         m_eventList.Add(GameEvent.Type.InitModel);
@@ -44,10 +41,7 @@ public class CMonster:Controller {
         monster.name = nodeName;
         monster.transform.SetParent(m_parent);
         monster.transform.position = data.GetScenePostion();
-        GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
-        monsterVision.transform.SetParent(monster.transform, false);
-        ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
-        ModelMonster script = new ModelMonster(monster, data.AttackRoleData, data.Speed, vision, type);
+        ModelMonster script = new ModelMonster(monster, data.AttackRoleData, data.Speed, data.headHeight, data.trackDis, type);
         if (m_dicNameMonster.ContainsKey(nodeName))
             m_dicNameMonster[nodeName] = script;
         else
@@ -94,10 +88,10 @@ public class CMonster:Controller {
         }
         if (deleteIndexList == null)
             return;
-        for (int i = 0; i < deleteIndexList.Count; i++) {
+        for (int i = deleteIndexList.Count - 1; i > 0; i--) {
             int index = deleteIndexList[i];
             string name = deleteNameList[i];
-            m_listMonster.RemoveAt(index);
+            m_listMonster.RemoveAt(index - i);
             if (m_dicNameMonster.ContainsKey(name))
                 m_dicNameMonster.Remove(name);
             CreateMonster(index);

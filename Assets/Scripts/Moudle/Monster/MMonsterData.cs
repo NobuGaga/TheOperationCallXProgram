@@ -6,7 +6,7 @@ public class MMonsterData:Model {
 
     public override void Init() {
         m_dicMonsterData = new Dictionary<MonsterType, ModelMonsterData>();
-        ModelMonsterData data = new ModelMonsterData(MonsterType.Rubbish, "Monster_Warrior_Prefab", 100, 30, 0.5f, 30);
+        ModelMonsterData data = new ModelMonsterData(MonsterType.Rubbish, "Monster_Warrior_Prefab", 100, 30, 2, 5, 0.5f, 30);
         data.AddScenePosition(GameScene.DesertScene, new Vector3(-0.2f, -0.48f, -0.3f), new Vector3(0.2f, -0.48f, 0.3f));
         m_dicMonsterData.Add(data.Type, data);
     }

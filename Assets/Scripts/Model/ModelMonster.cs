@@ -13,13 +13,22 @@ public class ModelMonster:ModelAttackRole {
             return m_hpPosY;
         }
     }
+    private static GameObject m_monsterVision;
 
-    public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, ModelMonsterVision vision, MonsterType type) :base(node, attackData) {
+    static ModelMonster() {
+        m_monsterVision = Resources.Load<GameObject>("MonsterVision");
+    }
+
+    public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, int headHeight, int trackDis, MonsterType type):base(node, attackData) {
         m_speed = speed;
+        m_type = type;
+        GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
+        monsterVision.transform.SetParent(transform, false);
+        ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
+        vision.SetVision(headHeight, trackDis);
         vision.SetCallBack(OnTriggerEnter, OnTriggerStay, OnTriggerExit);
         m_vision = vision;
-        m_visionArea = vision.Area;
-        m_type = type;
+        m_visionArea = trackDis;
     }
 
     protected override void InitAnimation() {
