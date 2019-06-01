@@ -19,7 +19,7 @@ public class ModelMonster:ModelAttackRole {
         m_monsterVision = Resources.Load<GameObject>("MonsterVision");
     }
 
-    public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, int headHeight, int trackDis, MonsterType type):base(node, attackData) {
+    public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, float headHeight, int trackDis, MonsterType type):base(node, attackData) {
         m_speed = speed;
         m_type = type;
         GameObject monsterVision = GameObject.Instantiate(m_monsterVision);

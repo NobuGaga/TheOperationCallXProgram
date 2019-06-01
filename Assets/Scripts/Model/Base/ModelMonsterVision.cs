@@ -27,7 +27,7 @@ public class ModelMonsterVision:MonoBehaviour {
             m_endFunc = endFunc;
     }
 
-    public void SetVision(int headHeight, int rang) {
+    public void SetVision(float headHeight, int rang) {
         Vector3 center = m_collider.center;
         center.y = headHeight;
         m_collider.center = center;

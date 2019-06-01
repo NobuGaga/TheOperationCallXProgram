@@ -88,7 +88,7 @@ public class CMonster:Controller {
         }
         if (deleteIndexList == null)
             return;
-        for (int i = deleteIndexList.Count - 1; i > 0; i--) {
+        for (int i = 0; i < deleteIndexList.Count; i++) {
             int index = deleteIndexList[i];
             string name = deleteNameList[i];
             m_listMonster.RemoveAt(index - i);
