@@ -28,13 +28,14 @@ public class ModelMonster:ModelAttackRole {
         GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
         monsterVision.transform.SetParent(transform, false);
         ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
-        data.Speed, , , 
         vision.SetVision(data.headHeight, data.trackDis);
         vision.SetCallBack(OnTriggerEnter, OnTriggerStay, OnTriggerExit);
         m_vision = vision;
         m_visionArea = data.trackDis;
         m_selectObj = GameObject.Instantiate(selectObj);
         m_selectObj.transform.SetParent(transform, false);
+        Vector3 position = m_selectObj.transform.localPosition;
+        m_selectObj.transform.localPosition = new Vector3(position.x, data.selectPoint, position.z);
         m_selectObj.SetActive(false);
     }
 
