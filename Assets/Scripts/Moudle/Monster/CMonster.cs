@@ -41,7 +41,7 @@ public class CMonster:Controller {
         monster.name = nodeName;
         monster.transform.SetParent(m_parent);
         monster.transform.position = data.GetScenePostion();
-        ModelMonster script = new ModelMonster(monster, data.AttackRoleData, data.Speed, data.headHeight, data.trackDis, type);
+        ModelMonster script = new ModelMonster(monster, data, type);
         if (m_dicNameMonster.ContainsKey(nodeName))
             m_dicNameMonster[nodeName] = script;
         else

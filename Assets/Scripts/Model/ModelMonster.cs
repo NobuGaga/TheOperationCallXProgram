@@ -22,16 +22,17 @@ public class ModelMonster:ModelAttackRole {
         selectObj = Resources.Load<GameObject>("MonsterVision");
     }
 
-    public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, float headHeight, int trackDis, MonsterType type):base(node, attackData) {
-        m_speed = speed;
+    public ModelMonster(GameObject node, ModelMonsterData data, MonsterType type):base(node, data.AttackRoleData) {
+        m_speed = data.Speed;
         m_type = type;
         GameObject monsterVision = GameObject.Instantiate(m_monsterVision);
         monsterVision.transform.SetParent(transform, false);
         ModelMonsterVision vision = monsterVision.GetComponent<ModelMonsterVision>();
-        vision.SetVision(headHeight, trackDis);
+        data.Speed, , , 
+        vision.SetVision(data.headHeight, data.trackDis);
         vision.SetCallBack(OnTriggerEnter, OnTriggerStay, OnTriggerExit);
         m_vision = vision;
-        m_visionArea = trackDis;
+        m_visionArea = data.trackDis;
         m_selectObj = GameObject.Instantiate(selectObj);
         m_selectObj.transform.SetParent(transform, false);
         m_selectObj.SetActive(false);

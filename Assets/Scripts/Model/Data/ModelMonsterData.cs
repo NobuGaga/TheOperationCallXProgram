@@ -16,8 +16,9 @@ public struct ModelMonsterData {
     private int attackAngle;
     public float headHeight;
     public int trackDis;
+    public float selectPoint;
 
-    public ModelMonsterData(MonsterType type, string prefabName, int maxHP, float speed, float headHeight, int trackDis, float attackDis, int attackAngle, Dictionary<GameScene, Vector3[]> dicScenePos = null) {
+    public ModelMonsterData(MonsterType type, string prefabName, int maxHP, float speed, float headHeight, int trackDis, float attackDis, int attackAngle, float selectPoint = 0, Dictionary<GameScene, Vector3[]> dicScenePos = null) {
         this.type = type;
         if (dicScenePos == null)
             this.dicScenePos = new Dictionary<GameScene, Vector3[]>();
@@ -32,6 +33,7 @@ public struct ModelMonsterData {
         this.trackDis = trackDis;
         this.attackDis = attackDis;
         this.attackAngle = attackAngle;
+        this.selectPoint = selectPoint;
     }
 
     public void AddScenePosition(GameScene scene, Vector3 start, Vector3 end) {
