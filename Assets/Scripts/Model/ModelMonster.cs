@@ -3,6 +3,7 @@
 public class ModelMonster:ModelAttackRole {
     private float m_speed;
     private ModelMonsterVision m_vision;
+    private GameObject m_selectObj;
     private MonsterType m_type;
     private int m_hpPosY;
     public int HPPosY {
@@ -14,9 +15,11 @@ public class ModelMonster:ModelAttackRole {
         }
     }
     private static GameObject m_monsterVision;
+    private static GameObject selectObj;
 
     static ModelMonster() {
         m_monsterVision = Resources.Load<GameObject>("MonsterVision");
+        selectObj = Resources.Load<GameObject>("MonsterVision");
     }
 
     public ModelMonster(GameObject node, ModelAttackRoleData attackData, float speed, float headHeight, int trackDis, MonsterType type):base(node, attackData) {
@@ -29,6 +32,9 @@ public class ModelMonster:ModelAttackRole {
         vision.SetCallBack(OnTriggerEnter, OnTriggerStay, OnTriggerExit);
         m_vision = vision;
         m_visionArea = trackDis;
+        m_selectObj = GameObject.Instantiate(selectObj);
+        m_selectObj.transform.SetParent(transform, false);
+        m_selectObj.SetActive(false);
     }
 
     protected override void InitAnimation() {
@@ -98,10 +104,13 @@ public class ModelMonster:ModelAttackRole {
         DebugTool.Log("ModelMonster::Damage " + m_healthPoint.ToString());
         if (m_target == null)
             m_target = GameSceneManager.GetNode<Transform>(data.sender);
+        m_selectObj.SetActive(true);
+        TimerManager.Register(1, () => m_selectObj.SetActive(false));
         return percent;
     }
 
     public override void Death() {
+        m_selectObj.SetActive(false);
         m_rigidBody.useGravity = false;
         Vector3 force = transform.position - m_target.position;
         force.y = 0;

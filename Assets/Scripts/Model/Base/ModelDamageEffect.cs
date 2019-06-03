@@ -28,9 +28,9 @@ public class ModelDamageEffect {
         else {
             Transform trans = effect.transform;
             trans.SetParent(parent, false);
-            trans.position = m_originPos;
             effect.SetActive(true);
         }
+        effect.transform.localPosition = m_originPos;
         TimerManager.Register(m_lastTime, () => {
             effect.SetActive(false);
             effect.transform.SetParent(effect.transform.parent);
