@@ -89,4 +89,8 @@ public static class GameSceneManager {
             return Camera.main.WorldToScreenPoint(point);
         return Camera.main.WorldToScreenPoint(point);
     }
+
+    public static float DistanceToCamera(Vector3 point) {
+        return Vector3.Distance(point, Camera.main.transform.position);
+    }
 }

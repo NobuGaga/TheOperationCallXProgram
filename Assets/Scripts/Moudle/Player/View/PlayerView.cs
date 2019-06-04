@@ -38,11 +38,12 @@ public class PlayerView:View {
         });
     }
 
-    public void CreateHPProcess(string nodeName, Vector3 position, bool isPlayer = false) {
+    public void CreateHPProcess(string nodeName, Vector3 position, float scale = 1, bool isPlayer = false) {
         Transform parent = GetNode<Transform>("hpProcessGroup");
         string itemName = "RoleHPItem";
         LoadItem(itemName, parent, (UIPrefab itemPrefab) => {
             itemPrefab.transform.position = position;
+            itemPrefab.transform.localScale = new Vector3(scale, scale);
             itemPrefab.GetNode<UIImage>("hpProcess").FillAmountX = 1;
             m_dicHPProcess.Add(nodeName, itemPrefab);
         });
@@ -50,15 +51,18 @@ public class PlayerView:View {
             m_playerModelName = nodeName;
     }
 
-    public void MoveHPProcess(string nodeName, Vector3 position, bool isPlayer = false) {
+    public void MoveHPProcess(string nodeName, Vector3 position, float scale = 1, bool isPlayer = false) {
         if (!m_dicHPProcess.ContainsKey(nodeName) && !isPlayer) {
             DebugTool.LogError("PlayerView MoveHPProcess node is not exit\t" + nodeName);
             return;
         }
+        Transform trans = null;
         if (isPlayer)
-            m_dicHPProcess[m_playerModelName].transform.position = position;
+            trans = m_dicHPProcess[m_playerModelName].transform;
         else
-            m_dicHPProcess[nodeName].transform.position = position;
+            trans = m_dicHPProcess[nodeName].transform;
+        trans.position = position;
+        trans.localScale = new Vector3(scale, scale);
     }
 
     public void UpdateHPProcess(string nodeName, float hpPercent) {

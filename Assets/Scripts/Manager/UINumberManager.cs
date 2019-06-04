@@ -140,11 +140,8 @@ public static class UINumberManager {
         }
         bool isHaveSub = dicSprite.ContainsKey(color) && dicSprite[color].ContainsKey(-1);
         int length = CalculateDamageLength(damage);
-        int startIndex = 0;
-        if (isHaveSub) {
+        if (isHaveSub)
             length++;
-            startIndex = 1;
-        }
         Transform[] arrayNumImages = new Transform[length];
         if (isHaveSub)
             AddSubToList(color, (Transform sub) => {

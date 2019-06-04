@@ -10,7 +10,8 @@ public class CPlayer:Controller {
     private float m_cameraHeight;
     private float m_cameraToPlayerDis;
     private Vector3 m_cameraToPlayerDisVec3;
-
+    // 怪物 UI 缩放系数 (以角色距离摄像机距离为基准)
+    private float m_monsterScaleFlag;
     public CPlayer(GameMoudle moudle, Type modelType):base(moudle, modelType) { }
 
     protected override void InitEvent() {
@@ -59,6 +60,7 @@ public class CPlayer:Controller {
         GameObject playerObj = dicNodeName[playerPrefabName];
         ModelAttackRoleData data = new ModelAttackRoleData(GetModel<MPlayerData>().PlayerHP, 0.5f, 30);
         m_player = new ModelPlayer(playerObj, data);
+        m_monsterScaleFlag = GameSceneManager.DistanceToCamera(playerObj.transform.position);
 
         m_cameraTrans = dicNodeName[GameConst.PlayerCamera].transform;
         m_cameraRotationY = m_cameraTrans.rotation.eulerAngles.y;
@@ -72,7 +74,7 @@ public class CPlayer:Controller {
                 m_playerView = new PlayerView(Moudle, viewType, gameObject.GetComponent<UIPrefab>());
                 Vector3 position = GameSceneManager.ToScreenPoint(playerObj.transform.position);
                 position.y += ModelRoleManager.GetModelRoleHpPosY(playerPrefabName);
-                m_playerView.CreateHPProcess(playerPrefabName, position, true);
+                m_playerView.CreateHPProcess(playerPrefabName, position, 1, true);
             }
         );
 
@@ -99,13 +101,26 @@ public class CPlayer:Controller {
     }
 
     private void MonsterCreate(object arg) {
-        KeyValuePair<string, Vector3> data = (KeyValuePair<string, Vector3>)arg;
-        m_playerView.CreateHPProcess(data.Key, data.Value);
+        ModelMonsterHPData data = (ModelMonsterHPData)arg;
+        data = GetScaleData(data);
+        m_playerView.CreateHPProcess(data.prefabName, data.position, data.scale);
     }
 
     private void MonsterMove(object arg) {
-        KeyValuePair<string, Vector3> data = (KeyValuePair<string, Vector3>)arg;
-        m_playerView.MoveHPProcess(data.Key, data.Value);
+        ModelMonsterHPData data = (ModelMonsterHPData)arg;
+        data = GetScaleData(data);
+        m_playerView.MoveHPProcess(data.prefabName, data.position, data.scale);
+    }
+
+    private ModelMonsterHPData GetScaleData(ModelMonsterHPData data) {
+        float scale = m_monsterScaleFlag / data.scale;
+        if (scale > 1)
+            scale = 1;
+        Vector3 position = data.position;
+        position.y += data.positionFix * scale;
+        data.position = position;
+        data.scale = scale;
+        return data;
     }
 
     private void MonsterDamage(object arg) {
@@ -151,7 +166,7 @@ public class CPlayer:Controller {
     private void PlayerHPUpdatePosition() {
         Vector3 position = GameSceneManager.ToScreenPoint(m_player.transform.position);
         position.y += ModelRoleManager.GetModelRoleHpPosY(m_player.gameObject.name);
-        m_playerView?.MoveHPProcess(string.Empty, position, true);
+        m_playerView?.MoveHPProcess(string.Empty, position, 1, true);
     }
 
     private void ResetCameraFixMode() {

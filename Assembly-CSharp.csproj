@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\Model\Data\ModelAttackRoleData.cs" />
     <Compile Include="Assets\Scripts\Model\Data\ModelHPData.cs" />
     <Compile Include="Assets\Scripts\Model\Data\ModelMonsterData.cs" />
+    <Compile Include="Assets\Scripts\Model\Data\ModelMonsterHPData.cs" />
     <Compile Include="Assets\Scripts\Model\Data\ModelRoleData.cs" />
     <Compile Include="Assets\Scripts\Model\Data\ModelRoleType.cs" />
     <Compile Include="Assets\Scripts\Model\ModelMonster.cs" />

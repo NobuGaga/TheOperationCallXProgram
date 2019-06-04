@@ -49,8 +49,8 @@ public class CMonster:Controller {
         m_listMonster.Add(script);
         Vector3 screenPos = GameSceneManager.ToScreenPoint(monster.transform.position);
         script.HPPosY = ModelRoleManager.GetModelRoleHpPosY(data.PrefabName);
-        screenPos.y += script.HPPosY;
-        KeyValuePair<string, Vector3> hpProcessData = new KeyValuePair<string, Vector3>(monster.name, screenPos);
+        float distance = GameSceneManager.DistanceToCamera(monster.transform.position);
+        ModelMonsterHPData hpProcessData = new ModelMonsterHPData(monster.name, screenPos, script.HPPosY, distance);
         EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterCreate, hpProcessData);
     }
 
@@ -103,8 +103,8 @@ public class CMonster:Controller {
             string nodeName = m_listMonster[i].gameObject.name;
             Vector3 position = m_listMonster[i].transform.position;
             position = GameSceneManager.ToScreenPoint(position);
-            position.y += m_listMonster[i].HPPosY;
-            KeyValuePair<string, Vector3> data = new KeyValuePair<string, Vector3>(nodeName, position);
+            float distance = GameSceneManager.DistanceToCamera(m_listMonster[i].transform.position);
+            ModelMonsterHPData data = new ModelMonsterHPData(nodeName, position, m_listMonster[i].HPPosY, distance);
             EventManager.Dispatch(GameMoudle.Player, GameEvent.Type.MonsterMove, data);
         }
     }
