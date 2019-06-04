@@ -117,7 +117,7 @@ public static class UINumberManager {
         yield break;
     }
 
-    private static void AddSubToGroup(Transform group, NumberColor color) {
+    private static void AddSubToList(NumberColor color, System.Action<Transform> callback) {
         List<Transform> list = dicNumber[color][-1];
         Transform node = null;
         for (int i = 0; i < list.Count; i++)
@@ -128,11 +128,9 @@ public static class UINumberManager {
             }
         if (node == null)
             GameManager.LogicScript.StartCoroutine(
-                CreateImage(color, -1, (Transform numberImage) => numberImage.SetParent(group)));
-        else {
-            node.SetParent(group);
-            node.gameObject.SetActive(true);
-        }
+                CreateImage(color, -1, (Transform numberImage) => callback(numberImage)));
+        else
+            callback(node);
     }
 
     private static void AddNumberToGroup(Transform group, int damage, NumberColor color) {
@@ -140,9 +138,46 @@ public static class UINumberManager {
             DebugTool.LogError("UINumberManager not exit color image, color\t" + color.ToString());
             return;
         }
-        if (dicSprite.ContainsKey(color) && dicSprite[color].ContainsKey(-1))
-            AddSubToGroup(group, color);
-        FindNumberToAdd(group, damage, color);
+        bool isHaveSub = dicSprite.ContainsKey(color) && dicSprite[color].ContainsKey(-1);
+        int length = CalculateDamageLength(damage);
+        int startIndex = 0;
+        if (isHaveSub) {
+            length++;
+            startIndex = 1;
+        }
+        Transform[] arrayNumImages = new Transform[length];
+        if (isHaveSub)
+            AddSubToList(color, (Transform sub) => {
+                Transform[] arrayNumImagesCopy = arrayNumImages;
+                arrayNumImagesCopy[0] = sub;
+                Transform groupCopy = group;
+                LoadCompletedCallBack(color, arrayNumImagesCopy, groupCopy);
+            });
+        for (int index = startIndex; index < length; index++) {
+            AddNumberToList(damage, color, (Transform numberImage) => {
+                Transform[] arrayNumImagesCopy = arrayNumImages;
+                arrayNumImagesCopy[index] = numberImage;
+                Transform groupCopy = group;
+                LoadCompletedCallBack(color, arrayNumImagesCopy, groupCopy);
+            });
+        }
+    }
+
+    private static int CalculateDamageLength(int damage) {
+        int length = 1;
+        while ((damage /= 10) > 0)
+            length++;
+        return length;
+    }
+
+    private static void LoadCompletedCallBack(NumberColor color, Transform[] arrayNumImages, Transform group) {
+        for (int i = 0; i < arrayNumImages.Length; i++)
+            if (arrayNumImages[i] == null)
+                return;
+            else {
+                arrayNumImages[i].gameObject.SetActive(true);
+                arrayNumImages[i].SetParent(group);
+            }
         TimerManager.Register(1, () => {
             listGroup.Remove(group);
             UINumberImage[] images = group.GetComponentsInChildren<UINumberImage>();
@@ -155,11 +190,11 @@ public static class UINumberManager {
         });
     }
 
-    private static void FindNumberToAdd(Transform group, int damage, NumberColor color) {
+    private static void AddNumberToList(int damage, NumberColor color, System.Action<Transform> callback) {
         int newDamage = damage / 10;
         int rest = damage % 10;
         if (newDamage > 0)
-            FindNumberToAdd(group, newDamage, color);
+            AddNumberToList(newDamage, color, callback);
         if (!dicNumber[color].ContainsKey(rest)) {
             DebugTool.LogError("UINumberManager not exit color number image, number\t" + rest);
             return;
@@ -174,11 +209,9 @@ public static class UINumberManager {
             }
         if (node == null)
             GameManager.LogicScript.StartCoroutine(
-                CreateImage(color, rest, (Transform numberImage) => numberImage.SetParent(group)));
-        else {
-            node.SetParent(group);
-            node.gameObject.SetActive(true);
-        }
+                CreateImage(color, rest, (Transform numberImage) => callback(numberImage)));
+        else
+            callback(node);
     }
 
     private static void FrameUpdate(object arg) {
