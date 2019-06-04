@@ -75,20 +75,21 @@ public static class UINumberManager {
         numberTrans.gameObject.SetActive(false);
     }
 
-    private static void CreateImage(NumberColor color, int number, Transform groupTrans) {
+    private static IEnumerator CreateImage(NumberColor color, int number, System.Action<Transform> callback) {
         if (!dicSprite.ContainsKey(color)) {
             DebugTool.LogError("UINumberManager not exit color\t" + color.ToString());
-            return;
+            yield break;
         }
         if (!dicSprite[color].ContainsKey(number)) {
             DebugTool.LogError("UINumberManager not exit color number\t" + number);
-            return;
+            yield break;
         }
         GameObject obj = GameObject.Instantiate(numberPrefab);
-        obj.transform.SetParent(groupTrans, false);
         UINumberImage image = obj.GetComponent<UINumberImage>();
         image.sprite = dicSprite[color][number];
         AddImageData(obj.transform, color, number);
+        callback(obj.transform);
+        yield break;
     }
 
     public static void ShowDamageText(Transform parent, Vector3 position, int damage, NumberColor color = NumberColor.Default) {
@@ -126,7 +127,8 @@ public static class UINumberManager {
                 break;
             }
         if (node == null)
-            CreateImage(color, -1, group);
+            GameManager.LogicScript.StartCoroutine(
+                CreateImage(color, -1, (Transform numberImage) => numberImage.SetParent(group)));
         else {
             node.SetParent(group);
             node.gameObject.SetActive(true);
@@ -138,11 +140,9 @@ public static class UINumberManager {
             DebugTool.LogError("UINumberManager not exit color image, color\t" + color.ToString());
             return;
         }
-        DebugTool.Log("AddNumberToGroup Start");
         if (dicSprite.ContainsKey(color) && dicSprite[color].ContainsKey(-1))
             AddSubToGroup(group, color);
         FindNumberToAdd(group, damage, color);
-        DebugTool.Log("AddNumberToGroup End");
         TimerManager.Register(1, () => {
             listGroup.Remove(group);
             UINumberImage[] images = group.GetComponentsInChildren<UINumberImage>();
@@ -158,7 +158,6 @@ public static class UINumberManager {
     private static void FindNumberToAdd(Transform group, int damage, NumberColor color) {
         int newDamage = damage / 10;
         int rest = damage % 10;
-        DebugTool.Log("FindNumberToAdd rest\t" + rest);
         if (newDamage > 0)
             FindNumberToAdd(group, newDamage, color);
         if (!dicNumber[color].ContainsKey(rest)) {
@@ -174,7 +173,8 @@ public static class UINumberManager {
                 break;
             }
         if (node == null)
-            CreateImage(color, rest, group);
+            GameManager.LogicScript.StartCoroutine(
+                CreateImage(color, rest, (Transform numberImage) => numberImage.SetParent(group)));
         else {
             node.SetParent(group);
             node.gameObject.SetActive(true);
