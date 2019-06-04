@@ -148,22 +148,18 @@ public static class UINumberManager {
         Transform[] arrayNumImages = new Transform[length];
         if (isHaveSub)
             AddSubToList(color, (Transform sub) => {
-                Transform[] arrayNumImagesCopy = arrayNumImages;
-                arrayNumImagesCopy[0] = sub;
-                Transform groupCopy = group;
-                LoadCompletedCallBack(color, arrayNumImagesCopy, groupCopy);
+                arrayNumImages[0] = sub;
+                LoadCompletedCallBack(color, arrayNumImages, group);
             });
-        for (int index = startIndex; index < length; index++) {
-            AddNumberToList(damage, color, (Transform numberImage) => {
-                Transform[] arrayNumImagesCopy = arrayNumImages;
-                arrayNumImagesCopy[index] = numberImage;
-                Transform groupCopy = group;
-                LoadCompletedCallBack(color, arrayNumImagesCopy, groupCopy);
-            });
-        }
+        AddNumberToList(damage, color, (Transform numberImage, int index) => {
+            arrayNumImages[index] = numberImage;
+            LoadCompletedCallBack(color, arrayNumImages, group);
+        }, length - 1);
     }
 
     private static int CalculateDamageLength(int damage) {
+        int newDamage = damage / 10;
+        int rest = damage % 10;
         int length = 1;
         while ((damage /= 10) > 0)
             length++;
@@ -174,10 +170,10 @@ public static class UINumberManager {
         for (int i = 0; i < arrayNumImages.Length; i++)
             if (arrayNumImages[i] == null)
                 return;
-            else {
-                arrayNumImages[i].gameObject.SetActive(true);
-                arrayNumImages[i].SetParent(group);
-            }
+        for (int i = 0; i < arrayNumImages.Length; i++) {
+            arrayNumImages[i].SetParent(group);
+            arrayNumImages[i].gameObject.SetActive(true);
+        }
         TimerManager.Register(1, () => {
             listGroup.Remove(group);
             UINumberImage[] images = group.GetComponentsInChildren<UINumberImage>();
@@ -190,11 +186,11 @@ public static class UINumberManager {
         });
     }
 
-    private static void AddNumberToList(int damage, NumberColor color, System.Action<Transform> callback) {
+    private static void AddNumberToList(int damage, NumberColor color, System.Action<Transform, int> callback, int index) {
         int newDamage = damage / 10;
         int rest = damage % 10;
         if (newDamage > 0)
-            AddNumberToList(newDamage, color, callback);
+            AddNumberToList(newDamage, color, callback, index - 1);
         if (!dicNumber[color].ContainsKey(rest)) {
             DebugTool.LogError("UINumberManager not exit color number image, number\t" + rest);
             return;
@@ -209,9 +205,9 @@ public static class UINumberManager {
             }
         if (node == null)
             GameManager.LogicScript.StartCoroutine(
-                CreateImage(color, rest, (Transform numberImage) => callback(numberImage)));
+                CreateImage(color, rest, (Transform numberImage) => callback(numberImage, index)));
         else
-            callback(node);
+            callback(node, index);
     }
 
     private static void FrameUpdate(object arg) {
