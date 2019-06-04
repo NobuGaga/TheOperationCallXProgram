@@ -75,21 +75,53 @@ public class ModelPlayer:ModelWeaponRole {
     }
 
     private Collider[] SearchAttactTarget() {
+        if (GameConfig.isAutoAttack)
+            return AutoSearchAttackTarget();
+        else
+            return NormalSearchAttackTarget();
+    }
+
+    /// <summary>
+    /// 自动搜索攻击目标, 先寻找最近单位, 再以最近单位为朝向发起攻击
+    /// </summary>
+    /// <returns></returns>
+    private Collider[] AutoSearchAttackTarget() {
+        Collider[] colliders = Physics.OverlapSphere(m_transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Enemy.ToString()));
+        if (colliders == null)
+            return null;
+        float minDistance = m_attackDis;
+        Vector3 lookPoint = transform.position;
+        Collider minDisCollider = null;
+        for (int i = 0; i < colliders.Length; i++) {
+            if (colliders[i].isTrigger || colliders[i].tag != GameTagInfo.Enemy.ToString())
+                continue;
+            Vector3 selfToTarget = colliders[i].transform.position - m_transform.position;
+            if (selfToTarget.magnitude < minDistance) {
+                minDistance = selfToTarget.magnitude;
+                lookPoint = colliders[i].transform.position;
+                minDisCollider = colliders[i];
+            }
+        }
+        lookPoint.y = m_transform.position.y;
+        m_transform.LookAt(lookPoint);
+        if (IsShortWeapon)
+            return NormalSearchAttackTarget();
+        else
+            return new Collider[1] { minDisCollider };
+    }
+
+    private Collider[] NormalSearchAttackTarget() {
         Collider[] colliders = Physics.OverlapSphere(m_transform.position, m_attackDis, LayerMask.GetMask(GameLayerInfo.Enemy.ToString()));
         float minDistance = m_attackDis;
-        bool isInAttackArea = false;
         List<Collider> listTarget = new List<Collider>();
         for (int i = 0; i < colliders.Length; i++) {
             if (colliders[i].isTrigger || colliders[i].tag != GameTagInfo.Enemy.ToString())
                 continue;
             Vector3 selfToTarget = colliders[i].transform.position - m_transform.position;
             float selfToTargetAngle = Vector3.Angle(selfToTarget, m_transform.forward);
-            bool isInAttackAngle = selfToTargetAngle <= m_attackAngle;
-            if (isInAttackAngle)
-                isInAttackArea = true;
-            if (!GameConfig.isAutoAttack && !isInAttackAngle)
+            if (selfToTargetAngle > m_attackAngle)
                 continue;
-            if (IsShortWeapon && isInAttackAngle)
+            if (IsShortWeapon)
                 listTarget.Add(colliders[i]);
             else if (selfToTarget.magnitude < minDistance) {
                 listTarget.Clear();
@@ -97,18 +129,10 @@ public class ModelPlayer:ModelWeaponRole {
                 listTarget.Add(colliders[i]);
             }
         }
-        if (!GameConfig.isAutoAttack && isInAttackArea) {
-            if (IsShortWeapon)
-                return listTarget.ToArray();
-            if (minDistance == m_attackDis)
-                return null;
+        if (IsShortWeapon)
             return listTarget.ToArray();
-        }
-        if (listTarget.Count == 0)
+        if (minDistance == m_attackDis)
             return null;
-        Vector3 lookPoint = listTarget[0].transform.position;
-        lookPoint.y = m_transform.position.y;
-        m_transform.LookAt(lookPoint);
         return listTarget.ToArray();
     }
 
