@@ -54,6 +54,8 @@ public class ModelPlayer:ModelWeaponRole {
 
     public override void Attack() {
         Collider[] targets = SearchAttactTarget();
+        if (targets == null || targets[0].transform == null)
+            return;
         switch (m_attackLevel) {
             case ModelAttackLevel.Normal:
             case ModelAttackLevel.SkillOne:
@@ -64,8 +66,6 @@ public class ModelPlayer:ModelWeaponRole {
                 PlaySkillAnimator(targets[0].transform.position);
                 break;
         }
-        if (targets == null)
-            return;
         for (int i = 0; i < targets.Length; i++) {
             if (targets[i] == null)
                 continue;
