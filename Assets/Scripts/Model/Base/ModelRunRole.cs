@@ -16,11 +16,11 @@ public abstract class ModelRunRole:ModelRole {
     }
 
     public virtual void Run() {
-        m_rigidBody.velocity = m_velocity;
+        m_transform.position = m_transform.position + m_velocity * Time.deltaTime;
         m_transform.rotation = Quaternion.Euler(0, m_rotationY, 0);
     }
 
     public virtual void EndRun() {
-        m_rigidBody.velocity = Vector3.zero;
+
     }
 }

@@ -155,8 +155,6 @@ public static class UINumberManager {
     }
 
     private static int CalculateDamageLength(int damage) {
-        int newDamage = damage / 10;
-        int rest = damage % 10;
         int length = 1;
         while ((damage /= 10) > 0)
             length++;

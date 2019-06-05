@@ -15,13 +15,11 @@ public abstract class ModelRole {
             return m_transform;
         }
     }
-    protected Rigidbody m_rigidBody;
     private Animation m_animation;
 
     public ModelRole(GameObject node) {
         m_gameObject = node;
         m_transform = m_gameObject.transform;
-        m_rigidBody = m_gameObject.GetComponent<Rigidbody>();
         m_animation = m_gameObject.GetComponent<Animation>();
         InitAnimation();
         State = SRoleState.Type.SRoleStand;
@@ -79,7 +77,6 @@ public abstract class ModelRole {
     ~ModelRole() {
         m_dicStateCache?.Clear();
         m_animation = null;
-        m_rigidBody = null;
         m_transform = null;
         GameObject.Destroy(m_gameObject);
         m_gameObject = null;

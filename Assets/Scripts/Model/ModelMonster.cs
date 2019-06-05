@@ -116,15 +116,13 @@ public class ModelMonster:ModelAttackRole {
         gameObject.GetComponent<Collider>().enabled = false;
         m_vision.gameObject.SetActive(false);
         float time = 1;
-        TimerManager.Register(time / 2, () => m_rigidBody.isKinematic = true);
         TimerManager.Register(time, () => GameObject.Destroy(gameObject));
-        m_rigidBody.useGravity = false;
-        Vector3 attackPoint = transform.position + transform.forward;
-        if (m_target != null)
-            attackPoint = m_target.position;
-        Vector3 force = transform.position - attackPoint;
-        force.y = 0;
-        m_rigidBody.AddForce(force.normalized * 2.5f, ForceMode.Impulse);
+        //Vector3 attackPoint = transform.position + transform.forward;
+        //if (m_target != null)
+        //    attackPoint = m_target.position;
+        //Vector3 force = transform.position - attackPoint;
+        //force.y = 0;
+        //m_rigidBody.AddForce(force.normalized * 2.5f, ForceMode.Impulse);
     }
 
     private void OnTriggerEnter(Collider collider) {
