@@ -54,6 +54,10 @@ public abstract class Prefab {
         m_gameobject.SetActive(false);
     }
 
+    public void Destroy() {
+        GameObject.Destroy(m_gameobject);
+    }
+
     ~Prefab() {
         m_dicImage?.Clear();
         m_dicText?.Clear();
