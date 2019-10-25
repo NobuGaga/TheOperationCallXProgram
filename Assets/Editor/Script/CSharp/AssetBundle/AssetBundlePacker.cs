@@ -30,9 +30,7 @@ public static class AssetBundlePacker {
             string[] splitStr = assetBundleName.Split('/');
             splitStr[splitStr.Length - 1] = null;
             StringBuilder strBuilder = new StringBuilder();
-            for (int i = 0; i < splitStr.Length; i++) {
-                if (splitStr == null)
-                    break;
+            for (int i = 0; i < splitStr.Length - 1; i++) {
                 strBuilder.Append(splitStr[i]);
                 strBuilder.Append('/');
             }

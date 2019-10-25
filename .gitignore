@@ -4,3 +4,6 @@ Library
 Logs
 Temp
 obj
+
+# Mac OSX File
+.DS_Store
