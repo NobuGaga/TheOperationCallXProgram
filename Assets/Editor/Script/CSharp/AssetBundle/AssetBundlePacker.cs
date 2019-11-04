@@ -34,7 +34,7 @@ public static class AssetBundlePacker {
                 strBuilder.Append(splitStr[i]);
                 strBuilder.Append('/');
             }
-            strBuilder.Remove(strBuilder.Length - 2, 2);
+            strBuilder.Remove(strBuilder.Length - 1, 1);
             assetBundleName = strBuilder.ToString();
             if (!dicBundle.ContainsKey(assetBundleName))
                 dicBundle.Add(assetBundleName, new List<string>());
