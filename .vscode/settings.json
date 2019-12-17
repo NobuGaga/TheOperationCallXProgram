@@ -59,6 +59,5 @@
         "Assets/Plugins" : true,
         "Assets/Scenes" : true,
         "Logs" : true,
-        "Packages" : true,
     }
 }
